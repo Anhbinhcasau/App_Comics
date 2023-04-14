@@ -104,8 +104,9 @@ ThongTinAdapter ThongTinAdapter;
                 }
                 //Đăng bài
                 else if (i == 1) {
-                    if(i == 2) {
-                        
+                    if(ID == 1) { //sửa id
+                        Intent intent1 = new Intent(Home.this, TheLoai.class);
+                        startActivity(intent1);
                     }
                     else{
                         Toast.makeText(Home.this, "Bạn không có quyền đăng bài", Toast.LENGTH_SHORT).show();
