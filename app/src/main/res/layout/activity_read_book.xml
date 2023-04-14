@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/drawer_chapter"
+    android:layout_height="match_parent"
+    tools:context=".Read_Book">
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/srvNovel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <TextView
+                android:id="@+id/tvNovel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Tại huyện Dự Châu, có một sơn thôn hẻo lánh tên là Diệp gia thôn. Dựa theo tập tục của thôn này, ban đêm, mỗi nhà đều phải ở trước cửa đốt hai xấp tiền giấy, một xấp đồ cúng, một... xấp khác là cho cô hồn dã quỷ qua đường. Tiền giấy là dành cho người nhà để họ thuận lợi ra đi, không gặp khó khăn gì trên đường xuống dưới. Đốt xong tiền giấy, mỗi nhà đều đóng chặt cửa, cài chặt then sớm nghỉ ngơi, những người tin phật tín đạo thì còn cầu khẩn trong nhà, cầu cho đêm nay vượt qua bình an. Đêm khuya, mưa dông nổi lên, đập vào lá cây rào rào xào xạc giống như tiếng cô hồn dã quỷ bộ hành, tiếng gió thổi nức nở như than như khóc, làm cho bầu không khí nơi đây vốn bất thường lại càng quỷ dị hơn. Trên một con đường nhỏ vào thôn, một thân ảnh mơ hồ trong mưa gió như ẩn như hiện đi ra khỏi làng, trực tiếp leo lên phía sau núi, tiến thẳng vào một phần mộ. Phần mộ này là của tổ tiên Diệp gia thôn, chôn người chết của Diệp gia mấy trăm năm qua. Bóng đen đi tới trước một phần mộ không có bia đá, cắm một cây cờ chiêu hồn vào phía đầu, đứng trong gió bắt tay gọi quỷ. Trên mặt đất mới của phần mộ chưa hề có cắm cây cờ chiêu hồn nào, chứng tỏ đây là một phần mộ còn mới. 'Nhị tẩu, hôm nay là bảy ngày của tẩu, vừa qua quỷ tiết, ta tới thăm tẩu đây.'. Tiếng nói khàn khàn, nghe không quá bốn mươi tuổi. Người đàn ông đứng trước mộ lặng im trong chốc lát rồi cởi một cây dù đỏ từ trên lưng xuống, mở ra đặt trước phần mộ để che gió che mưa, tiếp đó y thận trọng lấy ra ba nén nhang cắm ngập xuống đất bùn. Y không quan tâm đến lầy lội, quỳ xuống dập đầu lạy ba cái, sau đó đứng dậy lấy ra một cái xẻng cong cong, bắt đầu khai quật phần mộ. Phần mộ vốn là đất mới, lại vừa bị thấm nước mưa, đất vô cùng xốp, không quá hai mươi phút đã bị đào một lỗ hổng. Lau đi tầng bùn đất, một quan tài màu đỏ tươi như máu hiện ra, đẹp đẽ ướt át."
+                android:textColor="@color/black"
+                android:textSize="18dp" />
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/rlTopBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/teal_200"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/btnExit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/icon_back" />
+            <Button
+                android:id="@+id/btnShowChapter"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/icon_drop"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rlBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/teal_200"
+            android:layout_alignParentBottom="true"
+            android:padding="5dp">
+            <Button
+                android:id="@+id/btnPreviousPage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/icon_left"/>
+            <Button
+                android:id="@+id/btnNextPage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/icon_right"/>
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="end">
+        <ListView
+            android:id="@+id/lvChapter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>
