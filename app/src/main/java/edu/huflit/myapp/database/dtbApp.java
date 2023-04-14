@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import edu.huflit.myapp.Model.Users;
 
-public class        dtbApp extends SQLiteOpenHelper {
+public class dtbApp extends SQLiteOpenHelper {
     // Bảng Tài Khoản
     private static String TABLE_TAIKHOAN = "taikhoan";
     private static String ID_TAI_KHOAN = "idtaikhoan";
@@ -27,6 +27,11 @@ public class        dtbApp extends SQLiteOpenHelper {
     private static String TEN_TRUYEN = "tieude";
     private static String NOI_DUNG = "noidung";
     private static String IMAGE = "anh";
+
+    //Bảng Chapter
+    private static String TABLE_CHUONG = "chuong";
+    private static String ID_CHUONG = "idChuong";
+    private static String TEN_CHUONG = "tenChuong";
 
     // Phương thức tương tác với hệ điều hành truy cập vào tài nguyên hệ thống
     private Context context;
@@ -53,11 +58,17 @@ public class        dtbApp extends SQLiteOpenHelper {
                 +IMAGE+" TEXT, "+ID_TAI_KHOAN+" INTEGER , FOREIGN KEY ( "+ ID_TAI_KHOAN +" ) REFERENCES "+
                 TABLE_TAIKHOAN+"("+ID_TAI_KHOAN+"))";
 
+        //Tạo bảng Truyện
+        String SQLQuery2 = "CREATE TABLE "+ TABLE_CHUONG +" ( "
+                + ID_CHUONG+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +TEN_CHUONG+" TEXT UNIQUE, "
+                +ID_TRUYEN+" INTEGER, FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES "
+                +TABLE_TRUYEN+"(" + ID_TRUYEN +"))";
 
         //Insert Dữ Liệu vảo bảng người dùng
         //Phân quyền ( 1 - admin ) ( 2 - user)
-        String SQLQuery2 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
-        String SQLQuery3 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
+        String SQLQuery3 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
+        String SQLQuery4 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
@@ -65,7 +76,7 @@ public class        dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery1);
         sqLiteDatabase.execSQL(SQLQuery2);
         sqLiteDatabase.execSQL(SQLQuery3);
-
+        sqLiteDatabase.execSQL(SQLQuery4);
 
     }
 
