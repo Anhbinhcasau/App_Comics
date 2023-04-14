@@ -51,7 +51,7 @@ public class Home_Detail extends AppCompatActivity {
                 mBtnComment.setVisibility(View.INVISIBLE);
                 mlvChapter.setVisibility(View.VISIBLE);
                 if (hidden) {
-                    mBtnChapter.setBackgroundResource(R.drawable.primary_drawable);
+                    mBtnChapter.setBackgroundResource(R.color.teal_200);
                     mBtnSummary.setBackgroundColor(Color.WHITE);
                     hidden = true;
                 }
