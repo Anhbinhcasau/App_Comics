@@ -12,6 +12,6 @@ public class ChangePass extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
         //huynhthanhbinh
-
+        //doanducdai
     }
 }
