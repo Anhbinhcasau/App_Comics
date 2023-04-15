@@ -8,20 +8,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import edu.huflit.myapp.Model.Dialog_rating;
 
 public class Home_Detail extends AppCompatActivity {
-    Button mBtnSummary, mBtnFavorite, mBtnChapter, mBtnComment , mBtnContinue, mBtnRating;
+    Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue;
     TextView mTvSummary;
+    ImageView mImgFavorite, mImgRating;
     ListView mlvChapter ;
 
-    RatingBar mRtBStar ;
     boolean hidden = true;
     boolean isColor = false;
     String items[] = new String[] {"chap1","chap2","chap3","chap1","chap2","chap3","chap2","chap3","chap1","chap2","chap3","chap2","chap3","chap1","chap2","chap3"};
@@ -32,9 +34,9 @@ public class Home_Detail extends AppCompatActivity {
         mBtnSummary = (Button) findViewById(R.id.btnSummary);
         mBtnChapter = (Button) findViewById(R.id.btnChapter);
         mBtnComment = (Button) findViewById(R.id.btnComment);
-        mBtnFavorite = (Button) findViewById(R.id.btnFavorite);
-        mBtnRating = (Button) findViewById(R.id.btnRating);
-        mBtnContinue = (Button) findViewById(R.id.btnContinue);
+        mImgFavorite = (ImageView) findViewById(R.id.imgFavorite);
+        mImgRating = (ImageView) findViewById(R.id.imgRating);
+        mBtnContinue = (Button) findViewById(R.id.btnStart);
 
         mTvSummary = (TextView) findViewById(R.id.tvSummary);
 
@@ -72,14 +74,14 @@ public class Home_Detail extends AppCompatActivity {
                 }
             }
         });
-        mBtnFavorite.setOnClickListener(new View.OnClickListener() {
+        mImgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(isColor){
-                    mBtnFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
+                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
                     isColor = false;
                 }else {
-                    mBtnFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
+                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
                     isColor = true;
                 }
             }
@@ -91,11 +93,11 @@ public class Home_Detail extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        mBtnRating.setOnClickListener(new View.OnClickListener() {
+        mImgRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Dialog_rating rating = new Dialog_rating(Home_Detail.this);
-                rating.getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+                rating.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(Home_Detail.this, android.R.color.transparent)));
                 rating.setCancelable(false);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                 lp.copyFrom(rating.getWindow().getAttributes());

@@ -2,6 +2,7 @@ package edu.huflit.myapp;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -37,7 +38,7 @@ public class Read_Book extends AppCompatActivity {
         btnExit = (Button) findViewById(R.id.btnExit);
 
 
-        tvNovel = findViewById(R.id.tvNovel);
+        lvComic = findViewById(R.id.lvComic);
         rlTopBar = findViewById(R.id.rlTopBar);
         rlBottomBar= findViewById(R.id.rlBottomBar);
 
@@ -52,6 +53,7 @@ public class Read_Book extends AppCompatActivity {
         }
         ArrayAdapter adapterChapter = new Chapter_Adapter(this, R.layout.item_custom_list_view_chapter, arrChapter);
         mlvChapter.setAdapter(adapterChapter);
+        lvComic.setAdapter(adapterChapter);
 
         btnShowChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,27 @@ public class Read_Book extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        lvComic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            private static final long DOUBLE_CLICK_TIME_DELTA = 300; //Thời gian giữa 2 lần click (0.3s)
+            private long lastClickTime = 0; // Khởi tạo giá trị bằng 0
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // gán thời gian hiện tại
+                long clickTime = System.currentTimeMillis();
+                if(clickTime - lastClickTime <= DOUBLE_CLICK_TIME_DELTA){
+                    if(hidden){
+                        rlBottomBar.setVisibility(View.INVISIBLE);
+                        rlTopBar.setVisibility(View.INVISIBLE);
+                        hidden = false;
+                    }else{
+                        rlBottomBar.setVisibility(View.VISIBLE);
+                        rlTopBar.setVisibility(View.VISIBLE);
+                        hidden = true;
+                    }
+                }
+                lastClickTime = clickTime;
             }
         });
     }

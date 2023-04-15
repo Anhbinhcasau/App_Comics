@@ -11,22 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/srvNovel"
+        <ListView
+            android:id="@+id/lvComic"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
-
-            <TextView
-                android:id="@+id/tvNovel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Tại huyện Dự Châu, có một sơn thôn hẻo lánh tên là Diệp gia thôn. Dựa theo tập tục của thôn này, ban đêm, mỗi nhà đều phải ở trước cửa đốt hai xấp tiền giấy, một xấp đồ cúng, một... xấp khác là cho cô hồn dã quỷ qua đường. Tiền giấy là dành cho người nhà để họ thuận lợi ra đi, không gặp khó khăn gì trên đường xuống dưới. Đốt xong tiền giấy, mỗi nhà đều đóng chặt cửa, cài chặt then sớm nghỉ ngơi, những người tin phật tín đạo thì còn cầu khẩn trong nhà, cầu cho đêm nay vượt qua bình an. Đêm khuya, mưa dông nổi lên, đập vào lá cây rào rào xào xạc giống như tiếng cô hồn dã quỷ bộ hành, tiếng gió thổi nức nở như than như khóc, làm cho bầu không khí nơi đây vốn bất thường lại càng quỷ dị hơn. Trên một con đường nhỏ vào thôn, một thân ảnh mơ hồ trong mưa gió như ẩn như hiện đi ra khỏi làng, trực tiếp leo lên phía sau núi, tiến thẳng vào một phần mộ. Phần mộ này là của tổ tiên Diệp gia thôn, chôn người chết của Diệp gia mấy trăm năm qua. Bóng đen đi tới trước một phần mộ không có bia đá, cắm một cây cờ chiêu hồn vào phía đầu, đứng trong gió bắt tay gọi quỷ. Trên mặt đất mới của phần mộ chưa hề có cắm cây cờ chiêu hồn nào, chứng tỏ đây là một phần mộ còn mới. 'Nhị tẩu, hôm nay là bảy ngày của tẩu, vừa qua quỷ tiết, ta tới thăm tẩu đây.'. Tiếng nói khàn khàn, nghe không quá bốn mươi tuổi. Người đàn ông đứng trước mộ lặng im trong chốc lát rồi cởi một cây dù đỏ từ trên lưng xuống, mở ra đặt trước phần mộ để che gió che mưa, tiếp đó y thận trọng lấy ra ba nén nhang cắm ngập xuống đất bùn. Y không quan tâm đến lầy lội, quỳ xuống dập đầu lạy ba cái, sau đó đứng dậy lấy ra một cái xẻng cong cong, bắt đầu khai quật phần mộ. Phần mộ vốn là đất mới, lại vừa bị thấm nước mưa, đất vô cùng xốp, không quá hai mươi phút đã bị đào một lỗ hổng. Lau đi tầng bùn đất, một quan tài màu đỏ tươi như máu hiện ra, đẹp đẽ ướt át."
-                android:textColor="@color/black"
-                android:textSize="18dp" />
-        </ScrollView>
-
+            android:layout_height="match_parent"/>
         <RelativeLayout
             android:id="@+id/rlTopBar"
             android:layout_width="wrap_content"
