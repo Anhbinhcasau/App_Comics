@@ -24,7 +24,7 @@
         android:id="@+id/dktaikhoan"
         android:drawableRight="@drawable/icon_login"
         android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/regular"
@@ -40,7 +40,7 @@
         android:drawableRight="@drawable/icon_matkhau"
         android:layout_width="250dp"
         android:fontFamily="@font/regular"
-        android:layout_height="wrap_content"></EditText>
+        android:layout_height="50dp"></EditText>
     <EditText
         android:background="@drawable/custom_edtext"
         android:id="@+id/dkemail"
@@ -50,7 +50,7 @@
         android:drawableRight="@drawable/icon_email"
         android:layout_width="250dp"
         android:fontFamily="@font/regular"
-        android:layout_height="wrap_content"></EditText>
+        android:layout_height="50dp"></EditText>
     <Button
         android:background="@drawable/custom_button"
         android:id="@+id/btndangky"
