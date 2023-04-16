@@ -1,6 +1,7 @@
 package edu.huflit.myapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -36,34 +37,36 @@ import edu.huflit.myapp.adapter.ThongTinAdapter;
 import edu.huflit.myapp.adapter.TruyenTranhAdapter;
 
 public class Home extends AppCompatActivity {
-GridView gridView;
-TruyenTranhAdapter adapter;
-ArrayList<TruyenTranh> tranhArrayList;
+    GridView gridView;
+    TruyenTranhAdapter adapter;
+    ArrayList<TruyenTranh> tranhArrayList;
 
-Toolbar toolbar;
+    Toolbar toolbar;
 
-DrawerLayout drawerLayout;
+    DrawerLayout drawerLayout;
 
-NavigationView navigationView;
+    NavigationView navigationView;
 
-private ViewPager viewPager;
-private PhotoAdater photoAdater;
+    private ViewPager viewPager;
+    private PhotoAdater photoAdater;
 
-private List<Photo> mListPhoto;
+    private List<Photo> mListPhoto;
 
-private Timer mTimer;
+    private Timer mTimer;
 
-EditText edTSearch,edtName,edtEmail;
+    EditText edTSearch,edtName,edtEmail;
 
-String email,tentaikhoan;
+    String email,tentaikhoan;
 
-ListView listviewthongtin, listviewmanhinhchinh;
+    ListView listviewthongtin, listviewmanhinhchinh;
 
-ArrayList<ThongTin> navigationsArrayList;
-ArrayList<Users> usersArrayList;
+    ArrayList<ThongTin> navigationsArrayList;
+    ArrayList<Users> usersArrayList;
 
-NavigationAdapter NavigationAdapter;
-ThongTinAdapter ThongTinAdapter;
+    NavigationAdapter NavigationAdapter;
+    ThongTinAdapter ThongTinAdapter;
+    SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
 
 
@@ -93,6 +96,8 @@ ThongTinAdapter ThongTinAdapter;
         SetUp();
         //Hàm tìm kiếm truyện
         SetClick();
+        sp = getSharedPreferences("Data", MODE_PRIVATE);
+        editor = sp.edit();
 
         listviewmanhinhchinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -134,6 +139,9 @@ ThongTinAdapter ThongTinAdapter;
                 }
                 //Đăng Xuất
                 else if (i == 6) {
+                    editor.clear();
+                    editor.apply();
+                    startActivity(new Intent(Home.this, MainLogin.class));
                     finish();
                 }
             }
