@@ -18,8 +18,8 @@ import edu.huflit.myapp.database.dtbApp;
 public class MainLogin extends AppCompatActivity {
     EditText edtTK,edtMK;
     Button btnDangNhap, btnDangKy;
-    SharedPreferences sp;
-    SharedPreferences.Editor editor;
+    SharedPreferences sp,rmb;
+    SharedPreferences.Editor editor, rmbEditor;
     dtbApp dtbApp;
     CheckBox ckbRemember;
     @Override
@@ -31,7 +31,6 @@ public class MainLogin extends AppCompatActivity {
 
         dtbApp = new dtbApp(this);
 
-
         //Tạo sự kiện click button với Intent
         btnDangKy.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,10 +39,23 @@ public class MainLogin extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         Cursor cursor = dtbApp.getData();
+
         sp = getSharedPreferences("Data", MODE_PRIVATE );
+        rmb = getSharedPreferences("Data1", MODE_PRIVATE );
+
         editor = sp.edit();
+        rmbEditor = rmb.edit();
+
         boolean login = sp.getBoolean("ISLOGGEDIN", false);
+        boolean remember = rmb.getBoolean("REMEMBER", false);
+
+        if (remember == true){
+            edtTK.setText(rmb.getString("username", ""));
+            edtMK.setText(rmb.getString("password", ""));
+        }
+
         if (login == true){
             String username = sp.getString("username", "");
             String password = sp.getString("password", "");
@@ -59,12 +71,10 @@ public class MainLogin extends AppCompatActivity {
                     String tk = cursor.getString(1);
 
                     Intent i = new Intent(MainLogin.this,Home.class);
-
                     i.putExtra("phanquyen",phanquyen);
                     i.putExtra("Id",id);
                     i.putExtra("TaiKhoan",tk);
                     i.putExtra("Email",email);
-
                     startActivity(i);
                 }
             }
@@ -96,41 +106,28 @@ public class MainLogin extends AppCompatActivity {
                         String tk = cursor.getString(1);
 
                         if(ckbRemember.isChecked()){
-
-
-                            editor.putString("username" , datataikhoan);
-                            editor.putString("password", datamatkhau);
-                            editor.putBoolean("ISLOGGEDIN", true);
-                            editor.apply();
-
-                            //Chuyển vào màn hình HOME app đọc truyện
-                            Intent i = new Intent(MainLogin.this,Home.class);
-
-                            Toast.makeText(MainLogin.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
-                            //Gửi dữ liệu qua Activity là Main Home
-                            i.putExtra("phanquyen",phanquyen);
-                            i.putExtra("Id",id);
-                            i.putExtra("TaiKhoan",tk);
-                            i.putExtra("Email",email);
-
-                            startActivity(i);
-                        }else {
-
-                            Intent i = new Intent(MainLogin.this,Home.class);
-
-                            Toast.makeText(MainLogin.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-
-                            //Gửi dữ liệu qua Activity là Main Home
-                            i.putExtra("phanquyen",phanquyen);
-                            i.putExtra("Id",id);
-                            i.putExtra("TaiKhoan",tk);
-                            i.putExtra("Email",email);
-
-                            startActivity(i);
+                            rmbEditor.putString("username" , datataikhoan);
+                            rmbEditor.putString("password", datamatkhau);
+                            rmbEditor.putBoolean("REMEMBER", true);
+                            rmbEditor.apply();
                         }
+                        editor.putString("username" , datataikhoan);
+                        editor.putString("password", datamatkhau);
+                        editor.putBoolean("ISLOGGEDIN", true);
+                        editor.apply();
 
+                        //Chuyển vào màn hình HOME app đọc truyện
+                        Intent i = new Intent(MainLogin.this,Home.class);
 
+                        Toast.makeText(MainLogin.this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+
+                        //Gửi dữ liệu qua Activity là Main Home
+                        i.putExtra("phanquyen",phanquyen);
+                        i.putExtra("Id",id);
+                        i.putExtra("TaiKhoan",tk);
+                        i.putExtra("Email",email);
+
+                        startActivity(i);
                     }
                 }
                 //Trả cursor về đầu

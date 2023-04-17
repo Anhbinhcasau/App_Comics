@@ -70,6 +70,9 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery3 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery4 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
+        String SQLQuery5 = "INSERT INTO Truyen VALUES (null,'Doraemon','hehe','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg',1)";
+
+
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
         sqLiteDatabase.execSQL(SQLQuery);
@@ -77,6 +80,7 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery2);
         sqLiteDatabase.execSQL(SQLQuery3);
         sqLiteDatabase.execSQL(SQLQuery4);
+        sqLiteDatabase.execSQL(SQLQuery5);
 
     }
 
@@ -87,10 +91,15 @@ public class dtbApp extends SQLiteOpenHelper {
 
     public Cursor getData() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAIKHOAN,null);
+        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAIKHOAN,null) ;
         return res;
     }
 
+    public Cursor getDataTruyen(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TRUYEN,null) ;
+        return res;
+    }
     // Hàm add vào dtb khi user tạo tài khoản thành công
     public void Add(Users taikhoan){
         SQLiteDatabase dtb = this.getWritableDatabase();
@@ -99,7 +108,6 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(MAT_KHAU,taikhoan.getMatkhau());
         values.put(EMAIL,taikhoan.getEmail());
         values.put(PHAN_QUYEN,taikhoan.getPhanquyen());
-
         dtb.insert(TABLE_TAIKHOAN,null,values);
         dtb.close();
         Log.e("Add taikhoan ","Thành Công");

@@ -3,15 +3,26 @@ package edu.huflit.myapp.Model;
 public class TruyenTranh {
     private String tenTruyen,tenChap,LinkAnh;
 
-    public TruyenTranh() {
-
+    public Integer getIdTruyen() {
+        return idTruyen;
     }
-    public TruyenTranh(String tenTruyen, String tenChap, String linkAnh) {
+
+    public TruyenTranh(String tenTruyen, String tenChap, String linkAnh, Integer idTruyen) {
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
         LinkAnh = linkAnh;
+        this.idTruyen = idTruyen;
     }
 
+    public void setIdTruyen(Integer idTruyen) {
+        this.idTruyen = idTruyen;
+    }
+
+    private Integer idTruyen;
+
+    public TruyenTranh() {
+
+    }
     public String getTenTruyen() {
         return tenTruyen;
     }

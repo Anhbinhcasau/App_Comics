@@ -2,6 +2,7 @@ package edu.huflit.myapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -35,6 +36,7 @@ import edu.huflit.myapp.adapter.NavigationAdapter;
 import edu.huflit.myapp.adapter.PhotoAdater;
 import edu.huflit.myapp.adapter.ThongTinAdapter;
 import edu.huflit.myapp.adapter.TruyenTranhAdapter;
+import edu.huflit.myapp.database.dtbApp;
 
 public class Home extends AppCompatActivity {
     GridView gridView;
@@ -67,6 +69,7 @@ public class Home extends AppCompatActivity {
     ThongTinAdapter ThongTinAdapter;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+    dtbApp dtbapp;
 
 
 
@@ -83,6 +86,8 @@ public class Home extends AppCompatActivity {
         tentaikhoan = intent.getStringExtra("TaiKhoan");
 
         AnhXa();
+        dtbapp = new dtbApp(this);
+
 
         ActionBar();
         //Phương lấy ảnh để set lên viewpager
@@ -93,6 +98,7 @@ public class Home extends AppCompatActivity {
         autoImage();
         //Hàm hiện list truyện
         Init();
+        Onclick();
         SetUp();
         //Hàm tìm kiếm truyện
         SetClick();
@@ -176,21 +182,37 @@ public class Home extends AppCompatActivity {
 
     // Hiện các truyện
     private void Init() {
-        tranhArrayList = new ArrayList<>();
+        Cursor cursor = dtbapp.getDataTruyen();
+        tranhArrayList = new ArrayList<TruyenTranh>();
 
-        tranhArrayList.add(new TruyenTranh("Dragonball","Chapter 35","https://i.pinimg.com/564x/60/1b/90/601b90e64e522854e663d5a31d8b1ba0.jpg"));
-        tranhArrayList.add(new TruyenTranh("Pokemon","Chapter 53","https://i.pinimg.com/750x/69/37/f3/6937f3e367d0f9c1202a6da0565b7c1b.jpg"));
-        tranhArrayList.add(new TruyenTranh("Naruto","Chapter 45","https://i.pinimg.com/564x/18/c7/32/18c732f7a0c630014c239dfe4b8c1b42.jpg"));
-        tranhArrayList.add(new TruyenTranh("Doraemon","Chapter 34","https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg"));
-        tranhArrayList.add(new TruyenTranh("FairyTail","Chapter 35","https://i.truyenvua.com/ebook/190x247/fairy-tail-100-year-quest_1532514729.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("Nguyên Tôn","Chapter 53","https://i.truyenvua.com/ebook/190x247/nguyen-ton_1513349962.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("Học Viện Anh Hùng ","Chapter 45","https://i.truyenvua.com/ebook/190x247/boku-no-hero-academia_1552459650.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("Estio","Chapter 34","https://i.truyenvua.com/ebook/190x247/estio_1667375485.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("Quyết Chiến","Chapter 35","https://i.truyenvua.com/ebook/190x247/quyet-chien_1672882588.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("Hỏa Long","Chapter 53","https://i.truyenvua.com/ebook/190x247/hoa-long-vainqueur_1666167689.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("Chemy","Chapter 45","https://i.truyenvua.com/ebook/190x247/chemy_1660314535.jpg?gt=hdfgdfg&mobile=2"));
-        tranhArrayList.add(new TruyenTranh("1331","Chapter 34","https://i.truyenvua.com/ebook/190x247/1331_1678606537.jpg?gt=hdfgdfg&mobile=2"));
+        while (cursor.moveToNext()){
+            TruyenTranh truyenTranh= new TruyenTranh();
+            int id = cursor.getInt(0);
+            String Ten =cursor.getString(1);
+            String anh = cursor.getString(3);
+            truyenTranh.setIdTruyen(id);
+            truyenTranh.setTenTruyen(Ten);
+            truyenTranh.setLinkAnh(anh);
+            tranhArrayList.add(truyenTranh);
+        }
+        cursor.moveToFirst();
+        //Thực hiện khi không sử dụng
+        cursor.close();
+
+        //tranhArrayList.add(new TruyenTranh("Dragonball","Chapter 35","https://i.pinimg.com/564x/60/1b/90/601b90e64e522854e663d5a31d8b1ba0.jpg"));
+        //tranhArrayList.add(new TruyenTranh("Pokemon","Chapter 53","https://i.pinimg.com/750x/69/37/f3/6937f3e367d0f9c1202a6da0565b7c1b.jpg"));
+        //tranhArrayList.add(new TruyenTranh("Naruto","Chapter 45","https://i.pinimg.com/564x/18/c7/32/18c732f7a0c630014c239dfe4b8c1b42.jpg"));
+        //tranhArrayList.add(new TruyenTranh("Doraemon","Chapter 34","https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg"));
+        //tranhArrayList.add(new TruyenTranh("FairyTail","Chapter 35","https://i.truyenvua.com/ebook/190x247/fairy-tail-100-year-quest_1532514729.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("Nguyên Tôn","Chapter 53","https://i.truyenvua.com/ebook/190x247/nguyen-ton_1513349962.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("Học Viện Anh Hùng ","Chapter 45","https://i.truyenvua.com/ebook/190x247/boku-no-hero-academia_1552459650.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("Estio","Chapter 34","https://i.truyenvua.com/ebook/190x247/estio_1667375485.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("Quyết Chiến","Chapter 35","https://i.truyenvua.com/ebook/190x247/quyet-chien_1672882588.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("Hỏa Long","Chapter 53","https://i.truyenvua.com/ebook/190x247/hoa-long-vainqueur_1666167689.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("Chemy","Chapter 45","https://i.truyenvua.com/ebook/190x247/chemy_1660314535.jpg?gt=hdfgdfg&mobile=2"));
+        //tranhArrayList.add(new TruyenTranh("1331","Chapter 34","https://i.truyenvua.com/ebook/190x247/1331_1678606537.jpg?gt=hdfgdfg&mobile=2"));
         adapter = new TruyenTranhAdapter(this,0,tranhArrayList);
+        gridView.setAdapter(adapter);
 
     }
     private void SetUp() {
@@ -253,15 +275,15 @@ public class Home extends AppCompatActivity {
         });
     }
 
-//    public void Onclick() {
-//        gridView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i = new Intent(Home.this,Home_Detail.class);
-//                startActivity(i);
-//            }
-//        });
-//    }
+    public void Onclick() {
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(Home.this,Home_Detail.class);
+                startActivity(i);
+            }
+        });
+    }
 
 
     // Hình ảnh tự chuyển động
