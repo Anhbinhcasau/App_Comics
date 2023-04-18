@@ -86,9 +86,6 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery3 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery4 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery5 = "INSERT INTO Truyen VALUES (null,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
-
-
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
         //sqLiteDatabase.execSQL(SQLQuery);
@@ -96,7 +93,7 @@ public class dtbApp extends SQLiteOpenHelper {
         //sqLiteDatabase.execSQL(SQLQuery2);
         //sqLiteDatabase.execSQL(SQLQuery3);
         //sqLiteDatabase.execSQL(SQLQuery4);
-        //sqLiteDatabase.execSQL(SQLQuery5);
+
 
     }
 
@@ -135,9 +132,10 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(ID_TRUYEN,truyenTranh.getIdTruyen());
         values.put(NOI_DUNG,truyenTranh.getTenChap());
         values.put(IMAGE,truyenTranh.getLinkAnh());
+        values.put(TAC_GIA,truyenTranh.getTacGia());
 
         dtb.insert(TABLE_TRUYEN,null,values);
         dtb.close();
-        Log.e("Add truyen ","Thành Công");
+        Log.e("Add truyenTranh ","Thành Công");
     }
 }

@@ -223,9 +223,6 @@ public class Home extends AppCompatActivity {
         usersArrayList.add(new Users(tentaikhoan,email));
         ThongTinAdapter = new ThongTinAdapter(this, R.layout.navigation_thongtin, usersArrayList);
         listviewthongtin.setAdapter(ThongTinAdapter);
-
-
-
         //Chuyên mục
         navigationsArrayList = new ArrayList<>();
         navigationsArrayList.add(new ThongTin("Thông Tin", R.drawable.icon_login));
@@ -270,7 +267,6 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
 
     // Hình ảnh tự chuyển động
     private void autoImage(){

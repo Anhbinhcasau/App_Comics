@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
 import edu.huflit.myapp.database.dtbApp;
@@ -58,10 +61,12 @@ public class ThemTruyen extends AppCompatActivity {
                     dbApp.Addtruyen(truyenTranh);
                     Toast.makeText(ThemTruyen.this, "Thêm truyện thành công!!", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(),Home.class);
+                    finish();
                     startActivity(i);
                 }
             }
         });
+
     }
     private TruyenTranh CreatTruyen(){
         String tieuDe = edtTieuDe.getText().toString();
@@ -75,14 +80,15 @@ public class ThemTruyen extends AppCompatActivity {
         TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
         return truyenTranh;
     }
+    public static String createId() {
+        ArrayList<String> idList = new ArrayList<String>();
 
-    @Override
-    protected void onActivityResult(int request, int result, @Nullable Intent data)
-    {
-        super.onActivityResult(request, result, data);
-        if (result == RESULT_OK && request == 1) {
-            Uri uri = data.getData();
-            imgTruyen.setImageURI(uri);
+        String id = UUID.randomUUID().toString(); // tạo một id ngẫu nhiên
+        while (idList.contains(id)) { // kiểm tra id đã tồn tại trong danh sách chưa
+            id = UUID.randomUUID().toString(); // nếu đã tồn tại, tạo lại id mới
         }
+        idList.add(id); // thêm id mới vào danh sách
+        return id;
     }
+
 }
