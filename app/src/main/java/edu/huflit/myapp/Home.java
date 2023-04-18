@@ -265,8 +265,23 @@ public class Home extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(Home.this,Home_Detail.class);
-                startActivity(i);
+                Cursor cursor = dtbapp.getDataTruyen();
+                if (cursor.moveToPosition(position)) {
+                    // Di chuyển con trỏ đến vị trí item được chọn
+                    int idTruyen = cursor.getInt(0);
+                    String Ten = cursor.getString(1);
+                    String tomtat = cursor.getString(2);
+                    String anh = cursor.getString(3);
+                    String tacgia = cursor.getString(4);
+                    Intent i = new Intent(Home.this, Home_Detail.class);
+                    i.putExtra("anh", anh);
+                    i.putExtra("Id", idTruyen);
+                    i.putExtra("Ten", Ten);
+                    i.putExtra("tomtat", tomtat);
+                    i.putExtra("tacgia", tacgia);
+                    startActivity(i);
+                }
+                cursor.close();
             }
         });
     }
