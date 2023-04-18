@@ -16,7 +16,7 @@ import edu.huflit.myapp.database.dtbApp;
 
 public class MainDangKy extends AppCompatActivity {
     EditText edttk,edtmk,edtemail;
-    Button btnDK,btnBackLogin;
+    Button btnDK;
 
     TextView tvback;
     dtbApp dtbApp;
@@ -71,7 +71,7 @@ public class MainDangKy extends AppCompatActivity {
         String taikhoan = edttk.getText().toString();
         String matkhau = edtmk.getText().toString();
         String email = edtemail.getText().toString();
-        int Phanquyen = 1;
+        int Phanquyen = 2;
 
         Users tk = new Users(taikhoan,matkhau,email,Phanquyen);
         return tk;
