@@ -47,7 +47,7 @@
         android:layout_height="50dp"></EditText>
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="78dp"
