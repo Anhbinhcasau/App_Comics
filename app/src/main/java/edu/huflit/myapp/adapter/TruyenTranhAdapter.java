@@ -38,11 +38,9 @@ public class TruyenTranhAdapter extends ArrayAdapter<TruyenTranh> {
             TruyenTranh truyenTranh =this.arr.get(position);
 
             TextView tenTruyen = convertView.findViewById(R.id.tvtenTruyen);
-            TextView tenChap = convertView.findViewById(R.id.tvtenChap);
             ImageView imgTruyen = convertView.findViewById(R.id.imgAnhtruyen);
 
             tenTruyen.setText(truyenTranh.getTenTruyen());
-            tenChap.setText(truyenTranh.getTenChap());
             Glide.with(this.ct).load(truyenTranh.getLinkAnh()).into(imgTruyen);
         }
         return convertView;

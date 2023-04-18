@@ -9,22 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="180dp">
         <ImageView
-
             android:id="@+id/imgAnhtruyen"
             android:src="@drawable/dragonball"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></ImageView>
-        <TextView
-            android:id="@+id/tvtenChap"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:background="#81616060"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:text="Truyen Tranh"
-            android:textSize="15dp"></TextView>
+            android:layout_height="match_parent">
+        </ImageView>
     </RelativeLayout>
 
         <TextView
