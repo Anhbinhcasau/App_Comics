@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
@@ -16,13 +17,22 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+
 import edu.huflit.myapp.Model.Dialog_rating;
+import edu.huflit.myapp.Model.TruyenTranh;
+import edu.huflit.myapp.database.dtbApp;
 
 public class Home_Detail extends AppCompatActivity {
-    Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue;
-    TextView mTvSummary;
-    ImageView mImgFavorite, mImgRating;
+    Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue ;
+    ImageButton mBntExt;
+    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
+    ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
+    ArrayList<TruyenTranh> arrayListTruyen;
+    dtbApp dtbapp;
 
     boolean hidden = true;
     boolean isColor = false;
@@ -37,10 +47,28 @@ public class Home_Detail extends AppCompatActivity {
         mImgFavorite = (ImageView) findViewById(R.id.imgFavorite);
         mImgRating = (ImageView) findViewById(R.id.imgRating);
         mBtnContinue = (Button) findViewById(R.id.btnStart);
-
+        mBntExt = (ImageButton) findViewById(R.id.btnExit);
         mTvSummary = (TextView) findViewById(R.id.tvSummary);
-
         mlvChapter = (ListView) findViewById(R.id.lvchap);
+        imgMain = (ImageView) findViewById(R.id.imgMain);
+        tvNameComic = findViewById(R.id.tvNameComic);
+        tvNameAuthor = findViewById(R.id.tvNameAuthor);
+        tvSummary = findViewById(R.id.tvSummary);
+        dtbapp = new dtbApp(this);
+        TruyenTranh truyenTranh = new TruyenTranh();
+
+        Intent intent = getIntent();
+        int IDtruyen = intent.getIntExtra("Id",0);
+        String anh = intent.getStringExtra("anh");
+        String ten = intent.getStringExtra("Ten");
+        String tomTat  = intent.getStringExtra("tomtat");
+        String tacgia = intent.getStringExtra("tacgia");
+
+        tvNameComic.setText(ten);
+        tvSummary.setText(tomTat);
+        tvNameAuthor.setText(tacgia);
+        Glide.with(this).load(anh).fitCenter().into(imgMain);
+
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
@@ -112,6 +140,12 @@ public class Home_Detail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Home_Detail.this, Comment.class );
                 startActivity(i);
+            }
+        });
+        mBntExt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

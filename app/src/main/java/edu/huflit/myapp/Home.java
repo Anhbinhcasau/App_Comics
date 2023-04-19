@@ -1,6 +1,5 @@
 package edu.huflit.myapp;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,7 +10,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -231,6 +229,9 @@ public class Home extends AppCompatActivity {
         usersArrayList.add(new Users(tentaikhoan,email));
         ThongTinAdapter = new ThongTinAdapter(this, R.layout.navigation_thongtin, usersArrayList);
         listviewthongtin.setAdapter(ThongTinAdapter);
+
+
+
         //Chuyên mục
         navigationsArrayList = new ArrayList<>();
         navigationsArrayList.add(new ThongTin("Thông Tin", R.drawable.icon_login));
@@ -275,12 +276,27 @@ public class Home extends AppCompatActivity {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(Home.this,Home_Detail.class);
-                startActivity(i);
-
+                Cursor cursor = dtbapp.getDataTruyen();
+                if (cursor.moveToPosition(position)) {
+                    // Di chuyển con trỏ đến vị trí item được chọn
+                    int idTruyen = cursor.getInt(0);
+                    String Ten = cursor.getString(1);
+                    String tomtat = cursor.getString(2);
+                    String anh = cursor.getString(3);
+                    String tacgia = cursor.getString(4);
+                    Intent i = new Intent(Home.this, Home_Detail.class);
+                    i.putExtra("anh", anh);
+                    i.putExtra("Id", idTruyen);
+                    i.putExtra("Ten", Ten);
+                    i.putExtra("tomtat", tomtat);
+                    i.putExtra("tacgia", tacgia);
+                    startActivity(i);
+                }
+                cursor.close();
             }
         });
     }
+
 
     // Hình ảnh tự chuyển động
     private void autoImage(){
