@@ -24,7 +24,6 @@ public class ThemTruyen extends AppCompatActivity {
 
     EditText edtIDTruyen, edtTieuDe, edtNoiDung, edtIMG, edtTacGia;
     Button btnThem;
-    ImageView imgTruyen;
 
     dtbApp dbApp;
 

@@ -69,10 +69,8 @@ public class dtbApp extends SQLiteOpenHelper {
                 +NOI_DUNG+" TEXT, "
                 +IMAGE+" TEXT, "
                 +TAC_GIA+" TEXT, "
-                +ID_TAP+" INTEGER , FOREIGN KEY ( "
-                +ID_TAP +" ) REFERENCES "
-                +TABLE_TAP+"("
-                +ID_TAP+"))";
+                +ID_TAP+" INTEGER , FOREIGN KEY ( "+ID_TAP +" ) REFERENCES "
+                +TABLE_TAP+"("+ID_TAP+"))";
 
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
@@ -88,11 +86,11 @@ public class dtbApp extends SQLiteOpenHelper {
 
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
-        //sqLiteDatabase.execSQL(SQLQuery);
-        //sqLiteDatabase.execSQL(SQLQuery1);
-        //sqLiteDatabase.execSQL(SQLQuery2);
-        //sqLiteDatabase.execSQL(SQLQuery3);
-        //sqLiteDatabase.execSQL(SQLQuery4);
+        sqLiteDatabase.execSQL(SQLQuery);
+        sqLiteDatabase.execSQL(SQLQuery1);
+        sqLiteDatabase.execSQL(SQLQuery2);
+        sqLiteDatabase.execSQL(SQLQuery3);
+        sqLiteDatabase.execSQL(SQLQuery4);
 
 
     }
