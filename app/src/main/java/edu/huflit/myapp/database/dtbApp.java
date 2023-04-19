@@ -69,8 +69,10 @@ public class dtbApp extends SQLiteOpenHelper {
                 +NOI_DUNG+" TEXT, "
                 +IMAGE+" TEXT, "
                 +TAC_GIA+" TEXT, "
-                +ID_TAP+" INTEGER , FOREIGN KEY ( "+ID_TAP +" ) REFERENCES "
-                +TABLE_TAP+"("+ID_TAP+"))";
+                +ID_TAP+" INTEGER , FOREIGN KEY ( "
+                +ID_TAP +" ) REFERENCES "
+                +TABLE_TAP+"("
+                +ID_TAP+"))";
 
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
@@ -84,14 +86,17 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery3 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery4 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
+        String SQLQuery5 = "INSERT INTO Truyen VALUES (null,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
+
+
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
-        sqLiteDatabase.execSQL(SQLQuery);
-        sqLiteDatabase.execSQL(SQLQuery1);
-        sqLiteDatabase.execSQL(SQLQuery2);
-        sqLiteDatabase.execSQL(SQLQuery3);
-        sqLiteDatabase.execSQL(SQLQuery4);
-
+        //sqLiteDatabase.execSQL(SQLQuery);
+        //sqLiteDatabase.execSQL(SQLQuery1);
+        //sqLiteDatabase.execSQL(SQLQuery2);
+        //sqLiteDatabase.execSQL(SQLQuery3);
+        //sqLiteDatabase.execSQL(SQLQuery4);
+        //sqLiteDatabase.execSQL(SQLQuery5);
 
     }
 
