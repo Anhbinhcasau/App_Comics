@@ -91,12 +91,12 @@ public class dtbApp extends SQLiteOpenHelper {
 
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
-        //sqLiteDatabase.execSQL(SQLQuery);
-        //sqLiteDatabase.execSQL(SQLQuery1);
-        //sqLiteDatabase.execSQL(SQLQuery2);
-        //sqLiteDatabase.execSQL(SQLQuery3);
-        //sqLiteDatabase.execSQL(SQLQuery4);
-        //sqLiteDatabase.execSQL(SQLQuery5);
+        sqLiteDatabase.execSQL(SQLQuery);
+        sqLiteDatabase.execSQL(SQLQuery1);
+        sqLiteDatabase.execSQL(SQLQuery2);
+        sqLiteDatabase.execSQL(SQLQuery3);
+        sqLiteDatabase.execSQL(SQLQuery4);
+        sqLiteDatabase.execSQL(SQLQuery5);
 
     }
 

@@ -34,10 +34,9 @@
     <EditText
         android:id="@+id/edtNoiDungTruyen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_height="200dp"
         android:inputType="text"
-        android:hint="Nội dung truyện..." />
+        android:hint="Nội dung truyện..."/>
 
     <EditText
         android:id="@+id/edtTacGia"

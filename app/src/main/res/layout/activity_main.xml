@@ -85,16 +85,16 @@
         android:text="OR"></TextView>
 
     <Button
-            android:background="@drawable/custom_button"
-            android:id="@+id/dangky"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="#000"
-            android:fontFamily="@font/regular"
-            android:onClick="Dangkyusers"
-            android:text="SIGN UP"
-            android:textSize="16dp"></Button>
+        android:background="@drawable/custom_button"
+        android:id="@+id/dangky"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#000"
+        android:fontFamily="@font/regular"
+        android:onClick="Dangkyusers"
+        android:text="SIGN UP"
+        android:textSize="16dp"></Button>
 </LinearLayout>
 
