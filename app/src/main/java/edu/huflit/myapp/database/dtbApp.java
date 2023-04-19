@@ -138,4 +138,9 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
     }
+    public int Delete(int i){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int res = db.delete(TABLE_TRUYEN, ID_TRUYEN + " = " + i,null);
+        return res;
+    }
 }

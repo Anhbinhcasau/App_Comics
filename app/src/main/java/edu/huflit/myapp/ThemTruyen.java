@@ -73,22 +73,10 @@ public class ThemTruyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("Id",0);
+        int id = Integer.parseInt(edtIDTruyen.getText().toString());
 
         TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
         return truyenTranh;
-    }
-    public static String createId() {
-        ArrayList<String> idList = new ArrayList<String>();
-
-        String id = UUID.randomUUID().toString(); // tạo một id ngẫu nhiên
-        while (idList.contains(id)) { // kiểm tra id đã tồn tại trong danh sách chưa
-            id = UUID.randomUUID().toString(); // nếu đã tồn tại, tạo lại id mới
-        }
-        idList.add(id); // thêm id mới vào danh sách
-        return id;
     }
 
 }
