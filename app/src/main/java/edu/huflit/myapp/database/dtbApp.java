@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
 
@@ -116,6 +117,11 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TRUYEN,null) ;
         return res;
     }
+    public Cursor getDataTap(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
+        return res;
+    }
     // Hàm add vào dtb khi user tạo tài khoản thành công
     public void Add(Users taikhoan){
         SQLiteDatabase dtb = this.getWritableDatabase();
@@ -140,6 +146,16 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.insert(TABLE_TRUYEN,null,values);
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
+    }
+    public void Addtap(TapTruyen tapTruyen){
+        SQLiteDatabase dtb = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TRUYEN, tapTruyen.getTenTap());
+        values.put(ID_TAP, tapTruyen.getId());
+
+        dtb.insert(TABLE_TAP, null, values);
+        dtb.close();
+        Log.e("Add tapTruyen", "Thành Công" );
     }
     public int Delete(int i){
         SQLiteDatabase db = this.getReadableDatabase();

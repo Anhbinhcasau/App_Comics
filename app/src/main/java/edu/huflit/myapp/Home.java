@@ -207,7 +207,6 @@ public class Home extends AppCompatActivity {
         cursor.close();
         adapter = new TruyenTranhAdapter(this,0,tranhArrayList);
         gridView.setAdapter(adapter);
-
     }
     private void SetUp() {
         gridView.setAdapter(adapter);
@@ -340,7 +339,7 @@ public class Home extends AppCompatActivity {
     }
 
     //Xóa truyện
-    private void DialogDelete(int po){
+    private void DialogDelete(int i){
         Dialog dialog = new Dialog(this);
 
         dialog.setContentView(R.layout.dialogdelete);
@@ -350,7 +349,7 @@ public class Home extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int idTruyen = tranhArrayList.get(po).getIdTruyen();
+                int idTruyen = tranhArrayList.get(i).getIdTruyen();
                 dtbapp.Delete(idTruyen);
 
                 Intent i = new Intent(Home.this, Home.class);
