@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,7 +46,7 @@ public class Home_Detail extends AppCompatActivity {
         mImgFavorite = (ImageView) findViewById(R.id.imgFavorite);
         mImgRating = (ImageView) findViewById(R.id.imgRating);
         mBtnContinue = (Button) findViewById(R.id.btnStart);
-        mBntExt = (ImageButton) findViewById(R.id.btnExit);
+        mBntExt = (ImageButton) findViewById(R.id.btnExt);
         mTvSummary = (TextView) findViewById(R.id.tvSummary);
         mlvChapter = (ListView) findViewById(R.id.lvchap);
         imgMain = (ImageView) findViewById(R.id.imgMain);
