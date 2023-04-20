@@ -35,7 +35,7 @@ public class Home_Detail extends AppCompatActivity {
 
     boolean hidden = true;
     boolean isColor = false;
-    String items[] = new String[] {"chap1","chap2","chap3","chap1","chap2","chap3","chap2","chap3","chap1","chap2","chap3","chap2","chap3","chap1","chap2","chap3"};
+    String items[] = new String[] {};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

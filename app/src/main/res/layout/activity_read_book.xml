@@ -68,7 +68,14 @@
         android:layout_gravity="end">
         <ListView
             android:id="@+id/lvChapter"
+            android:layout_marginTop="60dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnThemTap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thêm Tập mới" />
     </com.google.android.material.navigation.NavigationView>
 </androidx.drawerlayout.widget.DrawerLayout>
