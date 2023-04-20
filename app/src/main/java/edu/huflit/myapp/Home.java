@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -83,6 +84,7 @@ public class Home extends AppCompatActivity {
         int pk = intent.getIntExtra("phanquyen",0);
         email = intent.getStringExtra("Email");
         tentaikhoan = intent.getStringExtra("TaiKhoan");
+        Log.e("Test 1 " , pk +email+tentaikhoan);
 
         AnhXa();
         dtbapp = new dtbApp(this);

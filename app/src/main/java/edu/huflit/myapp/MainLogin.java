@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ShareActionProvider;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -127,7 +126,10 @@ public class MainLogin extends AppCompatActivity {
                         i.putExtra("TaiKhoan",tk);
                         i.putExtra("Email",email);
 
+                        Intent i1 = new Intent(MainLogin.this,Home.class);
+
                         startActivity(i);
+
                     }
                 }
                 //Trả cursor về đầu

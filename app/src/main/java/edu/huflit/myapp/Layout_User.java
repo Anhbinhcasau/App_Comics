@@ -1,12 +1,15 @@
 package edu.huflit.myapp;
 
+
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -18,12 +21,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.huflit.myapp.database.dtbApp;
+
 public class Layout_User extends AppCompatActivity {
     ImageView ava;
     ImageButton btnImg;
     EditText edtName, edtId, edtEmail;
     Button btnSave, btnUPa;
     ImageView imgAva;
+
+    edu.huflit.myapp.database.dtbApp dtbApp;
+
+    String email, tentaikhoan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +48,31 @@ public class Layout_User extends AppCompatActivity {
         btnUPa= (Button) findViewById(R.id.btnUpAva);
         imgAva = (ImageView) findViewById(R.id.imgAva);
 
+        dtbApp = new dtbApp(this);
+
+
+        //Lay du lieu tu login
+        Intent intent = getIntent();
+        int pk = intent.getIntExtra("phanquyen",0);
+        email = intent.getStringExtra("Email");
+        tentaikhoan = intent.getStringExtra("TaiKhoan");
+        Log.e("Test 1 " , pk +email+tentaikhoan);
+
+        Cursor c = dtbApp.getData();
+        while (c.moveToNext()) {
+            Log.e("Test",c.getString(1) + c.getString(3)+ c.getInt(0));
+            if (tentaikhoan==(c.getString(1)) ) {
+                edtName.setText(c.getString(1));
+                edtId.setText(c.getInt(0));
+                edtEmail.setText(c.getString(3));
+            }
+            String tentk = c.getString(1);
+            if(tentk==tentaikhoan) {
+                edtName.setText(c.getString(1));
+                edtId.setText(c.getInt(0));
+                edtEmail.setText(c.getString(3));
+            }
+        }
         //Ẩn 2 button Up và Save ở chế độ xem
         btnSave.setVisibility(View.INVISIBLE);
         btnUPa.setVisibility(View.INVISIBLE);
