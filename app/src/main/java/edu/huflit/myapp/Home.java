@@ -1,5 +1,6 @@
 package edu.huflit.myapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -11,6 +12,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListView;
@@ -71,7 +73,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     dtbApp dtbapp;
-
+    Button btnYes, btnNo;
 
 
     @Override
@@ -153,7 +155,13 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
-
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                DialogDelete(i);
+                return false;
+            }
+        });
     }
 
     //Thiết lập icon thông qua drawerLayout
@@ -201,7 +209,6 @@ public class Home extends AppCompatActivity {
         cursor.close();
         adapter = new TruyenTranhAdapter(this,0,tranhArrayList);
         gridView.setAdapter(adapter);
-
     }
     private void SetUp() {
         gridView.setAdapter(adapter);
@@ -240,6 +247,11 @@ public class Home extends AppCompatActivity {
 
         NavigationAdapter = new NavigationAdapter(this,R.layout.layout_chuyenmuc,navigationsArrayList);
         listviewmanhinhchinh.setAdapter(NavigationAdapter);
+
+        //
+        btnYes = findViewById(R.id.btnYes);
+        btnNo = findViewById(R.id.btnNo);
+
     }
 
     // Thanh tìm kiếm truyện
@@ -326,5 +338,34 @@ public class Home extends AppCompatActivity {
             mTimer.cancel();
             mTimer = null;
         }
+    }
+
+    //Xóa truyện
+    private void DialogDelete(int i){
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialogdelete);
+        //khi click vào btnNo mới đóng dialog
+        dialog.setCanceledOnTouchOutside(false);
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int idTruyen = tranhArrayList.get(i).getIdTruyen();
+                dtbapp.Delete(idTruyen);
+
+                Intent i = new Intent(Home.this, Home.class);
+                finish();
+                startActivity(i);
+                Toast.makeText(Home.this, "Xóa truyện thành công!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 }

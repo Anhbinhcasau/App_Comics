@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
 
@@ -91,12 +92,12 @@ public class dtbApp extends SQLiteOpenHelper {
 
 
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
-        sqLiteDatabase.execSQL(SQLQuery);
-        sqLiteDatabase.execSQL(SQLQuery1);
-        sqLiteDatabase.execSQL(SQLQuery2);
-        sqLiteDatabase.execSQL(SQLQuery3);
-        sqLiteDatabase.execSQL(SQLQuery4);
-        sqLiteDatabase.execSQL(SQLQuery5);
+        //sqLiteDatabase.execSQL(SQLQuery);
+        //sqLiteDatabase.execSQL(SQLQuery1);
+        //sqLiteDatabase.execSQL(SQLQuery2);
+        //sqLiteDatabase.execSQL(SQLQuery3);
+        //sqLiteDatabase.execSQL(SQLQuery4);
+        //sqLiteDatabase.execSQL(SQLQuery5);
 
     }
 
@@ -114,6 +115,11 @@ public class dtbApp extends SQLiteOpenHelper {
     public Cursor getDataTruyen(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TRUYEN,null) ;
+        return res;
+    }
+    public Cursor getDataTap(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
         return res;
     }
     // Hàm add vào dtb khi user tạo tài khoản thành công
@@ -135,9 +141,25 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(ID_TRUYEN,truyenTranh.getIdTruyen());
         values.put(NOI_DUNG,truyenTranh.getTenChap());
         values.put(IMAGE,truyenTranh.getLinkAnh());
+        values.put(TAC_GIA,truyenTranh.getTacGia());
 
         dtb.insert(TABLE_TRUYEN,null,values);
         dtb.close();
-        Log.e("Add truyen ","Thành Công");
+        Log.e("Add truyenTranh ","Thành Công");
+    }
+    public void Addtap(TapTruyen tapTruyen){
+        SQLiteDatabase dtb = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TRUYEN, tapTruyen.getTenTap());
+        values.put(ID_TAP, tapTruyen.getId());
+
+        dtb.insert(TABLE_TAP, null, values);
+        dtb.close();
+        Log.e("Add tapTruyen", "Thành Công" );
+    }
+    public int Delete(int i){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int res = db.delete(TABLE_TRUYEN, ID_TRUYEN + " = " + i,null);
+        return res;
     }
 }
