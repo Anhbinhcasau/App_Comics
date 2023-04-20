@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
 import edu.huflit.myapp.database.dtbApp;
@@ -21,7 +24,6 @@ public class ThemTruyen extends AppCompatActivity {
 
     EditText edtIDTruyen, edtTieuDe, edtNoiDung, edtIMG, edtTacGia;
     Button btnThem;
-    ImageView imgTruyen;
 
     dtbApp dbApp;
 
@@ -58,31 +60,22 @@ public class ThemTruyen extends AppCompatActivity {
                     dbApp.Addtruyen(truyenTranh);
                     Toast.makeText(ThemTruyen.this, "Thêm truyện thành công!!", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(),Home.class);
+                    finish();
                     startActivity(i);
                 }
             }
         });
+
     }
     private TruyenTranh CreatTruyen(){
         String tieuDe = edtTieuDe.getText().toString();
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-
-        Intent intent = getIntent();
-        int id = intent.getIntExtra("Id",0);
+        int id = Integer.parseInt(edtIDTruyen.getText().toString());
 
         TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
         return truyenTranh;
     }
 
-    @Override
-    protected void onActivityResult(int request, int result, @Nullable Intent data)
-    {
-        super.onActivityResult(request, result, data);
-        if (result == RESULT_OK && request == 1) {
-            Uri uri = data.getData();
-            imgTruyen.setImageURI(uri);
-        }
-    }
 }

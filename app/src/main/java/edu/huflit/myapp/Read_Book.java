@@ -1,13 +1,16 @@
 package edu.huflit.myapp;
 
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -27,9 +30,13 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.huflit.myapp.Model.List_Chapter;
+import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.adapter.Chapter_Adapter;
+
 import edu.huflit.myapp.adapter.Image_Adapter;
+
+import edu.huflit.myapp.database.dtbApp;
+
 
 public class Read_Book extends AppCompatActivity {
 
@@ -39,8 +46,12 @@ public class Read_Book extends AppCompatActivity {
 
     TextView tvNovel;
     ListView lvComic, mlvChapter;
-    Button btnShowChapter, btnExit;
-    String items[] = new String[] {"chap1","chap2","chap3","chap1","chap2","chap3","chap2","chap3","chap1","chap2","chap3","chap2","chap3","chap1","chap2","chap3"};
+    Button btnShowChapter, btnExit, btnThemTap;
+    dtbApp dbApp;
+    ArrayList<TapTruyen> tapTruyenArrayList;
+
+    Chapter_Adapter adapterChapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +94,11 @@ public class Read_Book extends AppCompatActivity {
             }
         });
 
+        btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
+        btnExit = (Button) findViewById(R.id.btnExit);
+        btnThemTap = findViewById(R.id.btnThemTap);
+
+
 
 
         btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
@@ -91,6 +107,8 @@ public class Read_Book extends AppCompatActivity {
         rlTopBar = findViewById(R.id.rlTopBar);
         rlBottomBar= findViewById(R.id.rlBottomBar);
         mlvChapter = (ListView) findViewById(R.id.lvChapter);
+
+        dbApp = new dtbApp(this);
 
 
         ArrayList arrChapter = new ArrayList<List_Chapter>();
@@ -101,6 +119,8 @@ public class Read_Book extends AppCompatActivity {
         }
         ArrayAdapter adapterChapter = new Chapter_Adapter(this, R.layout.item_custom_list_view_chapter, arrChapter);
         mlvChapter.setAdapter(adapterChapter);
+
+        Init();
 
 
         btnShowChapter.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +157,33 @@ public class Read_Book extends AppCompatActivity {
                 lastClickTime = clickTime;
             }
         });
+        btnThemTap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Read_Book.this, ThemTap.class);
+                startActivity(i);
+            }
+        });
+    }
+    //hiện các tập
+    private void Init() {
+        Cursor cursor = dbApp.getDataTap();
+        tapTruyenArrayList = new ArrayList<TapTruyen>();
+
+        while (cursor.moveToNext()){
+            TapTruyen tapTruyen = new TapTruyen();
+            int id = cursor.getInt(0);
+            String Ten = cursor.getString(1);
+            tapTruyen.setId(id);
+            tapTruyen.setTenTap(Ten);
+
+            tapTruyenArrayList.add(tapTruyen);
+        }
+        cursor.moveToFirst();
+        //Thực hiện khi không sử dụng
+        cursor.close();
+        adapterChapter = new Chapter_Adapter(this,0, tapTruyenArrayList);
+        mlvChapter.setAdapter(adapterChapter);
     }
 
 }
