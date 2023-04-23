@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.huflit.myapp.Home;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.R;
 
@@ -43,6 +46,7 @@ public class TruyenTranhAdapter extends ArrayAdapter<TruyenTranh> {
             tenTruyen.setText(truyenTranh.getTenTruyen());
             Glide.with(this.ct).load(truyenTranh.getLinkAnh()).into(imgTruyen);
         }
+
         return convertView;
     }
 

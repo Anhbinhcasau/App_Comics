@@ -3,19 +3,19 @@ package edu.huflit.myapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -30,6 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.huflit.myapp.Model.List_Chapter;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.adapter.Chapter_Adapter;
 
@@ -51,6 +52,7 @@ public class Read_Book extends AppCompatActivity {
     ArrayList<TapTruyen> tapTruyenArrayList;
 
     Chapter_Adapter adapterChapter;
+    String[] items = new String[]{};
 
 
     @Override
