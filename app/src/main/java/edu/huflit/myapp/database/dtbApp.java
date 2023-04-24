@@ -121,9 +121,9 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery);
         sqLiteDatabase.execSQL(SQLQuery1);
         sqLiteDatabase.execSQL(SQLQuery2);
-        sqLiteDatabase.execSQL(SQLQuery3);
-        sqLiteDatabase.execSQL(SQLQuery4);
-        sqLiteDatabase.execSQL(SQLQuery5);
+//        sqLiteDatabase.execSQL(SQLQuery3);
+//        sqLiteDatabase.execSQL(SQLQuery4);
+//        sqLiteDatabase.execSQL(SQLQuery5);
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
         sqLiteDatabase.execSQL(SQLQuery8);
@@ -181,7 +181,6 @@ public class dtbApp extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(TEN_TAP, tapTruyen.getTenTap());
         values.put(ID_TAP, tapTruyen.getId());
-
         dtb.insert(TABLE_TAP, null, values);
         dtb.close();
         Log.e("Add tapTruyen", "Thành Công" );

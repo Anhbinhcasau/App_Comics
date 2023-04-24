@@ -1,23 +1,15 @@
 package edu.huflit.myapp;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import androidx.appcompat.app.AppCompatActivity;
 
 import edu.huflit.myapp.Model.TruyenTranh;
-import edu.huflit.myapp.Model.Users;
 import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
@@ -59,9 +51,6 @@ public class ThemTruyen extends AppCompatActivity {
                 else {
                     dbApp.Addtruyen(truyenTranh);
                     Toast.makeText(ThemTruyen.this, "Thêm truyện thành công!!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),Home.class);
-                    finish();
-                    startActivity(i);
                 }
             }
         });
@@ -77,5 +66,4 @@ public class ThemTruyen extends AppCompatActivity {
         TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
         return truyenTranh;
     }
-
 }
