@@ -1,5 +1,6 @@
 package edu.huflit.myapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -8,7 +9,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -58,9 +58,9 @@ public class Home extends AppCompatActivity {
 
     private Timer mTimer;
 
-    EditText edTSearch, edtName, edtEmail;
+    EditText edTSearch,edtName,edtEmail;
 
-    String email, tentaikhoan;
+    String email,tentaikhoan;
 
     ListView listviewthongtin, listviewmanhinhchinh;
 
@@ -82,10 +82,9 @@ public class Home extends AppCompatActivity {
 
         //Lấy dữ liệu từ trang Login qua
         Intent intent = getIntent();
-        int pk = intent.getIntExtra("phanquyen", 0);
+        int pk = intent.getIntExtra("phanquyen",0);
         email = intent.getStringExtra("Email");
         tentaikhoan = intent.getStringExtra("TaiKhoan");
-        Log.e("Test 1 ", pk + email + tentaikhoan);
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -94,7 +93,7 @@ public class Home extends AppCompatActivity {
         ActionBar();
         //Phương thức lấy ảnh để set lên viewpager
         mListPhoto = GetListPhoto();
-        photoAdater = new PhotoAdater(this, mListPhoto);
+        photoAdater = new PhotoAdater(this,mListPhoto);
         viewPager.setAdapter(photoAdater);
         //Hàm animation
         autoImage();
@@ -111,16 +110,17 @@ public class Home extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Thông Tin Cá Nhân
-                if (i == 0) {
+                if(i == 0) {
                     Intent intent = new Intent(Home.this, Layout_User.class);
                     startActivity(intent);
                 }
                 //Đăng bài
                 else if (i == 1) {
-                    if (pk == 1) {
-                        Intent intent1 = new Intent(Home.this, ThemTruyen.class);
+                    if(pk == 1) {
+                        Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
                         startActivity(intent1);
-                    } else {
+                    }
+                    else{
                         Toast.makeText(Home.this, "Bạn không có quyền đăng bài", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -136,7 +136,7 @@ public class Home extends AppCompatActivity {
                 }
                 //Đổi Mật Khẩu
                 else if (i == 4) {
-                    Intent intent = new Intent(Home.this, ChangePass.class);
+                    Intent intent = new Intent(Home.this,ChangePass.class);
                     startActivity(intent);
                 }
                 //Setting
@@ -151,13 +151,6 @@ public class Home extends AppCompatActivity {
                     startActivity(new Intent(Home.this, MainLogin.class));
                     finish();
                 }
-            }
-        });
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //DialogDelete(i);
-                return false;
             }
         });
     }
@@ -188,14 +181,14 @@ public class Home extends AppCompatActivity {
     }
 
     // Hiện các truyện
-    private void Init() {
+    public void Init() {
         Cursor cursor = dtbapp.getDataTruyen();
         tranhArrayList = new ArrayList<TruyenTranh>();
 
-        while (cursor.moveToNext()) {
-            TruyenTranh truyenTranh = new TruyenTranh();
+        while (cursor.moveToNext()){
+            TruyenTranh truyenTranh= new TruyenTranh();
             int id = cursor.getInt(0);
-            String Ten = cursor.getString(1);
+            String Ten =cursor.getString(1);
             String anh = cursor.getString(3);
             truyenTranh.setIdTruyen(id);
             truyenTranh.setTenTruyen(Ten);
@@ -205,14 +198,18 @@ public class Home extends AppCompatActivity {
         cursor.moveToFirst();
         //Thực hiện khi không sử dụng
         cursor.close();
-        adapter = new TruyenTranhAdapter(this, 0, tranhArrayList);
+        adapter = new TruyenTranhAdapter(this,0,tranhArrayList);
         gridView.setAdapter(adapter);
     }
-
     private void SetUp() {
         gridView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Init();
+    }
 
     //Phương thực gọi các biến
     private void AnhXa() {
@@ -228,22 +225,23 @@ public class Home extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawerlayout);
         //Thông tin
         usersArrayList = new ArrayList<>();
-        usersArrayList.add(new Users(tentaikhoan, email));
+        usersArrayList.add(new Users(tentaikhoan,email));
         ThongTinAdapter = new ThongTinAdapter(this, R.layout.navigation_thongtin, usersArrayList);
         listviewthongtin.setAdapter(ThongTinAdapter);
+
 
 
         //Chuyên mục
         navigationsArrayList = new ArrayList<>();
         navigationsArrayList.add(new ThongTin("Thông Tin", R.drawable.icon_login));
-        navigationsArrayList.add(new ThongTin("Đăng bài", R.drawable.icon_dangbai));
-        navigationsArrayList.add(new ThongTin("Ưa thích", R.drawable.baseline_favorite_red));
-        navigationsArrayList.add(new ThongTin("Thể Loại", R.drawable.icon_theloai));
-        navigationsArrayList.add(new ThongTin("Đổi mật khẩu", R.drawable.icon_doimatkhau));
-        navigationsArrayList.add(new ThongTin("Setting", R.drawable.icon_setting));
+        navigationsArrayList.add(new ThongTin("Đăng bài",R.drawable.icon_dangbai));
+        navigationsArrayList.add(new ThongTin("Ưa thích",R.drawable.baseline_favorite_red));
+        navigationsArrayList.add(new ThongTin("Thể Loại",R.drawable.icon_theloai));
+        navigationsArrayList.add(new ThongTin("Đổi mật khẩu",R.drawable.icon_doimatkhau));
+        navigationsArrayList.add(new ThongTin("Setting",R.drawable.icon_setting));
         navigationsArrayList.add(new ThongTin("Đăng Xuất", R.drawable.icon_logout));
 
-        NavigationAdapter = new NavigationAdapter(this, R.layout.layout_chuyenmuc, navigationsArrayList);
+        NavigationAdapter = new NavigationAdapter(this,R.layout.layout_chuyenmuc,navigationsArrayList);
         listviewmanhinhchinh.setAdapter(NavigationAdapter);
 
         //
@@ -300,11 +298,11 @@ public class Home extends AppCompatActivity {
 
 
     // Hình ảnh tự chuyển động
-    private void autoImage() {
-        if (mListPhoto == null || mListPhoto.isEmpty() || viewPager == null) {
+    private void autoImage(){
+        if(mListPhoto == null || mListPhoto.isEmpty() || viewPager == null) {
             return;
         }
-        if (mTimer == null) {
+        if(mTimer == null){
             mTimer = new Timer();
         }
 
@@ -315,28 +313,28 @@ public class Home extends AppCompatActivity {
                     @Override
                     public void run() {
                         int currentItem = viewPager.getCurrentItem();
-                        int totalItem = mListPhoto.size() - 1;
-                        if (currentItem < totalItem) {
+                        int totalItem = mListPhoto.size()-1;
+                        if(currentItem<totalItem) {
                             currentItem++;
                             viewPager.setCurrentItem(currentItem);
-                        } else {
+                        }
+                        else {
                             viewPager.setCurrentItem(0);
                         }
                     }
                 });
             }
-        }, 500, 3000);
+        },500,3000);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mTimer != null) {
+        if(mTimer != null) {
             mTimer.cancel();
             mTimer = null;
         }
     }
-}
 
     //Xóa truyện
 //    private void DialogDelete(int i){

@@ -185,9 +185,20 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add tapTruyen", "Thành Công" );
     }
-    public int Delete(TruyenTranh truyenTranh){
+    public void Delete(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
-        int res = db.delete(TABLE_TRUYEN, ID_TRUYEN + " = " + "'" + truyenTranh.getIdTruyen() + "'",null);
+        db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
+        db.close();
+    }
+    public long Edit(TruyenTranh truyenTranh){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TRUYEN, truyenTranh.getTenTruyen());
+        values.put(TAC_GIA, truyenTranh.getTacGia());
+        values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
+
+        long res = db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
+        db.close();
         return res;
     }
 }

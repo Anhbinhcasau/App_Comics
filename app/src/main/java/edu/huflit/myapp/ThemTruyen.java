@@ -1,15 +1,23 @@
 package edu.huflit.myapp;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
+import java.util.UUID;
 
 import edu.huflit.myapp.Model.TruyenTranh;
+import edu.huflit.myapp.Model.Users;
 import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
@@ -51,6 +59,9 @@ public class ThemTruyen extends AppCompatActivity {
                 else {
                     dbApp.Addtruyen(truyenTranh);
                     Toast.makeText(ThemTruyen.this, "Thêm truyện thành công!!", Toast.LENGTH_SHORT).show();
+                    //Intent i = new Intent(ThemTruyen.this,ThemTruyen.class);
+                    finish();
+                    //startActivity(i);
                 }
             }
         });
@@ -61,9 +72,16 @@ public class ThemTruyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-        int id = Integer.parseInt(edtIDTruyen.getText().toString());
 
-        TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
+        TruyenTranh truyenTranh = new TruyenTranh();
+
+        truyenTranh.setIdTruyen(id);
+        truyenTranh.setTenTruyen(tieuDe);
+        truyenTranh.setLinkAnh(img);
+        truyenTranh.setNoiDungTruyen(noiDung);
+        truyenTranh.setTacGia(tacGia);
+
         return truyenTranh;
     }
+
 }
