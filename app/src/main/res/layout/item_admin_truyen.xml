@@ -9,7 +9,7 @@
         android:id="@+id/imgTruyenAd"
         android:layout_width="50dp"
         android:layout_height="150dp"
-        android:scaleType="fitCenter"
+        android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_weight="1"
         android:layout_marginTop="2dp"

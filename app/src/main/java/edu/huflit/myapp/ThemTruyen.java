@@ -14,7 +14,7 @@ import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
 
-    EditText edtIDTruyen, edtTieuDe, edtNoiDung, edtIMG, edtTacGia;
+    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia;
     Button btnThem;
 
     dtbApp dbApp;

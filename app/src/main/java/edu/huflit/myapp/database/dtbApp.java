@@ -113,7 +113,7 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
+
 
 
 
@@ -126,7 +126,7 @@ public class dtbApp extends SQLiteOpenHelper {
 //        sqLiteDatabase.execSQL(SQLQuery5);
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
-        sqLiteDatabase.execSQL(SQLQuery8);
+//        sqLiteDatabase.execSQL(SQLQuery8);
 
     }
 
@@ -168,7 +168,7 @@ public class dtbApp extends SQLiteOpenHelper {
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TEN_TRUYEN,truyenTranh.getTenTruyen());
-        values.put(NOI_DUNG,truyenTranh.getTenChap());
+        values.put(NOI_DUNG,truyenTranh.getNoiDungTruyen());
         values.put(IMAGE,truyenTranh.getLinkAnh());
         values.put(TAC_GIA,truyenTranh.getTacGia());
 
