@@ -24,6 +24,7 @@ public class ThemTap extends AppCompatActivity {
     Button btnThem;
     EditText edtName, edtIMGnoiDung, edtIdTap;
     dtbApp dbApp;
+    private static int idtap = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +33,12 @@ public class ThemTap extends AppCompatActivity {
 
         btnThem = findViewById(R.id.btnThem);
         edtName = findViewById(R.id.edtTenTap);
-        edtIdTap = findViewById(R.id.edtIDtap);
         dbApp = new dtbApp(this);
 
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String tenTap = edtName.getText().toString();
-                int id = Integer.parseInt(edtIdTap.getText().toString());
 
                 TapTruyen tapTruyen = CreatTap();
 
@@ -61,9 +60,9 @@ public class ThemTap extends AppCompatActivity {
     }
     private TapTruyen CreatTap(){
         String tenTap = edtName.getText().toString();
-        int id = Integer.parseInt(edtIdTap.getText().toString());
-
-        TapTruyen tapTruyen = new TapTruyen(tenTap, id);
+        TapTruyen tapTruyen = new TapTruyen();
+        tapTruyen.setId(idtap);
+        tapTruyen.setTenTap(tenTap);
         return tapTruyen;
     }
 }

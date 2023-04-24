@@ -22,17 +22,16 @@ import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
 
-    EditText edtIDTruyen, edtTieuDe, edtNoiDung, edtIMG, edtTacGia;
+    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTenTap;
     Button btnThem;
-
     dtbApp dbApp;
+    private static int id = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_truyen);
 
-        edtIDTruyen = findViewById(R.id.edtIDTruyen);
         edtNoiDung = findViewById(R.id.edtNoiDungTruyen);
         edtTieuDe = findViewById(R.id.edtTieuDe);
         edtIMG = findViewById(R.id.edtIMG);
@@ -59,9 +58,9 @@ public class ThemTruyen extends AppCompatActivity {
                 else {
                     dbApp.Addtruyen(truyenTranh);
                     Toast.makeText(ThemTruyen.this, "Thêm truyện thành công!!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),Home.class);
+                    //Intent i = new Intent(ThemTruyen.this,ThemTruyen.class);
                     finish();
-                    startActivity(i);
+                    //startActivity(i);
                 }
             }
         });
@@ -72,9 +71,15 @@ public class ThemTruyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-        int id = Integer.parseInt(edtIDTruyen.getText().toString());
 
-        TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
+        TruyenTranh truyenTranh = new TruyenTranh();
+
+        truyenTranh.setIdTruyen(id);
+        truyenTranh.setTenTruyen(tieuDe);
+        truyenTranh.setLinkAnh(img);
+        truyenTranh.setNoiDungTruyen(noiDung);
+        truyenTranh.setTacGia(tacGia);
+
         return truyenTranh;
     }
 

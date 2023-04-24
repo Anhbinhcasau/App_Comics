@@ -4,6 +4,15 @@ public class TruyenTranh {
     private String tenTruyen;
     private String tenChap;
     private String LinkAnh;
+    private String noiDungTruyen;
+
+    public String getNoiDungTruyen() {
+        return noiDungTruyen;
+    }
+
+    public void setNoiDungTruyen(String noiDungTruyen) {
+        this.noiDungTruyen = noiDungTruyen;
+    }
 
     public String getTacGia() {
         return tacGia;
@@ -15,23 +24,24 @@ public class TruyenTranh {
 
     private String tacGia;
 
-    public Integer getIdTruyen() {
+    public int getIdTruyen() {
         return idTruyen;
     }
 
-    public TruyenTranh(String tenTruyen, String tenChap, String linkAnh, String tacGia, Integer idTruyen) {
+    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String linkAnh, String tacGia, int idTruyen) {
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
         LinkAnh = linkAnh;
         this.tacGia = tacGia;
         this.idTruyen = idTruyen;
+        this.noiDungTruyen = noiDungTruyen;
     }
 
-    public void setIdTruyen(Integer idTruyen) {
+    public void setIdTruyen(int idTruyen) {
         this.idTruyen = idTruyen;
     }
 
-    private Integer idTruyen;
+    private int idTruyen;
 
     public TruyenTranh() {
 

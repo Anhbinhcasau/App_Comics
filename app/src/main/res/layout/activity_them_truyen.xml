@@ -16,14 +16,6 @@
         android:text="THÊM TRUYỆN MỚI" />
 
     <EditText
-        android:id="@+id/edtIDTruyen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Id..."
-        android:inputType="number" />
-
-    <EditText
         android:id="@+id/edtTieuDe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
