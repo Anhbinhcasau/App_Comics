@@ -1,8 +1,12 @@
 package edu.huflit.myapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,25 +51,31 @@ public class MainDangKy extends AppCompatActivity {
                 String matkhau = edtmk.getText().toString();
                 String email = edtemail.getText().toString();
 
-                Users tk = CreatTK();
+                Cursor c = dtbApp.getData();
 
-                if(taikhoan.equals("") || matkhau.equals("") || email.equals(""))
-                {
-                    Toast.makeText(MainDangKy.this, "Hãy điền vào ô trống ", Toast.LENGTH_SHORT).show();
+                    while (c.moveToNext()){
+                        if(c.getString(1) == taikhoan) {
+                            if(taikhoan.equals("") || matkhau.equals("") || email.equals(""))
+                            {
+                                Toast.makeText(MainDangKy.this, "Hãy điền vào ô trống ", Toast.LENGTH_SHORT).show();
+
+                            }else {
+                                Toast.makeText(MainDangKy.this, "Có ròi tạo hoài@@", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        else {
+                            Users tk = CreatTK();
+                            dtbApp.Add(tk);
+                            Toast.makeText(MainDangKy.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(getApplicationContext(),MainLogin.class);
+                            startActivity(i);
+                        }
+                        Log.e(TAG, "onClick: " + c.getString(1) + taikhoan);
+                    }
                 }
-                else {
-                    dtbApp.Add(tk);
-                    Toast.makeText(MainDangKy.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),MainLogin.class);
-                    startActivity(i);
-                }
-            }
-        });
-
-    }
-
-
-
+            });
+        }
 
     private Users CreatTK() {
         String taikhoan = edttk.getText().toString();

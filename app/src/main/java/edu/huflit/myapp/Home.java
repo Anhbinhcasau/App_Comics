@@ -125,7 +125,7 @@ public class Home extends AppCompatActivity {
                 }
                 //Yêu thích
                 else if (i == 2) {
-                    Intent intent = new Intent(Home.this, Home_Detail.class);
+                    Intent intent = new Intent(Home.this, LayoutLike.class);
                     startActivity(intent);
                 }
                 //Thể Loại
@@ -148,6 +148,7 @@ public class Home extends AppCompatActivity {
                     editor.clear();
                     editor.apply();
                     startActivity(new Intent(Home.this, MainLogin.class));
+
                     finish();
                 }
             }
@@ -188,7 +189,7 @@ public class Home extends AppCompatActivity {
             TruyenTranh truyenTranh= new TruyenTranh();
             int id = cursor.getInt(0);
             String Ten =cursor.getString(1);
-            String anh = cursor.getString(3);
+            String anh = cursor.getString(4);
             truyenTranh.setIdTruyen(id);
             truyenTranh.setTenTruyen(Ten);
             truyenTranh.setLinkAnh(anh);
@@ -277,10 +278,12 @@ public class Home extends AppCompatActivity {
                     int idTruyen = cursor.getInt(0);
                     String Ten = cursor.getString(1);
                     String tomtat = cursor.getString(2);
-                    String anh = cursor.getString(3);
-                    String tacgia = cursor.getString(4);
+                    String theLoai = cursor.getString(3);
+                    String anh = cursor.getString(4);
+                    String tacgia = cursor.getString(5);
                     Intent i = new Intent(Home.this, Home_Detail.class);
                     i.putExtra("anh", anh);
+                    i.putExtra("theLoai", theLoai);
                     i.putExtra("Id", idTruyen);
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);

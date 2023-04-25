@@ -27,7 +27,7 @@ public class MainLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AnhXa();
+        AnhXaLogin();
 
         dtbApp = new dtbApp(this);
 
@@ -139,7 +139,7 @@ public class MainLogin extends AppCompatActivity {
     }
 
 
-    public void AnhXa() {
+    public void AnhXaLogin() {
         edtTK = findViewById(R.id.taikhoan);
         edtMK = findViewById(R.id.matkhau);
         btnDangNhap = findViewById(R.id.dangnhap);

@@ -2,50 +2,35 @@ package edu.huflit.myapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.adapter.AdminTruyenAdapter;
-import edu.huflit.myapp.adapter.TruyenTranhAdapter;
 import edu.huflit.myapp.database.dtbApp;
 
-public class LayoutAdmin extends AppCompatActivity {
-    Button btnThem;
-    public static ListView listView;
-    public static dtbApp dtbapp;
+public class LayoutLike extends AppCompatActivity {
+
+    ListView listView;
+    dtbApp dtbapp;
     ArrayList<TruyenTranh> tranhArrayList;
     AdminTruyenAdapter adapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_layout_admin);
-        dtbapp = new dtbApp(this);
+        setContentView(R.layout.activity_layout_like);
 
-        btnThem = findViewById(R.id.btnThemTruyen);
-        listView = findViewById(R.id.lvQuanLy);
+        listView = findViewById(R.id.lvyeuthich);
+        Uppppp();
 
-        btnThem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LayoutAdmin.this, ThemTruyen.class);
-                startActivity(i);
-            }
-        });
-        Init();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -58,7 +43,7 @@ public class LayoutAdmin extends AppCompatActivity {
                     String theLoai = cursor.getString(3);
                     String anh = cursor.getString(4);
                     String tacgia = cursor.getString(5);
-                    Intent a = new Intent(LayoutAdmin.this, Home_Detail.class);
+                    Intent a = new Intent(LayoutLike.this, Home_Detail.class);
                     a.putExtra("anh", anh);
                     a.putExtra("theLoai", theLoai);
                     a.putExtra("Id", idTruyen);
@@ -70,30 +55,9 @@ public class LayoutAdmin extends AppCompatActivity {
                 cursor.close();
             }
         });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(LayoutAdmin.this);
-                builder.setMessage("Bạn muốn xóa hay sửa truyện này?");
-                builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        // Xóa item tại vị trí position trong danh sách truyện
-                        dtbapp.Delete(tranhArrayList.get(i));
-                        tranhArrayList.remove(i);
-                        listView.invalidateViews();
-
-                        // Cập nhật lại dữ liệu và giao diện
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                builder.show();
-                return false;
-            }
-        });
     }
-    private void Init() {
+    //Hiện các truyện yêu thích
+    private void Uppppp() {
         Cursor cursor = dtbapp.getDataTruyen();
         tranhArrayList = new ArrayList<TruyenTranh>();
 
@@ -102,15 +66,20 @@ public class LayoutAdmin extends AppCompatActivity {
             int id = cursor.getInt(0);
             String Ten =cursor.getString(1);
             String anh = cursor.getString(4);
-            truyenTranh.setIdTruyen(id);
-            truyenTranh.setTenTruyen(Ten);
-            truyenTranh.setLinkAnh(anh);
-            tranhArrayList.add(truyenTranh);
+            int likeee = cursor.getInt(6);
+            if (likeee == 1){
+                truyenTranh.setIdTruyen(id);
+                truyenTranh.setTenTruyen(Ten);
+                truyenTranh.setLinkAnh(anh);
+                truyenTranh.setYeuThich(likeee);
+                tranhArrayList.add(truyenTranh);
+            }
         }
         cursor.moveToFirst();
         //Thực hiện khi không sử dụng
         cursor.close();
         adapter = new AdminTruyenAdapter(this,0,tranhArrayList);
         listView.setAdapter(adapter);
+
     }
 }

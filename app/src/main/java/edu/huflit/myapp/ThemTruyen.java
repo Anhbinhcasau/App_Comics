@@ -22,7 +22,7 @@ import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
 
-    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTenTap;
+    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTheloai;
     Button btnThem;
     dtbApp dbApp;
     private static int id = 1;
@@ -37,6 +37,7 @@ public class ThemTruyen extends AppCompatActivity {
         edtIMG = findViewById(R.id.edtIMG);
         btnThem = findViewById(R.id.btnThem);
         edtTacGia = findViewById(R.id.edtTacGia);
+        edtTheloai = findViewById(R.id.edtTheLoai);
 
         dbApp = new dtbApp(this);
 
@@ -71,12 +72,14 @@ public class ThemTruyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
+        String theLoai = edtTheloai.getText().toString();
 
         TruyenTranh truyenTranh = new TruyenTranh();
 
         truyenTranh.setIdTruyen(id);
         truyenTranh.setTenTruyen(tieuDe);
         truyenTranh.setLinkAnh(img);
+        truyenTranh.setThLoai(theLoai);
         truyenTranh.setNoiDungTruyen(noiDung);
         truyenTranh.setTacGia(tacGia);
 

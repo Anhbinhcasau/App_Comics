@@ -4,6 +4,16 @@ public class TruyenTranh {
     private String tenTruyen;
     private String tenChap;
     private String LinkAnh;
+
+    public String getThLoai() {
+        return thLoai;
+    }
+
+    public void setThLoai(String thLoai) {
+        this.thLoai = thLoai;
+    }
+
+    private String thLoai;
     private String noiDungTruyen;
 
     public String getNoiDungTruyen() {
@@ -28,13 +38,15 @@ public class TruyenTranh {
         return idTruyen;
     }
 
-    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String linkAnh, String tacGia, int idTruyen) {
+    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String thLoai, String linkAnh, String tacGia, int idTruyen, int yeuThich) {
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
         LinkAnh = linkAnh;
         this.tacGia = tacGia;
         this.idTruyen = idTruyen;
         this.noiDungTruyen = noiDungTruyen;
+        this.thLoai = thLoai;
+        this.yeuThich = yeuThich;
     }
 
     public void setIdTruyen(int idTruyen) {
@@ -42,6 +54,15 @@ public class TruyenTranh {
     }
 
     private int idTruyen;
+    private int yeuThich;
+
+    public int getYeuThich() {
+        return yeuThich;
+    }
+
+    public void setYeuThich(int yeuThich) {
+        this.yeuThich = yeuThich;
+    }
 
     public TruyenTranh() {
 

@@ -1,9 +1,13 @@
 package edu.huflit.myapp.adapter;
 
+
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.huflit.myapp.Home;
+import edu.huflit.myapp.LayoutAdmin;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.R;
 
@@ -45,7 +50,7 @@ public class AdminTruyenAdapter extends ArrayAdapter<TruyenTranh> {
             Glide.with(this.ct).load(truyenTranh.getLinkAnh()).into(imgTruyen);
         }
         return convertView;
-    }
 
+    }
 }
 

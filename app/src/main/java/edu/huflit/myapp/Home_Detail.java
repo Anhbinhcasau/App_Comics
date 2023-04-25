@@ -27,14 +27,15 @@ import edu.huflit.myapp.database.dtbApp;
 public class Home_Detail extends AppCompatActivity {
     Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue ;
     ImageButton mBntExt;
-    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
-    ImageView mImgFavorite, mImgRating, imgMain;
+    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor, tvCate;
+    public ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
     ArrayList<TruyenTranh> arrayListTruyen;
     dtbApp dtbapp;
 
     boolean hidden = true;
     boolean isColor = false;
+    int likeee = 0;
     String items[] = new String[] {};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +54,22 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic = findViewById(R.id.tvNameComic);
         tvNameAuthor = findViewById(R.id.tvNameAuthor);
         tvSummary = findViewById(R.id.tvSummary);
+        tvCate = findViewById(R.id.tvCategory);
+
         dtbapp = new dtbApp(this);
         TruyenTranh truyenTranh = new TruyenTranh();
 
         Intent intent = getIntent();
-        int IDtruyen = intent.getIntExtra("Id",0);
         String anh = intent.getStringExtra("anh");
         String ten = intent.getStringExtra("Ten");
+        String theLoai = intent.getStringExtra("theLoai");
         String tomTat  = intent.getStringExtra("tomtat");
         String tacgia = intent.getStringExtra("tacgia");
 
         tvNameComic.setText(ten);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
+        tvCate.setText(theLoai);
         Glide.with(this).load(anh).fitCenter().into(imgMain);
 
 
@@ -106,11 +110,14 @@ public class Home_Detail extends AppCompatActivity {
             public void onClick(View view) {
                 if(isColor){
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
+                    likeee = 1;
                     isColor = false;
                 }else {
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
+                    likeee = 0;
                     isColor = true;
                 }
+                adapter.notifyDataSetChanged();
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
