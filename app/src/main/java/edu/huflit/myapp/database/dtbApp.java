@@ -125,9 +125,12 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery);
         sqLiteDatabase.execSQL(SQLQuery1);
         sqLiteDatabase.execSQL(SQLQuery2);
+
         //sqLiteDatabase.execSQL(SQLQuery3);
         //sqLiteDatabase.execSQL(SQLQuery4);
         //sqLiteDatabase.execSQL(SQLQuery5);
+
+
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
         sqLiteDatabase.execSQL(SQLQuery8);
@@ -177,7 +180,7 @@ public class dtbApp extends SQLiteOpenHelper {
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TEN_TRUYEN,truyenTranh.getTenTruyen());
-        values.put(NOI_DUNG,truyenTranh.getTenChap());
+        values.put(NOI_DUNG,truyenTranh.getNoiDungTruyen());
         values.put(IMAGE,truyenTranh.getLinkAnh());
         values.put(TAC_GIA,truyenTranh.getTacGia());
 
@@ -194,9 +197,20 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add tapTruyen", "Thành Công" );
     }
-    public int Delete(TruyenTranh truyenTranh){
+    public void Delete(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
-        int res = db.delete(TABLE_TRUYEN, ID_TRUYEN + " = " + "'" + truyenTranh.getIdTruyen() + "'",null);
+        db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
+        db.close();
+    }
+    public long Edit(TruyenTranh truyenTranh){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TRUYEN, truyenTranh.getTenTruyen());
+        values.put(TAC_GIA, truyenTranh.getTacGia());
+        values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
+
+        long res = db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
+        db.close();
         return res;
     }
 }

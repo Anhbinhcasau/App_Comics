@@ -41,9 +41,9 @@ import edu.huflit.myapp.adapter.TruyenTranhAdapter;
 import edu.huflit.myapp.database.dtbApp;
 
 public class Home extends AppCompatActivity {
-    GridView gridView;
+    public static GridView gridView;
     TruyenTranhAdapter adapter;
-    ArrayList<TruyenTranh> tranhArrayList;
+    public static ArrayList<TruyenTranh> tranhArrayList;
 
     Toolbar toolbar;
 
@@ -71,8 +71,7 @@ public class Home extends AppCompatActivity {
     ThongTinAdapter ThongTinAdapter;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
-    dtbApp dtbapp;
-    Button btnYes, btnNo;
+    public static dtbApp dtbapp;
 
 
     @Override
@@ -117,7 +116,7 @@ public class Home extends AppCompatActivity {
                 //Đăng bài
                 else if (i == 1) {
                     if(pk == 1) {
-                        Intent intent1 = new Intent(Home.this, ThemTruyen.class);
+                        Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
                         startActivity(intent1);
                     }
                     else{
@@ -153,13 +152,6 @@ public class Home extends AppCompatActivity {
                 }
             }
         });
-        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                DialogDelete(i);
-                return false;
-            }
-        });
     }
 
     //Thiết lập icon thông qua drawerLayout
@@ -188,7 +180,7 @@ public class Home extends AppCompatActivity {
     }
 
     // Hiện các truyện
-    private void Init() {
+    public void Init() {
         Cursor cursor = dtbapp.getDataTruyen();
         tranhArrayList = new ArrayList<TruyenTranh>();
 
@@ -211,6 +203,11 @@ public class Home extends AppCompatActivity {
         gridView.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Init();
+    }
 
     //Phương thực gọi các biến
     private void AnhXa() {
@@ -245,9 +242,6 @@ public class Home extends AppCompatActivity {
         NavigationAdapter = new NavigationAdapter(this,R.layout.layout_chuyenmuc,navigationsArrayList);
         listviewmanhinhchinh.setAdapter(NavigationAdapter);
 
-        //
-        btnYes = findViewById(R.id.btnYes);
-        btnNo = findViewById(R.id.btnNo);
 
     }
 
@@ -343,6 +337,7 @@ public class Home extends AppCompatActivity {
         }
     }
 
+
     //Xóa truyện
     private void DialogDelete(int i){
         Dialog dialog = new Dialog(this);
@@ -371,4 +366,5 @@ public class Home extends AppCompatActivity {
         });
         dialog.show();
     }
+
 }

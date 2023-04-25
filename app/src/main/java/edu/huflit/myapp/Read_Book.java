@@ -3,12 +3,10 @@ package edu.huflit.myapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -57,6 +55,7 @@ public class Read_Book extends AppCompatActivity {
     String tenUser, tenTruyen, tap;
 
     Chapter_Adapter adapterChapter;
+    String[] items = new String[]{};
 
 
     @Override

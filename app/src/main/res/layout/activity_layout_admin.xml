@@ -5,19 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ThemTap">
+    tools:context=".LayoutAdmin">
 
-    <EditText
-        android:id="@+id/edtTenTap"
+    <TextView
+        android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="tap ???"
-        android:inputType="textPersonName" />
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:text="Quản lý " />
 
     <Button
-        android:id="@+id/btnThem"
+        android:id="@+id/btnThemTruyen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thêm" />
+        android:text="Thêm truyện" />
+
+    <ListView
+        android:id="@+id/lvQuanLy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>
