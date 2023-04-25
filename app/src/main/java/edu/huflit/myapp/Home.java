@@ -102,7 +102,7 @@ public class Home extends AppCompatActivity {
         SetUp();
         //Hàm tìm kiếm truyện
         SetClick();
-        sp = getSharedPreferences("Data", MODE_PRIVATE);
+        sp = getSharedPreferences("AutoLogin", MODE_PRIVATE);
         editor = sp.edit();
 
         listviewmanhinhchinh.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -194,7 +194,6 @@ public class Home extends AppCompatActivity {
             truyenTranh.setLinkAnh(anh);
             tranhArrayList.add(truyenTranh);
         }
-        cursor.moveToFirst();
         //Thực hiện khi không sử dụng
         cursor.close();
         adapter = new TruyenTranhAdapter(this,0,tranhArrayList);
@@ -284,6 +283,7 @@ public class Home extends AppCompatActivity {
                     i.putExtra("Id", idTruyen);
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);
+                    i.putExtra("TenUser", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     startActivity(i);
                 }
@@ -291,7 +291,12 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Init();
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+    }
 
     // Hình ảnh tự chuyển động
     private void autoImage(){
@@ -330,6 +335,36 @@ public class Home extends AppCompatActivity {
             mTimer.cancel();
             mTimer = null;
         }
+    }
+
+
+    //Xóa truyện
+    private void DialogDelete(int i){
+        Dialog dialog = new Dialog(this);
+
+        dialog.setContentView(R.layout.dialogdelete);
+        //khi click vào btnNo mới đóng dialog
+        dialog.setCanceledOnTouchOutside(false);
+
+        btnYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int idTruyen = tranhArrayList.get(i).getIdTruyen();
+                //dtbapp.Delete(idTruyen);
+
+                Intent i = new Intent(Home.this, Home.class);
+                finish();
+                startActivity(i);
+                Toast.makeText(Home.this, "Xóa truyện thành công!!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        btnNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+        dialog.show();
     }
 
 }

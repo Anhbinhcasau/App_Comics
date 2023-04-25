@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageMetadata;
@@ -45,11 +48,11 @@ public class Read_Book extends AppCompatActivity {
 
     private boolean hidden = true;
 
-    TextView tvNovel;
     ListView lvComic, mlvChapter;
     Button btnShowChapter, btnExit, btnThemTap;
     dtbApp dbApp;
     ArrayList<TapTruyen> tapTruyenArrayList;
+    String tenUser, tenTruyen, tap;
 
     Chapter_Adapter adapterChapter;
     String[] items = new String[]{};
@@ -60,49 +63,44 @@ public class Read_Book extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_book);
 
+        tenTruyen = getIntent().getStringExtra("TenTruyen");
+        tenUser = getIntent().getStringExtra("TenUser");
+        tap = Integer.toString(getIntent().getIntExtra("Tap", 0));
+        Toast.makeText(this, "Bạn đang xem truyên "+ tenTruyen+" Tập "+tap, Toast.LENGTH_SHORT).show();
+
+
+
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://truyen-9f7f6.appspot.com/");
-        StorageReference imageRef = storage.getReference().child("images");
+        StorageReference storageRef = storage.getReference().child(tenTruyen);
+        StorageReference imageRef = storageRef.child("Tập "+tap);
 
         imageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
-           @Override
-           public void onSuccess(ListResult listResult) {
-
-               List<StorageReference> imageRefs = listResult.getItems();
-               List<Bitmap> bitmaps = new ArrayList<>();
-               for (StorageReference imageRef : imageRefs) {
-                   imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-                       @Override
-                       public void onSuccess(byte[] bytes) {
-                           Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                           bitmaps.add(bitmap);
-                           if (bitmaps.size() == imageRefs.size()) {
-
-                               Image_Adapter adapterHinh = new Image_Adapter(Read_Book.this, bitmaps);
-                               lvComic.setAdapter(adapterHinh);
-                           }
-                       }
-                   }).addOnFailureListener(new OnFailureListener() {
-                       @Override
-                       public void onFailure(@NonNull Exception exception) {
-                           // Xử lý bất kỳ lỗi nào
-                       }
-                   });
-               }
-           }
-       }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Xử lý bất kỳ lỗi nào
+            public void onSuccess(ListResult listResult) {
+                List<StorageReference> imageRefs = listResult.getItems();
+                List<Task<byte[]>> tasks = new ArrayList<>();
+                for (StorageReference imageRef : imageRefs) {
+                    tasks.add(imageRef.getBytes(Long.MAX_VALUE));
+                }
+                Tasks.whenAllSuccess(tasks).addOnSuccessListener(new OnSuccessListener<List<Object>>() {
+                    @Override
+                    public void onSuccess(List<Object> objects) {
+                        List<Bitmap> bitmaps = new ArrayList<>();
+                        for (Object object : objects) {
+                            byte[] bytes = (byte[]) object;
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            bitmaps.add(bitmap);
+                        }
+                        Image_Adapter adapterHinh = new Image_Adapter(Read_Book.this, bitmaps);
+                        lvComic.setAdapter(adapterHinh);
+                    }
+                });
             }
         });
 
         btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
         btnExit = (Button) findViewById(R.id.btnExit);
         btnThemTap = findViewById(R.id.btnThemTap);
-
-
-
-
         btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
         btnExit = (Button) findViewById(R.id.btnExit);
         lvComic = findViewById(R.id.lvComic);
@@ -114,13 +112,6 @@ public class Read_Book extends AppCompatActivity {
 
 
         ArrayList arrChapter = new ArrayList<List_Chapter>();
-
-        for (int i = 0; i < items.length; i++) {
-            List_Chapter chapter = new List_Chapter(items[i]);
-            arrChapter.add(chapter);
-        }
-        ArrayAdapter adapterChapter = new Chapter_Adapter(this, R.layout.item_custom_list_view_chapter, arrChapter);
-        mlvChapter.setAdapter(adapterChapter);
 
         Init();
 
