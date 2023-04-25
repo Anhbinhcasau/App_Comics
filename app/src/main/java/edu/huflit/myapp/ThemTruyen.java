@@ -31,9 +31,7 @@ public class ThemTruyen extends AppCompatActivity {
     Button btnThem;
 
     ImageView imgTruyen;
-
-    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTenTap;
-    Button btnThem;
+    //Button btnThem;
     dtbApp dbApp;
     private static int id = 1;
 
@@ -41,15 +39,12 @@ public class ThemTruyen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_them_truyen);
-
         edtNoiDung = findViewById(R.id.edtNoiDungTruyen);
         edtTieuDe = findViewById(R.id.edtTieuDe);
         edtIMG = findViewById(R.id.edtIMG);
         btnThem = findViewById(R.id.btnThem);
         edtTacGia = findViewById(R.id.edtTacGia);
-
         dbApp = new dtbApp(this);
-
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,13 +61,7 @@ public class ThemTruyen extends AppCompatActivity {
                 else {
                     dbApp.Addtruyen(truyenTranh);
                     Toast.makeText(ThemTruyen.this, "Thêm truyện thành công!!", Toast.LENGTH_SHORT).show();
-
                     finish();
-
-                    //Intent i = new Intent(ThemTruyen.this,ThemTruyen.class);
-                    finish();
-                    //startActivity(i);
-
                 }
 //                FirebaseStorage storage = FirebaseStorage.getInstance("gs://truyen-9f7f6.appspot.com");
 //                StorageReference folderRef = storage.getReference().child(tieuDe);
@@ -91,16 +80,11 @@ public class ThemTruyen extends AppCompatActivity {
         Intent intent = getIntent();
         int id = intent.getIntExtra("Id",0);
         TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
-
-
-        TruyenTranh truyenTranh = new TruyenTranh();
-
         truyenTranh.setIdTruyen(id);
         truyenTranh.setTenTruyen(tieuDe);
         truyenTranh.setLinkAnh(img);
         truyenTranh.setNoiDungTruyen(noiDung);
         truyenTranh.setTacGia(tacGia);
-
 
         return truyenTranh;
     }

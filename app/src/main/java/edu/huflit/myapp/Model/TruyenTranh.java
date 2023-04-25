@@ -28,7 +28,7 @@ public class TruyenTranh {
         return idTruyen;
     }
 
-    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String linkAnh, String tacGia, int idTruyen) {
+    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String linkAnh, int idTruyen) {
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
         LinkAnh = linkAnh;

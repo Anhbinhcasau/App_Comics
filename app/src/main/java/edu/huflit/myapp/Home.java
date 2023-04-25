@@ -291,12 +291,6 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Init();
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-    }
 
     // Hình ảnh tự chuyển động
     private void autoImage(){
@@ -342,29 +336,29 @@ public class Home extends AppCompatActivity {
     private void DialogDelete(int i){
         Dialog dialog = new Dialog(this);
 
-        dialog.setContentView(R.layout.dialogdelete);
-        //khi click vào btnNo mới đóng dialog
-        dialog.setCanceledOnTouchOutside(false);
+//        dialog.setContentView(R.layout.dialogdelete);
+//        //khi click vào btnNo mới đóng dialog
+//        dialog.setCanceledOnTouchOutside(false);
 
-        btnYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int idTruyen = tranhArrayList.get(i).getIdTruyen();
-                //dtbapp.Delete(idTruyen);
-
-                Intent i = new Intent(Home.this, Home.class);
-                finish();
-                startActivity(i);
-                Toast.makeText(Home.this, "Xóa truyện thành công!!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        btnNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-        dialog.show();
+//        btnYes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                int idTruyen = tranhArrayList.get(i).getIdTruyen();
+//                //dtbapp.Delete(idTruyen);
+//
+//                Intent i = new Intent(Home.this, Home.class);
+//                finish();
+//                startActivity(i);
+//                Toast.makeText(Home.this, "Xóa truyện thành công!!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        btnNo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialog.cancel();
+//            }
+//        });
+        //dialog.show();
     }
 
 }
