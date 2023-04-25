@@ -65,7 +65,6 @@ public class ThemTruyen extends AppCompatActivity {
                 }
             }
         });
-
     }
     private TruyenTranh CreatTruyen(){
         String tieuDe = edtTieuDe.getText().toString();

@@ -12,7 +12,6 @@ import androidx.annotation.Nullable;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
-import kotlin.jvm.internal.PropertyReference0Impl;
 
 public class dtbApp extends SQLiteOpenHelper {
     // Bảng Tài Khoản
