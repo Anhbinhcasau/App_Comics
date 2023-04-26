@@ -49,24 +49,26 @@ public class Read_Book extends AppCompatActivity {
     private boolean hidden = true;
 
     ListView lvComic, mlvChapter;
-    Button btnShowChapter, btnExit, btnThemTap;
+    Button btnShowChapter, btnExit, btnThemTap,btnPreviousPage, btnNextPage;
     dtbApp dbApp;
     ArrayList<TapTruyen> tapTruyenArrayList;
     String tenUser, tenTruyen, tap;
+    int istap;
+    dtbApp dtbapp;
 
     Chapter_Adapter adapterChapter;
-    String[] items = new String[]{};
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_book);
+        dtbapp = new dtbApp(this);
 
         tenTruyen = getIntent().getStringExtra("TenTruyen");
         tenUser = getIntent().getStringExtra("TenUser");
         tap = Integer.toString(getIntent().getIntExtra("Tap", 0));
-        Toast.makeText(this, "Bạn đang xem truyên "+ tenTruyen+" Tập "+tap, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Bạn đang đọc truyên "+ tenTruyen+" Tập "+tap, Toast.LENGTH_SHORT).show();
 
 
 
@@ -98,23 +100,20 @@ public class Read_Book extends AppCompatActivity {
             }
         });
 
-        btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
-        btnExit = (Button) findViewById(R.id.btnExit);
         btnThemTap = findViewById(R.id.btnThemTap);
         btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
         btnExit = (Button) findViewById(R.id.btnExit);
+        btnNextPage = findViewById(R.id.btnNextPage);
+        btnPreviousPage = findViewById(R.id.btnPreviousPage);
         lvComic = findViewById(R.id.lvComic);
         rlTopBar = findViewById(R.id.rlTopBar);
         rlBottomBar= findViewById(R.id.rlBottomBar);
         mlvChapter = (ListView) findViewById(R.id.lvChapter);
-
         dbApp = new dtbApp(this);
 
 
         ArrayList arrChapter = new ArrayList<List_Chapter>();
-
         Init();
-
 
         btnShowChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +126,47 @@ public class Read_Book extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        //kiem tra neu la tap 1 thi an btnPreviousPage
+        int Tap = Integer.parseInt(tap);
+        if (Tap == 1){
+            btnPreviousPage.setVisibility(View.INVISIBLE);
+        }
+        btnPreviousPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int Tap = Integer.parseInt(tap);
+                Tap -= 1;
+                Intent i = new Intent(Read_Book.this, Read_Book.class);
+                i.putExtra("Tap", Tap);
+                i.putExtra("TenTruyen", tenTruyen);
+                i.putExtra("TenUser", tenUser);
+                startActivity(i);
+                finish();
+            }
+        });
+        btnNextPage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor cursor = dtbapp.getDataTap();
+                int Tap = Integer.parseInt(tap);
+                Tap += 1;
+                while (cursor.moveToNext()){
+                    istap = cursor.getInt(1);
+                }
+                istap +=1;
+                if (Tap != istap){
+                    Intent i = new Intent(Read_Book.this, Read_Book.class);
+                    i.putExtra("Tap", Tap);
+                    i.putExtra("TenTruyen", tenTruyen);
+                    i.putExtra("TenUser", tenUser);
+                    startActivity(i);
+                    finish();
+                } else {
+                Toast.makeText(Read_Book.this, "Bạn đang đọc tập mới nhất", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         lvComic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
