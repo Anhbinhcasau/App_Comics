@@ -165,16 +165,16 @@ public class Home_Detail extends AppCompatActivity {
         mlvChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = dtbapp.getDataTap();
+
+                Cursor cursor = dtbapp.getDataTapByIDTruyen(IDtruyen);
                 if (cursor.moveToPosition(position)){
                     int tenTap = Integer.parseInt(cursor.getString(1));
                     Intent i = new Intent(Home_Detail.this, Read_Book.class);
-                    i.putExtra("Tap",tenTap);
+                    i.putExtra("Tap", tenTap);
                     i.putExtra("TenTruyen", tenTruyen);
                     i.putExtra("TenUser", tenUser);
                     i.putExtra("phanquyen", pq);
                     i.putExtra("idTruyen", IDtruyen);
-
                     startActivity(i);
                 }
                 cursor.close();

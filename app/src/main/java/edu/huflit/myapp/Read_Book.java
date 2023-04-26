@@ -281,7 +281,7 @@ public class Read_Book extends AppCompatActivity {
         mlvChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = dtbapp.getDataTap();
+                Cursor cursor = dtbapp.getDataTapByIDTruyen(IDtruyen);
                 if (cursor.moveToPosition(position)) {
                     int tenTap = Integer.parseInt(cursor.getString(1));
                     Intent i = new Intent(Read_Book.this, Read_Book.class);
