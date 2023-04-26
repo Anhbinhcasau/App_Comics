@@ -113,4 +113,10 @@ public class LayoutAdmin extends AppCompatActivity {
         adapter = new AdminTruyenAdapter(this,0,tranhArrayList);
         listView.setAdapter(adapter);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Init();
+    }
 }

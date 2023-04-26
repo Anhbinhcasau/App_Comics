@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,6 +21,7 @@ import androidx.core.content.ContextCompat;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.huflit.myapp.Model.Dialog_rating;
 import edu.huflit.myapp.Model.TruyenTranh;
@@ -33,49 +35,59 @@ public class Home_Detail extends AppCompatActivity {
     ListView mlvChapter ;
     ArrayList<TruyenTranh> arrayListTruyen;
     dtbApp dtbapp;
+    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
+    int IDtruyen;
+
 
     boolean hidden = true;
     boolean isColor = false;
-    String items[] = new String[] {};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_detail);
-        mBtnSummary = (Button) findViewById(R.id.btnSummary);
-        mBtnChapter = (Button) findViewById(R.id.btnChapter);
-        mBtnComment = (Button) findViewById(R.id.btnComment);
-        mImgFavorite = (ImageView) findViewById(R.id.imgFavorite);
-        mImgRating = (ImageView) findViewById(R.id.imgRating);
-        mBtnContinue = (Button) findViewById(R.id.btnStart);
-        mBntExt = (ImageButton) findViewById(R.id.btnExt);
-        mTvSummary = (TextView) findViewById(R.id.tvSummary);
-        mlvChapter = (ListView) findViewById(R.id.lvchap);
-        imgMain = (ImageView) findViewById(R.id.imgMain);
-        tvNameComic = findViewById(R.id.tvNameComic);
-        tvNameAuthor = findViewById(R.id.tvNameAuthor);
-        tvSummary = findViewById(R.id.tvSummary);
-        tvCate = findViewById(R.id.tvCategory);
+
 
         dtbapp = new dtbApp(this);
         TruyenTranh truyenTranh = new TruyenTranh();
 
-        Intent intent = getIntent();
-        String anh = intent.getStringExtra("anh");
-        String ten = intent.getStringExtra("Ten");
-        String theLoai = intent.getStringExtra("theLoai");
-        String tomTat  = intent.getStringExtra("tomtat");
-        String tacgia = intent.getStringExtra("tacgia");
+        
 
         tvNameComic.setText(ten);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
         tvCate.setText(theLoai);
         Glide.with(this).load(anh).fitCenter().into(imgMain);
+        AnhXa();
 
 
 
+        IDtruyen = getIntent().getIntExtra("Id",0);
+        anhTruyen = getIntent().getStringExtra("anh");
+        tenTruyen = getIntent().getStringExtra("Ten");
+        tomTat  = getIntent().getStringExtra("tomtat");
+        tacgia = getIntent().getStringExtra("tacgia");
+        tenUser = getIntent().getStringExtra("TenUser");
+
+
+
+        Cursor cursor = dtbapp.getDataTap();
+        List<String> items = new ArrayList<String>();
+
+        while (cursor.moveToNext()){
+            int IdTruyen = Integer.parseInt(cursor.getString(2));
+            if (IdTruyen == IDtruyen){
+                String TenTap = Integer.toString(cursor.getInt(1));
+                items.add("Tập "+ TenTap);
+            }
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         mlvChapter.setAdapter(adapter);
+        ClickTap();
+
+        tvNameComic.setText(tenTruyen);
+        tvSummary.setText(tomTat);
+        tvNameAuthor.setText(tacgia);
+        Glide.with(this).load(anhTruyen).fitCenter().into(imgMain);
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +133,9 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Home_Detail.this, Read_Book.class );
+                i.putExtra("TenTruyen", tenTruyen);
+                i.putExtra("TenUser", tenUser);
+                i.putExtra("Tap", 1);
                 startActivity(i);
             }
         });
@@ -149,6 +164,40 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+    }
+    public void AnhXa(){
+        mBtnSummary = (Button) findViewById(R.id.btnSummary);
+        mBtnChapter = (Button) findViewById(R.id.btnChapter);
+        mBtnComment = (Button) findViewById(R.id.btnComment);
+        mImgFavorite = (ImageView) findViewById(R.id.imgFavorite);
+        mImgRating = (ImageView) findViewById(R.id.imgRating);
+        mBtnContinue = (Button) findViewById(R.id.btnStart);
+        mBntExt = (ImageButton) findViewById(R.id.btnExt);
+        mTvSummary = (TextView) findViewById(R.id.tvSummary);
+        mlvChapter = (ListView) findViewById(R.id.lvchap);
+        imgMain = (ImageView) findViewById(R.id.imgMain);
+        tvNameComic = findViewById(R.id.tvNameComic);
+        tvNameAuthor = findViewById(R.id.tvNameAuthor);
+        tvSummary = findViewById(R.id.tvSummary);
+        tvCate = findViewById(R.id.tvCategory);
+        dtbapp = new dtbApp(this);
+    }
+    public void ClickTap(){
+        mlvChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = dtbapp.getDataTap();
+                if (cursor.moveToPosition(position)){
+                    int tenTap = Integer.parseInt(cursor.getString(1));
+                    Intent i = new Intent(Home_Detail.this, Read_Book.class);
+                    i.putExtra("Tap",tenTap);
+                    i.putExtra("TenTruyen", tenTruyen);
+                    i.putExtra("TenUser", tenUser);
+                    startActivity(i);
+                }
+                cursor.close();
             }
         });
     }

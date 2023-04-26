@@ -38,7 +38,9 @@ public class TruyenTranh {
         return idTruyen;
     }
 
+
     public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String thLoai, String linkAnh, String tacGia, int idTruyen, int yeuThich) {
+
         this.tenTruyen = tenTruyen;
         this.tenChap = tenChap;
         LinkAnh = linkAnh;
