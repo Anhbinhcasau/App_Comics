@@ -197,6 +197,7 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(TEN_TRUYEN, truyenTranh.getTenTruyen());
         values.put(TAC_GIA, truyenTranh.getTacGia());
         values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
+        values.put(IMAGE,truyenTranh.getLinkAnh());
 
         long res = db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
