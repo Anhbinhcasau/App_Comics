@@ -118,6 +118,9 @@ public class Home extends AppCompatActivity {
                 else if (i == 1) {
                     if(pk == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
+                        tentaikhoan= getIntent().getStringExtra("TaiKhoan");
+                        int pk = getIntent().getIntExtra("phanquyen",0);
+                        email = getIntent().getStringExtra("Email");
                         startActivity(intent1);
                     }
                     else{

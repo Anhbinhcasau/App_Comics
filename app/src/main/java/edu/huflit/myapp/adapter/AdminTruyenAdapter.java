@@ -25,6 +25,7 @@ public class AdminTruyenAdapter extends ArrayAdapter<TruyenTranh> {
         super(context, resource, objects);
         this.ct=context;
         this.arrad = new ArrayList<>(objects);
+        notifyDataSetChanged();
     }
 
     @Override

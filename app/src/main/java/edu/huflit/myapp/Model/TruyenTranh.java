@@ -2,9 +2,17 @@ package edu.huflit.myapp.Model;
 
 public class TruyenTranh {
     private String tenTruyen;
-    private String tenChap;
     private String LinkAnh;
     private String noiDungTruyen;
+
+    public TruyenTranh(String tieuDe, String noiDung, String img, String tacGia, int id) {
+        this.tenTruyen = tieuDe;
+        this.LinkAnh = img;
+        this.tacGia = tacGia;
+        this.idTruyen = id;
+        this.noiDungTruyen = noiDung;
+    }
+
 
     public String getNoiDungTruyen() {
         return noiDungTruyen;
@@ -28,14 +36,8 @@ public class TruyenTranh {
         return idTruyen;
     }
 
-    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String linkAnh, int idTruyen) {
-        this.tenTruyen = tenTruyen;
-        this.tenChap = tenChap;
-        LinkAnh = linkAnh;
-        this.tacGia = tacGia;
-        this.idTruyen = idTruyen;
-        this.noiDungTruyen = noiDungTruyen;
-    }
+
+
 
     public void setIdTruyen(int idTruyen) {
         this.idTruyen = idTruyen;
@@ -54,13 +56,6 @@ public class TruyenTranh {
         this.tenTruyen = tenTruyen;
     }
 
-    public String getTenChap() {
-        return tenChap;
-    }
-
-    public void setTenChap(String tenChap) {
-        this.tenChap = tenChap;
-    }
 
     public String getLinkAnh() {
         return LinkAnh;

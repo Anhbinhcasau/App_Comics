@@ -18,12 +18,16 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.huflit.myapp.database.dtbApp;
+
 public class Layout_User extends AppCompatActivity {
     ImageView ava;
     ImageButton btnImg;
     EditText edtName, edtId, edtEmail;
     Button btnSave, btnUPa;
     ImageView imgAva;
+
+    dtbApp dtbApp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,15 @@ public class Layout_User extends AppCompatActivity {
         //Ẩn 2 button Up và Save ở chế độ xem
         btnSave.setVisibility(View.INVISIBLE);
         btnUPa.setVisibility(View.INVISIBLE);
+
+        dtbApp=new dtbApp(this);
+
+        String name= getIntent().getStringExtra("TaiKhoan");
+        edtName.setText(name);
+        int id = getIntent().getIntExtra("phanquyen",1);
+        edtId.setText(id);
+        String email= getIntent().getStringExtra("Email");
+        edtEmail.setText(email);
         //Nhấn đổi chế độ Edit
         btnImg.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

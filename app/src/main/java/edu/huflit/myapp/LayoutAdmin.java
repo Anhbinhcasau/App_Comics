@@ -56,11 +56,11 @@ public class LayoutAdmin extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         // Xóa item tại vị trí position trong danh sách truyện
                         dtbapp.Delete(tranhArrayList.get(i));
-                        tranhArrayList.remove(i);
                         listView.invalidateViews();
+                        Intent i = new Intent(LayoutAdmin.this,LayoutAdmin.class);
+                        startActivity(i);
 
                         // Cập nhật lại dữ liệu và giao diện
-                        adapter.notifyDataSetChanged();
                     }
                 });
                 builder.show();
@@ -78,7 +78,7 @@ public class LayoutAdmin extends AppCompatActivity {
                     String tomtat = cursor.getString(2);
                     String anh = cursor.getString(3);
                     String tacgia = cursor.getString(4);
-                    Intent a = new Intent(LayoutAdmin.this, Home_Detail.class);
+                    Intent a = new Intent(LayoutAdmin.this, update_truyen.class);
                     a.putExtra("anh", anh);
                     a.putExtra("Id", idTruyen);
                     a.putExtra("Ten", Ten);
