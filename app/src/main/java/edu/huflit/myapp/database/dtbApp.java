@@ -227,4 +227,12 @@ public class dtbApp extends SQLiteOpenHelper {
         db.close();
 
     }
+    public Cursor getDataTapByIDTruyen(int IDtruyen) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {ID_TAP, TEN_TAP, ID_TRUYEN};
+        String selection = "idtruyen = ?";
+        String[] selectionArgs = {String.valueOf(IDtruyen)};
+        Cursor cursor = db.query(TABLE_TAP, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
 }

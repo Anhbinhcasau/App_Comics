@@ -28,6 +28,7 @@ public class LayoutAdmin extends AppCompatActivity {
     dtbApp dtbapp;
     ArrayList<TruyenTranh> tranhArrayList;
     AdminTruyenAdapter adapter;
+    private boolean isLongClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,7 @@ public class LayoutAdmin extends AppCompatActivity {
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                isLongClick = true;
                 AlertDialog.Builder builder = new AlertDialog.Builder(LayoutAdmin.this);
                 builder.setMessage("Bạn muốn xóa hay sửa truyện này?");
                 builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
@@ -58,6 +60,7 @@ public class LayoutAdmin extends AppCompatActivity {
                         dtbapp.Delete(tranhArrayList.get(i));
                         listView.invalidateViews();
                         Intent i = new Intent(LayoutAdmin.this,LayoutAdmin.class);
+                        finish();
                         startActivity(i);
 
                         // Cập nhật lại dữ liệu và giao diện
@@ -70,23 +73,27 @@ public class LayoutAdmin extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Cursor cursor = dtbapp.getDataTruyen();
-                if (cursor.moveToPosition(i)) {
-                    // Di chuyển con trỏ đến vị trí item được chọn
-                    int idTruyen = cursor.getInt(0);
-                    String Ten = cursor.getString(1);
-                    String tomtat = cursor.getString(2);
-                    String anh = cursor.getString(3);
-                    String tacgia = cursor.getString(4);
-                    Intent a = new Intent(LayoutAdmin.this, update_truyen.class);
-                    a.putExtra("anh", anh);
-                    a.putExtra("Id", idTruyen);
-                    a.putExtra("Ten", Ten);
-                    a.putExtra("tomtat", tomtat);
-                    a.putExtra("tacgia", tacgia);
-                    startActivity(a);
+                if (!isLongClick) {
+                    isLongClick = false;
+                    Cursor cursor = dtbapp.getDataTruyen();
+                    if (cursor.moveToPosition(i)) {
+                        // Di chuyển con trỏ đến vị trí item được chọn
+                        int idTruyen = cursor.getInt(0);
+                        String Ten = cursor.getString(1);
+                        String tomtat = cursor.getString(2);
+                        String anh = cursor.getString(3);
+                        String tacgia = cursor.getString(4);
+                        Intent a = new Intent(LayoutAdmin.this, update_truyen.class);
+                        a.putExtra("anh", anh);
+                        a.putExtra("Id", idTruyen);
+                        a.putExtra("Ten", Ten);
+                        a.putExtra("tomtat", tomtat);
+                        a.putExtra("tacgia", tacgia);
+                        startActivity(a);
+                    }
+                    cursor.close();
                 }
-                cursor.close();
+
             }
         });
     }
