@@ -24,7 +24,7 @@ public class ThemTap extends AppCompatActivity {
     Button btnThem;
     EditText edtName, edtIMGnoiDung, edtIdTap;
     dtbApp dbApp;
-    private static int idtap = 2;
+    int idTruyen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +34,7 @@ public class ThemTap extends AppCompatActivity {
         btnThem = findViewById(R.id.btnThem);
         edtName = findViewById(R.id.edtTenTap);
         dbApp = new dtbApp(this);
+        idTruyen = getIntent().getIntExtra("idTruyen", 0);
 
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,19 +51,18 @@ public class ThemTap extends AppCompatActivity {
                 else {
                     dbApp.Addtap(tapTruyen);
                     Toast.makeText(ThemTap.this, "Thêm tập truyện thành công!!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(getApplicationContext(),ThemTap.class);
                     finish();
-                    startActivity(i);
+
                 }
             }
         });
 
     }
     private TapTruyen CreatTap(){
-        String tenTap = edtName.getText().toString();
+        int tenTap = Integer.parseInt(edtName.getText().toString());
         TapTruyen tapTruyen = new TapTruyen();
-        tapTruyen.setId(idtap);
         tapTruyen.setTenTap(tenTap);
+        tapTruyen.setIdTruyen(idTruyen);
         return tapTruyen;
     }
 }

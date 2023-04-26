@@ -33,10 +33,9 @@ public class Home_Detail extends AppCompatActivity {
     TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
     ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
-    ArrayList<TruyenTranh> arrayListTruyen;
     dtbApp dtbapp;
     String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
-    int IDtruyen;
+    int IDtruyen, pq;
 
 
     boolean hidden = true;
@@ -55,20 +54,10 @@ public class Home_Detail extends AppCompatActivity {
         tomTat  = getIntent().getStringExtra("tomtat");
         tacgia = getIntent().getStringExtra("tacgia");
         tenUser = getIntent().getStringExtra("TenUser");
+        pq = getIntent().getIntExtra("phanquyen", 0);
 
 
-        Cursor cursor = dtbapp.getDataTap();
-        List<String> items = new ArrayList<String>();
-
-        while (cursor.moveToNext()){
-            int IdTruyen = Integer.parseInt(cursor.getString(2));
-            if (IdTruyen == IDtruyen){
-                String TenTap = Integer.toString(cursor.getInt(1));
-                items.add("Tập "+ TenTap);
-            }
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        mlvChapter.setAdapter(adapter);
+        ShowTap();
         ClickTap();
 
         tvNameComic.setText(tenTruyen);
@@ -123,6 +112,8 @@ public class Home_Detail extends AppCompatActivity {
                 i.putExtra("TenTruyen", tenTruyen);
                 i.putExtra("TenUser", tenUser);
                 i.putExtra("Tap", 1);
+                i.putExtra("phanquyen", pq);
+                i.putExtra("idTruyen", IDtruyen);
                 startActivity(i);
             }
         });
@@ -181,10 +172,32 @@ public class Home_Detail extends AppCompatActivity {
                     i.putExtra("Tap",tenTap);
                     i.putExtra("TenTruyen", tenTruyen);
                     i.putExtra("TenUser", tenUser);
+                    i.putExtra("phanquyen", pq);
+                    i.putExtra("idTruyen", IDtruyen);
+
                     startActivity(i);
                 }
                 cursor.close();
             }
         });
+    }
+
+    public void  ShowTap(){
+        Cursor cursor = dtbapp.getDataTap();
+        List<String> items = new ArrayList<String>();
+        while (cursor.moveToNext()){
+            int IdTruyen = Integer.parseInt(cursor.getString(2));
+            if (IdTruyen == IDtruyen){
+                String TenTap = Integer.toString(cursor.getInt(1));
+                items.add("Tập "+ TenTap);
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        mlvChapter.setAdapter(adapter);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShowTap();
     }
 }

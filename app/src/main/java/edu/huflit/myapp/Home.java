@@ -72,6 +72,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     public static dtbApp dtbapp;
+    int pk;
 
 
     @Override
@@ -80,10 +81,10 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
-        Intent intent = getIntent();
-        int pk = intent.getIntExtra("phanquyen",0);
-        email = intent.getStringExtra("Email");
-        tentaikhoan = intent.getStringExtra("TaiKhoan");
+
+        pk = getIntent().getIntExtra("phanquyen",0);
+        email = getIntent().getStringExtra("Email");
+        tentaikhoan = getIntent().getStringExtra("TaiKhoan");
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -136,6 +137,7 @@ public class Home extends AppCompatActivity {
                 //Đổi Mật Khẩu
                 else if (i == 4) {
                     Intent intent = new Intent(Home.this,ChangePass.class);
+                    intent.putExtra("nameuser",tentaikhoan);
                     startActivity(intent);
                 }
                 //Setting
@@ -283,6 +285,7 @@ public class Home extends AppCompatActivity {
                     i.putExtra("Id", idTruyen);
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);
+                    i.putExtra("phanquyen", pk);
                     i.putExtra("TenUser", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     startActivity(i);
@@ -329,36 +332,6 @@ public class Home extends AppCompatActivity {
             mTimer.cancel();
             mTimer = null;
         }
-    }
-
-
-    //Xóa truyện
-    private void DialogDelete(int i){
-        Dialog dialog = new Dialog(this);
-
-//        dialog.setContentView(R.layout.dialogdelete);
-//        //khi click vào btnNo mới đóng dialog
-//        dialog.setCanceledOnTouchOutside(false);
-
-//        btnYes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                int idTruyen = tranhArrayList.get(i).getIdTruyen();
-//                //dtbapp.Delete(idTruyen);
-//
-//                Intent i = new Intent(Home.this, Home.class);
-//                finish();
-//                startActivity(i);
-//                Toast.makeText(Home.this, "Xóa truyện thành công!!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        btnNo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                dialog.cancel();
-//            }
-//        });
-        //dialog.show();
     }
 
 }

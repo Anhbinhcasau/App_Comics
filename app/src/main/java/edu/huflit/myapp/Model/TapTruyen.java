@@ -1,23 +1,38 @@
 package edu.huflit.myapp.Model;
 
 public class TapTruyen {
-    private String tenTap;
+    private Integer tenTap;
     private Integer Id;
 
-
-    public TapTruyen(String tenTap, int id) {
+    public TapTruyen(Integer tenTap, Integer id, Integer idTruyen) {
         this.tenTap = tenTap;
         Id = id;
+        IdTruyen = idTruyen;
     }
+
+
+    public Integer getIdTruyen() {
+        return IdTruyen;
+    }
+
+    public void setIdTruyen(Integer idTruyen) {
+        IdTruyen = idTruyen;
+    }
+
+    private Integer IdTruyen;
+
+
+
+
 
     public TapTruyen() {
     }
 
-    public String getTenTap() {
+    public Integer getTenTap() {
         return tenTap;
     }
 
-    public void setTenTap(String tenTap) {
+    public void setTenTap(Integer tenTap) {
         this.tenTap = tenTap;
     }
 
