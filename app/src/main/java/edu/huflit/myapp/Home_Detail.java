@@ -57,7 +57,6 @@ public class Home_Detail extends AppCompatActivity {
         tvCate = findViewById(R.id.tvCategory);
 
         dtbapp = new dtbApp(this);
-        TruyenTranh truyenTranh = new TruyenTranh();
 
         Intent intent = getIntent();
         String anh = intent.getStringExtra("anh");
@@ -66,16 +65,16 @@ public class Home_Detail extends AppCompatActivity {
         String tomTat  = intent.getStringExtra("tomtat");
         String tacgia = intent.getStringExtra("tacgia");
 
+
         tvNameComic.setText(ten);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
         tvCate.setText(theLoai);
         Glide.with(this).load(anh).fitCenter().into(imgMain);
 
-
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
         mlvChapter.setAdapter(adapter);
+
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,7 +108,9 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isColor){
+                    TruyenTranh truyenTranh = EditYThich();
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
+                    dtbapp.EditYT(truyenTranh);
                     isColor = false;
                 }else {
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
@@ -151,5 +152,13 @@ public class Home_Detail extends AppCompatActivity {
                 finish();
             }
         });
+    }
+    private TruyenTranh EditYThich(){
+
+        TruyenTranh truyenTranh = new TruyenTranh();
+
+        truyenTranh.setYeuThich(1);
+
+        return truyenTranh;
     }
 }

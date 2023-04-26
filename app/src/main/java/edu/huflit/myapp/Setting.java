@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -15,6 +16,7 @@ public class Setting extends AppCompatActivity {
     SeekBar sbarSize, sbarBright;
     Switch aSwitch;
     boolean nightMode;
+    TextView tvTT;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
@@ -59,7 +61,6 @@ public class Setting extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 float textSize = progress + 10;
-
             }
 
             @Override

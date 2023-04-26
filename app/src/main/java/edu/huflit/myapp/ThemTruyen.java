@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -22,9 +23,10 @@ import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
 
-    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTheloai;
+    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTheLoai;
     Button btnThem;
     dtbApp dbApp;
+    Spinner spinnerTl;
     private static int id = 1;
 
     @Override
@@ -37,7 +39,8 @@ public class ThemTruyen extends AppCompatActivity {
         edtIMG = findViewById(R.id.edtIMG);
         btnThem = findViewById(R.id.btnThem);
         edtTacGia = findViewById(R.id.edtTacGia);
-        edtTheloai = findViewById(R.id.edtTheLoai);
+        edtTheLoai = findViewById(R.id.edtTheLoai);
+        //spinnerTl = findViewById(R.id.spinner);
 
         dbApp = new dtbApp(this);
 
@@ -71,7 +74,7 @@ public class ThemTruyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-        String theLoai = edtTheloai.getText().toString();
+        String theLoai = edtTheLoai.getText().toString();
 
         TruyenTranh truyenTranh = new TruyenTranh();
 
@@ -81,6 +84,7 @@ public class ThemTruyen extends AppCompatActivity {
         truyenTranh.setThLoai(theLoai);
         truyenTranh.setNoiDungTruyen(noiDung);
         truyenTranh.setTacGia(tacGia);
+        truyenTranh.setYeuThich(0);
 
         return truyenTranh;
     }

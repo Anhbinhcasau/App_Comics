@@ -47,7 +47,9 @@ public class Like_Adapter extends ArrayAdapter<TruyenTranh> {
 
             tenTruyen.setText(truyenTranh.getTenTruyen());
             Glide.with(this.ct).load(truyenTranh.getLinkAnh()).into(imgTruyen);
+
             boolean isColor = false;
+
             imgYeuThich.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

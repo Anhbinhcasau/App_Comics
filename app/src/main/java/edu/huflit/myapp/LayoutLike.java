@@ -26,7 +26,7 @@ public class LayoutLike extends AppCompatActivity {
 
     ListView listView1;
     dtbApp dtbapp;
-    ArrayList<TruyenTranh> tranhArrayList;
+    public ArrayList<TruyenTranh> tranhArrayListYT;
     Like_Adapter adapter;
 
     @Override
@@ -40,7 +40,7 @@ public class LayoutLike extends AppCompatActivity {
 
         //Hiện các truyện yêu thích
         Cursor cursor = dtbapp.getDataTruyen();
-        tranhArrayList = new ArrayList<TruyenTranh>();
+        tranhArrayListYT = new ArrayList<TruyenTranh>();
 
         while (cursor.moveToNext()){
             if (cursor.getInt(6) == 1){
@@ -48,18 +48,16 @@ public class LayoutLike extends AppCompatActivity {
                 int id = cursor.getInt(0);
                 String Ten =cursor.getString(1);
                 String anh = cursor.getString(4);
-                int yt = cursor.getInt(6);
                 truyenTranh.setIdTruyen(id);
                 truyenTranh.setTenTruyen(Ten);
                 truyenTranh.setLinkAnh(anh);
-                truyenTranh.setYeuThich(yt);
-                tranhArrayList.add(truyenTranh);
+                tranhArrayListYT.add(truyenTranh);
             }
         }
         cursor.moveToFirst();
         //Thực hiện khi không sử dụng
         cursor.close();
-        adapter = new Like_Adapter(this, 0, tranhArrayList);
+        adapter = new Like_Adapter(this, 0, tranhArrayListYT);
         listView1.setAdapter(adapter);
 
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -70,11 +68,17 @@ public class LayoutLike extends AppCompatActivity {
                     // Di chuyển con trỏ đến vị trí item được chọn
                     int idTruyen = cursor.getInt(0);
                     String Ten = cursor.getString(1);
+                    String tomtat = cursor.getString(2);
+                    String theLoai = cursor.getString(3);
                     String anh = cursor.getString(4);
+                    String tacgia = cursor.getString(5);
                     Intent a = new Intent(LayoutLike.this, Home_Detail.class);
                     a.putExtra("anh", anh);
+                    a.putExtra("theLoai", theLoai);
                     a.putExtra("Id", idTruyen);
                     a.putExtra("Ten", Ten);
+                    a.putExtra("tomtat", tomtat);
+                    a.putExtra("tacgia", tacgia);
                     startActivity(a);
                 }
                 cursor.close();

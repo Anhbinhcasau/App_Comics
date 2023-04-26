@@ -93,6 +93,7 @@ public class LayoutAdmin extends AppCompatActivity {
             }
         });
     }
+    //Hiện các truyện
     private void Init() {
         Cursor cursor = dtbapp.getDataTruyen();
         tranhArrayList = new ArrayList<TruyenTranh>();
