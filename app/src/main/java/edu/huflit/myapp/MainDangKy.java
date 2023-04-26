@@ -51,31 +51,21 @@ public class MainDangKy extends AppCompatActivity {
                 String matkhau = edtmk.getText().toString();
                 String email = edtemail.getText().toString();
 
-                Cursor c = dtbApp.getData();
+                Users tk = CreatTK();
 
-                    while (c.moveToNext()){
-                        if(c.getString(1) == taikhoan) {
-                            if(taikhoan.equals("") || matkhau.equals("") || email.equals(""))
-                            {
-                                Toast.makeText(MainDangKy.this, "Hãy điền vào ô trống ", Toast.LENGTH_SHORT).show();
-
-                            }else {
-                                Toast.makeText(MainDangKy.this, "Có ròi tạo hoài@@", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        else {
-                            Users tk = CreatTK();
-                            dtbApp.Add(tk);
-                            Toast.makeText(MainDangKy.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(),MainLogin.class);
-                            startActivity(i);
-                        }
-                        Log.e(TAG, "onClick: " + c.getString(1) + taikhoan);
-                    }
+                if(taikhoan.equals("") || matkhau.equals("") || email.equals(""))
+                {
+                    Toast.makeText(MainDangKy.this, "Hãy điền vào ô trống ", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+                else {
+                    dtbApp.Add(tk);
+                    Toast.makeText(MainDangKy.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(getApplicationContext(),MainLogin.class);
+                    startActivity(i);
+                }
+            }
+        });
+    }
 
     private Users CreatTK() {
         String taikhoan = edttk.getText().toString();

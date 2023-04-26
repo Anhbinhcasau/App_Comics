@@ -15,39 +15,38 @@ import edu.huflit.myapp.Model.Users;
 
 public class dtbApp extends SQLiteOpenHelper {
     // Bảng Tài Khoản
-    private static String TABLE_TAIKHOAN = "taikhoan";
-    private static String ID_TAI_KHOAN = "idtaikhoan";
-    private static String TEN_TAI_KHOAN = "tentaikhoan";
-    private static String MAT_KHAU = "matkhau";
-    private static String PHAN_QUYEN = "phanquyen";
-    private static String EMAIL = "email";
-    private static int VERSION = 1;
+    private static String TABLE_TAIKHOAN = "TaiKhoan";
+    private static String ID_TAI_KHOAN = "idTaiKhoan";
+    private static String TEN_TAI_KHOAN = "TenTaiKhoan";
+    private static String MAT_KHAU = "MatKhau";
+    private static String PHAN_QUYEN = "PhanQuyen";
+    private static String EMAIL = "Email";
+    private static int VERSION = 8;
 
     // Bảng Truyện
-    private static String TABLE_TRUYEN = "truyen";
-    private static String ID_TRUYEN = "idtruyen";
-    private static String TEN_TRUYEN = "tieude";
-    private static String TAC_GIA = "tacgia";
-    private static String NOI_DUNG = "noidung";
-    private static String IMAGE = "anh";
-    private static String YEU_THICH = "yeuThich";
+    private static String TABLE_TRUYEN = "Truyen";
+    private static String ID_TRUYEN = "idTruyen";
+    private static String TEN_TRUYEN = "TieuDe";
+    private static String TAC_GIA = "TacGia";
+    private static String NOI_DUNG = "NoiDung";
+    private static String IMAGE = "IMG";
+    private static String YEU_THICH = "YeuThich";
     private static String THE_LOAI = "noiDungTheLoai";
 
     //Bảng Chapter
-    private static String TABLE_TAP = "tap";
+    private static String TABLE_TAP = "Tap";
     private static String ID_TAP = "idTap";
     private static String TEN_TAP = "tenTap";
-    private static String NOI_DUNG_TAP = "noiDungTap";
 
     //Bảng Comment
-    private static String TABLE_COMMENT = "comment";
+    private static String TABLE_COMMENT = "Comment";
     private static String ID_COMMENT = "idComment";
     private static String NOI_DUNG_COMMENT = "noiDungComment";
 
     //Bảng yêu tích
-    private static String TABLE_LIKE = "tblike";
+    private static String TABLE_LIKE = "tbLike";
     private static String ID_LIKE = "idLike";
-    private static String TRANGTHAI = "trangthai";
+    private static String TRANGTHAI = "TrangThai";
     //Bảng đánh giá
     private static String TABLE_RATING = "rating";
     private static String ID_RATING = "idRating";
@@ -63,14 +62,14 @@ public class dtbApp extends SQLiteOpenHelper {
 
 
     public dtbApp(@Nullable Context context) {
-        super(context, "App doc truyen", null, 4);
+        super(context, "AppDocTruyen", null, VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         // Tạo bảng Tài Khoản
-        String SQLQuery = "CREATE TABLE "+ TABLE_TAIKHOAN +" ( "
+        String SQLQuery = "CREATE TABLE "+ TABLE_TAIKHOAN + " ( "
                 +ID_TAI_KHOAN+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +TEN_TAI_KHOAN+" TEXT UNIQUE, "
                 +MAT_KHAU+" TEXT, "
@@ -121,19 +120,20 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        //String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1,1)";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@', 'tương lai','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
 
 
 
-        //Thực hiện các câu lệnh truy vấn không trả về kết quả
-        sqLiteDatabase.execSQL(SQLQuery);
-        sqLiteDatabase.execSQL(SQLQuery1);
-        sqLiteDatabase.execSQL(SQLQuery2);
-//        sqLiteDatabase.execSQL(SQLQuery3);
-//        sqLiteDatabase.execSQL(SQLQuery4);
-//        sqLiteDatabase.execSQL(SQLQuery5);
-        sqLiteDatabase.execSQL(SQLQuery6);
-        sqLiteDatabase.execSQL(SQLQuery7);
+//        Thực hiện các câu lệnh truy vấn không trả về kết quả
+//        sqLiteDatabase.execSQL(SQLQuery);
+//        sqLiteDatabase.execSQL(SQLQuery1);
+//        sqLiteDatabase.execSQL(SQLQuery2);
+////        sqLiteDatabase.execSQL(SQLQuery3);
+////        sqLiteDatabase.execSQL(SQLQuery4);
+////        sqLiteDatabase.execSQL(SQLQuery5);
+//        sqLiteDatabase.execSQL(SQLQuery6);
+//        sqLiteDatabase.execSQL(SQLQuery7);
+//        sqLiteDatabase.execSQL(SQLQuery8);
 
     }
 
@@ -206,6 +206,9 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(TEN_TRUYEN, truyenTranh.getTenTruyen());
         values.put(TAC_GIA, truyenTranh.getTacGia());
         values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
+        values.put(YEU_THICH, truyenTranh.getYeuThich());
+        values.put(THE_LOAI, truyenTranh.getThLoai());
+        values.put(IMAGE , truyenTranh.getLinkAnh());
 
         long res = db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();

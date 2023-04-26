@@ -1,6 +1,7 @@
 package edu.huflit.myapp;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -35,7 +36,6 @@ public class Home_Detail extends AppCompatActivity {
 
     boolean hidden = true;
     boolean isColor = false;
-    int likeee = 0;
     String items[] = new String[] {};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,14 +110,11 @@ public class Home_Detail extends AppCompatActivity {
             public void onClick(View view) {
                 if(isColor){
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
-                    likeee = 1;
                     isColor = false;
                 }else {
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
-                    likeee = 0;
                     isColor = true;
                 }
-                adapter.notifyDataSetChanged();
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {

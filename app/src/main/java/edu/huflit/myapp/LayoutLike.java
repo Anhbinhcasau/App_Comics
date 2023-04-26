@@ -1,13 +1,17 @@
 package edu.huflit.myapp;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -15,23 +19,50 @@ import java.util.ArrayList;
 
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.adapter.AdminTruyenAdapter;
+import edu.huflit.myapp.adapter.Like_Adapter;
 import edu.huflit.myapp.database.dtbApp;
 
 public class LayoutLike extends AppCompatActivity {
 
-    ListView listView;
+    ListView listView1;
     dtbApp dtbapp;
     ArrayList<TruyenTranh> tranhArrayList;
-    AdminTruyenAdapter adapter;
+    Like_Adapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_layout_like);
 
-        listView = findViewById(R.id.lvyeuthich);
-        Uppppp();
+        dtbapp = new dtbApp(this);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView1 = findViewById(R.id.lvyeuthich);
+
+        //Hiện các truyện yêu thích
+        Cursor cursor = dtbapp.getDataTruyen();
+        tranhArrayList = new ArrayList<TruyenTranh>();
+
+        while (cursor.moveToNext()){
+            if (cursor.getInt(6) == 1){
+                TruyenTranh truyenTranh= new TruyenTranh();
+                int id = cursor.getInt(0);
+                String Ten =cursor.getString(1);
+                String anh = cursor.getString(4);
+                int yt = cursor.getInt(6);
+                truyenTranh.setIdTruyen(id);
+                truyenTranh.setTenTruyen(Ten);
+                truyenTranh.setLinkAnh(anh);
+                truyenTranh.setYeuThich(yt);
+                tranhArrayList.add(truyenTranh);
+            }
+        }
+        cursor.moveToFirst();
+        //Thực hiện khi không sử dụng
+        cursor.close();
+        adapter = new Like_Adapter(this, 0, tranhArrayList);
+        listView1.setAdapter(adapter);
+
+        listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor cursor = dtbapp.getDataTruyen();
@@ -39,47 +70,15 @@ public class LayoutLike extends AppCompatActivity {
                     // Di chuyển con trỏ đến vị trí item được chọn
                     int idTruyen = cursor.getInt(0);
                     String Ten = cursor.getString(1);
-                    String tomtat = cursor.getString(2);
-                    String theLoai = cursor.getString(3);
                     String anh = cursor.getString(4);
-                    String tacgia = cursor.getString(5);
                     Intent a = new Intent(LayoutLike.this, Home_Detail.class);
                     a.putExtra("anh", anh);
-                    a.putExtra("theLoai", theLoai);
                     a.putExtra("Id", idTruyen);
                     a.putExtra("Ten", Ten);
-                    a.putExtra("tomtat", tomtat);
-                    a.putExtra("tacgia", tacgia);
                     startActivity(a);
                 }
                 cursor.close();
             }
         });
-    }
-    //Hiện các truyện yêu thích
-    private void Uppppp() {
-        Cursor cursor = dtbapp.getDataTruyen();
-        tranhArrayList = new ArrayList<TruyenTranh>();
-
-        while (cursor.moveToNext()){
-            TruyenTranh truyenTranh= new TruyenTranh();
-            int id = cursor.getInt(0);
-            String Ten =cursor.getString(1);
-            String anh = cursor.getString(4);
-            int likeee = cursor.getInt(6);
-            if (likeee == 1){
-                truyenTranh.setIdTruyen(id);
-                truyenTranh.setTenTruyen(Ten);
-                truyenTranh.setLinkAnh(anh);
-                truyenTranh.setYeuThich(likeee);
-                tranhArrayList.add(truyenTranh);
-            }
-        }
-        cursor.moveToFirst();
-        //Thực hiện khi không sử dụng
-        cursor.close();
-        adapter = new AdminTruyenAdapter(this,0,tranhArrayList);
-        listView.setAdapter(adapter);
-
     }
 }
