@@ -80,10 +80,9 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
-        Intent intent = getIntent();
-        int pk = intent.getIntExtra("phanquyen",0);
-        email = intent.getStringExtra("Email");
-        tentaikhoan = intent.getStringExtra("TaiKhoan");
+        tentaikhoan= getIntent().getStringExtra("TaiKhoan");
+        int pk = getIntent().getIntExtra("phanquyen",0);
+        email = getIntent().getStringExtra("Email");
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -117,6 +116,9 @@ public class Home extends AppCompatActivity {
                 else if (i == 1) {
                     if(pk == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
+                        tentaikhoan= getIntent().getStringExtra("TaiKhoan");
+                        int pk = getIntent().getIntExtra("phanquyen",0);
+                        email = getIntent().getStringExtra("Email");
                         startActivity(intent1);
                     }
                     else{

@@ -75,11 +75,7 @@ public class dtbApp extends SQLiteOpenHelper {
                 +TEN_TRUYEN+" TEXT UNIQUE, "
                 +NOI_DUNG+" TEXT, "
                 +IMAGE+" TEXT, "
-                +TAC_GIA+" TEXT, "
-                +ID_TAP+" INTEGER , FOREIGN KEY ( "
-                +ID_TAP +" ) REFERENCES "
-                +TABLE_TAP+"("
-                +ID_TAP+"))";
+                +TAC_GIA+" TEXT)";
 
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
@@ -202,7 +198,7 @@ public class dtbApp extends SQLiteOpenHelper {
         db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
         db.close();
     }
-    public long Edit(TruyenTranh truyenTranh){
+    public void Edit(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(TEN_TRUYEN, truyenTranh.getTenTruyen());
@@ -210,8 +206,7 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
         values.put(IMAGE,truyenTranh.getLinkAnh());
 
-        long res = db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
+        db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
-        return res;
     }
 }
