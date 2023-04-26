@@ -84,29 +84,29 @@ public class dtbApp extends SQLiteOpenHelper {
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
                 + ID_TAP+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +TEN_TAP+" TEXT UNIQUE, "
-                +NOI_DUNG_TAP+" TEXT UNIQUE, "
+                +TEN_TAP+" INTEGER, "
                 +ID_TRUYEN+" INTEGER, FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES "
                 +TABLE_TRUYEN+"(" + ID_TRUYEN +"))";
 
         //Tạo bảng Comment
-        String SQLQuery3 = "CREATE TABLE "+ TABLE_COMMENT +" ( "
-                +ID_COMMENT+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +NOI_DUNG_COMMENT+" TEXT UNIQUE, "
-                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
-                +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
+        //String SQLQuery3 = "CREATE TABLE "+ TABLE_COMMENT +" ( "
+        //        +ID_COMMENT+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+        //        +NOI_DUNG_COMMENT+" TEXT UNIQUE, "
+        //        +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+        //        +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
         //Tạo bảng yêu thích
-        String SQLQuery4 = "CREATE TABLE "+ TABLE_LIKE +" ( "
-                +ID_LIKE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
-                +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
+       // String SQLQuery4 = "CREATE TABLE "+ TABLE_LIKE +" ( "
+         //       +ID_LIKE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+
+           //     +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+           //     +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
         //Tạo bảng yêu thích
-        String SQLQuery5 = "CREATE TABLE "+ TABLE_RATING +" ( "
-                +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
-                +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
+        //String SQLQuery5 = "CREATE TABLE "+ TABLE_RATING +" ( "
+        //        +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+        //        +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+        //        +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
         //Insert Dữ Liệu vảo bảng người dùng
         //Phân quyền ( 1 - admin ) ( 2 - user)
@@ -114,6 +114,10 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
         String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
+        String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
+        String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
+        String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
+        String SQLQuery12 = "INSERT INTO Tap VALUES(null,4,1)";
 
 
 
@@ -121,12 +125,20 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery);
         sqLiteDatabase.execSQL(SQLQuery1);
         sqLiteDatabase.execSQL(SQLQuery2);
-//        sqLiteDatabase.execSQL(SQLQuery3);
-//        sqLiteDatabase.execSQL(SQLQuery4);
-//        sqLiteDatabase.execSQL(SQLQuery5);
+
+        //sqLiteDatabase.execSQL(SQLQuery3);
+        //sqLiteDatabase.execSQL(SQLQuery4);
+        //sqLiteDatabase.execSQL(SQLQuery5);
+
+
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
         sqLiteDatabase.execSQL(SQLQuery8);
+        sqLiteDatabase.execSQL(SQLQuery9);
+        sqLiteDatabase.execSQL(SQLQuery10);
+        sqLiteDatabase.execSQL(SQLQuery11);
+        sqLiteDatabase.execSQL(SQLQuery12);
+
 
     }
 
@@ -168,7 +180,7 @@ public class dtbApp extends SQLiteOpenHelper {
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TEN_TRUYEN,truyenTranh.getTenTruyen());
-        values.put(NOI_DUNG,truyenTranh.getTenChap());
+        values.put(NOI_DUNG,truyenTranh.getNoiDungTruyen());
         values.put(IMAGE,truyenTranh.getLinkAnh());
         values.put(TAC_GIA,truyenTranh.getTacGia());
 
@@ -181,7 +193,6 @@ public class dtbApp extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(TEN_TAP, tapTruyen.getTenTap());
         values.put(ID_TAP, tapTruyen.getId());
-
         dtb.insert(TABLE_TAP, null, values);
         dtb.close();
         Log.e("Add tapTruyen", "Thành Công" );
