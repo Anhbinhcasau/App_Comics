@@ -114,6 +114,11 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
         String SQLQuery12 = "INSERT INTO Tap VALUES(null,4,1)";
+        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio',1)";
+        String SQLQuery14 = "INSERT INTO Tap VALUES(null,1,0)";
+        String SQLQuery15 = "INSERT INTO Tap VALUES(null,2,0)";
+        String SQLQuery16 = "INSERT INTO Tap VALUES(null,3,0)";
+        String SQLQuery17 = "INSERT INTO Tap VALUES(null,4,0)";
 
 
 
@@ -134,7 +139,11 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery10);
         sqLiteDatabase.execSQL(SQLQuery11);
         sqLiteDatabase.execSQL(SQLQuery12);
-
+        sqLiteDatabase.execSQL(SQLQuery13);
+        sqLiteDatabase.execSQL(SQLQuery14);
+        sqLiteDatabase.execSQL(SQLQuery15);
+        sqLiteDatabase.execSQL(SQLQuery16);
+        sqLiteDatabase.execSQL(SQLQuery17);
 
     }
 
@@ -189,6 +198,7 @@ public class dtbApp extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(TEN_TAP, tapTruyen.getTenTap());
         values.put(ID_TAP, tapTruyen.getId());
+        values.put(ID_TRUYEN, tapTruyen.getIdTruyen());
         dtb.insert(TABLE_TAP, null, values);
         dtb.close();
         Log.e("Add tapTruyen", "Thành Công" );
@@ -208,5 +218,13 @@ public class dtbApp extends SQLiteOpenHelper {
 
         db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
+    }
+    public void ChangePass(Users taikhoan) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(MAT_KHAU, taikhoan.getMatkhau());
+        db.update(TABLE_TAIKHOAN,values,TEN_TAI_KHOAN +" = " + taikhoan.getTenTaiKhoan(), null);
+        db.close();
+
     }
 }
