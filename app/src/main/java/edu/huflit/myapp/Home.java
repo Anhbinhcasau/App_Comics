@@ -72,6 +72,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     public static dtbApp dtbapp;
+    int pk;
 
 
     @Override
@@ -80,10 +81,10 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
-        Intent intent = getIntent();
-        int pk = intent.getIntExtra("phanquyen",0);
-        email = intent.getStringExtra("Email");
-        tentaikhoan = intent.getStringExtra("TaiKhoan");
+
+        pk = getIntent().getIntExtra("phanquyen",0);
+        email = getIntent().getStringExtra("Email");
+        tentaikhoan = getIntent().getStringExtra("TaiKhoan");
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -117,6 +118,9 @@ public class Home extends AppCompatActivity {
                 else if (i == 1) {
                     if(pk == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
+                        tentaikhoan= getIntent().getStringExtra("TaiKhoan");
+                        int pk = getIntent().getIntExtra("phanquyen",0);
+                        email = getIntent().getStringExtra("Email");
                         startActivity(intent1);
                     }
                     else{
@@ -125,7 +129,7 @@ public class Home extends AppCompatActivity {
                 }
                 //Yêu thích
                 else if (i == 2) {
-                    Intent intent = new Intent(Home.this, LayoutLike.class);
+                    Intent intent = new Intent(Home.this, Home_Detail.class);
                     startActivity(intent);
                 }
                 //Thể Loại
@@ -136,6 +140,7 @@ public class Home extends AppCompatActivity {
                 //Đổi Mật Khẩu
                 else if (i == 4) {
                     Intent intent = new Intent(Home.this,ChangePass.class);
+                    intent.putExtra("nameuser",tentaikhoan);
                     startActivity(intent);
                 }
                 //Setting
@@ -148,7 +153,6 @@ public class Home extends AppCompatActivity {
                     editor.clear();
                     editor.apply();
                     startActivity(new Intent(Home.this, MainLogin.class));
-
                     finish();
                 }
             }
@@ -189,7 +193,7 @@ public class Home extends AppCompatActivity {
             TruyenTranh truyenTranh= new TruyenTranh();
             int id = cursor.getInt(0);
             String Ten =cursor.getString(1);
-            String anh = cursor.getString(4);
+            String anh = cursor.getString(3);
             truyenTranh.setIdTruyen(id);
             truyenTranh.setTenTruyen(Ten);
             truyenTranh.setLinkAnh(anh);
@@ -277,15 +281,14 @@ public class Home extends AppCompatActivity {
                     int idTruyen = cursor.getInt(0);
                     String Ten = cursor.getString(1);
                     String tomtat = cursor.getString(2);
-                    String theLoai = cursor.getString(3);
-                    String anh = cursor.getString(4);
-                    String tacgia = cursor.getString(5);
+                    String anh = cursor.getString(3);
+                    String tacgia = cursor.getString(4);
                     Intent i = new Intent(Home.this, Home_Detail.class);
                     i.putExtra("anh", anh);
-                    i.putExtra("theLoai", theLoai);
                     i.putExtra("Id", idTruyen);
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);
+                    i.putExtra("phanquyen", pk);
                     i.putExtra("TenUser", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     startActivity(i);
@@ -333,4 +336,5 @@ public class Home extends AppCompatActivity {
             mTimer = null;
         }
     }
+
 }

@@ -23,11 +23,12 @@ import edu.huflit.myapp.adapter.TruyenTranhAdapter;
 import edu.huflit.myapp.database.dtbApp;
 
 public class LayoutAdmin extends AppCompatActivity {
-    Button btnThem;
-    public static ListView listView;
-    public static dtbApp dtbapp;
+    Button btnThem, btnYes, btnNo;
+    ListView listView;
+    dtbApp dtbapp;
     ArrayList<TruyenTranh> tranhArrayList;
     AdminTruyenAdapter adapter;
+    private boolean isLongClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,54 +47,56 @@ public class LayoutAdmin extends AppCompatActivity {
             }
         });
         Init();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Cursor cursor = dtbapp.getDataTruyen();
-                if (cursor.moveToPosition(i)) {
-                    // Di chuyển con trỏ đến vị trí item được chọn
-                    int idTruyen = cursor.getInt(0);
-                    String Ten = cursor.getString(1);
-                    String tomtat = cursor.getString(2);
-                    String theLoai = cursor.getString(3);
-                    String anh = cursor.getString(4);
-                    String tacgia = cursor.getString(5);
-                    Intent a = new Intent(LayoutAdmin.this, Home_Detail.class);
-                    a.putExtra("anh", anh);
-                    a.putExtra("theLoai", theLoai);
-                    a.putExtra("Id", idTruyen);
-                    a.putExtra("Ten", Ten);
-                    a.putExtra("tomtat", tomtat);
-                    a.putExtra("tacgia", tacgia);
-                    startActivity(a);
-                }
-                cursor.close();
-            }
-        });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                isLongClick = true;
                 AlertDialog.Builder builder = new AlertDialog.Builder(LayoutAdmin.this);
                 builder.setMessage("Bạn muốn xóa hay sửa truyện này?");
                 builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
                         // Xóa item tại vị trí position trong danh sách truyện
                         dtbapp.Delete(tranhArrayList.get(i));
-                        tranhArrayList.remove(i);
                         listView.invalidateViews();
+                        Intent i = new Intent(LayoutAdmin.this,LayoutAdmin.class);
+                        finish();
+                        startActivity(i);
 
                         // Cập nhật lại dữ liệu và giao diện
-                        adapter.notifyDataSetChanged();
                     }
                 });
                 builder.show();
                 return false;
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!isLongClick) {
+                    isLongClick = false;
+                    Cursor cursor = dtbapp.getDataTruyen();
+                    if (cursor.moveToPosition(i)) {
+                        // Di chuyển con trỏ đến vị trí item được chọn
+                        int idTruyen = cursor.getInt(0);
+                        String Ten = cursor.getString(1);
+                        String tomtat = cursor.getString(2);
+                        String anh = cursor.getString(3);
+                        String tacgia = cursor.getString(4);
+                        Intent a = new Intent(LayoutAdmin.this, update_truyen.class);
+                        a.putExtra("anh", anh);
+                        a.putExtra("Id", idTruyen);
+                        a.putExtra("Ten", Ten);
+                        a.putExtra("tomtat", tomtat);
+                        a.putExtra("tacgia", tacgia);
+                        startActivity(a);
+                    }
+                    cursor.close();
+                }
+
+            }
+        });
     }
-    //Hiện các truyện
     private void Init() {
         Cursor cursor = dtbapp.getDataTruyen();
         tranhArrayList = new ArrayList<TruyenTranh>();
@@ -102,7 +105,7 @@ public class LayoutAdmin extends AppCompatActivity {
             TruyenTranh truyenTranh= new TruyenTranh();
             int id = cursor.getInt(0);
             String Ten =cursor.getString(1);
-            String anh = cursor.getString(4);
+            String anh = cursor.getString(3);
             truyenTranh.setIdTruyen(id);
             truyenTranh.setTenTruyen(Ten);
             truyenTranh.setLinkAnh(anh);

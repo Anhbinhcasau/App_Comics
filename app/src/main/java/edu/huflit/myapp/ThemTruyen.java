@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.storage.FirebaseStorage;
@@ -27,15 +26,13 @@ import edu.huflit.myapp.database.dtbApp;
 
 public class ThemTruyen extends AppCompatActivity {
 
-    EditText edtTieuDe, edtNoiDung, edtIMG, edtTacGia, edtTheloai;
 
-
+    EditText  edtTieuDe, edtNoiDung, edtIMG, edtTacGia;
     Button btnThem;
 
     ImageView imgTruyen;
     //Button btnThem;
     dtbApp dbApp;
-    Spinner spinnerTl;
     private static int id = 1;
 
     @Override
@@ -47,11 +44,6 @@ public class ThemTruyen extends AppCompatActivity {
         edtIMG = findViewById(R.id.edtIMG);
         btnThem = findViewById(R.id.btnThem);
         edtTacGia = findViewById(R.id.edtTacGia);
-        //spinnerTl = findViewById(R.id.spinner);
-
-        edtTheloai = findViewById(R.id.edtTheLoai);
-
-
         dbApp = new dtbApp(this);
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,18 +76,15 @@ public class ThemTruyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtIMG.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-        String theLoai = edtTheloai.getText().toString();
 
         Intent intent = getIntent();
         int id = intent.getIntExtra("Id",0);
-        TruyenTranh truyenTranh = new TruyenTranh();
+        TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung, img, tacGia, id);
         truyenTranh.setIdTruyen(id);
         truyenTranh.setTenTruyen(tieuDe);
         truyenTranh.setLinkAnh(img);
-        truyenTranh.setThLoai(theLoai);
         truyenTranh.setNoiDungTruyen(noiDung);
         truyenTranh.setTacGia(tacGia);
-        truyenTranh.setYeuThich(0);
 
         return truyenTranh;
     }

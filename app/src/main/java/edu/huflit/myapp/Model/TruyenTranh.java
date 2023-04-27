@@ -2,19 +2,17 @@ package edu.huflit.myapp.Model;
 
 public class TruyenTranh {
     private String tenTruyen;
-    private String tenChap;
     private String LinkAnh;
-
-    public String getThLoai() {
-        return thLoai;
-    }
-
-    public void setThLoai(String thLoai) {
-        this.thLoai = thLoai;
-    }
-
-    private String thLoai;
     private String noiDungTruyen;
+
+    public TruyenTranh(String tieuDe, String noiDung, String img, String tacGia, int id) {
+        this.tenTruyen = tieuDe;
+        this.LinkAnh = img;
+        this.tacGia = tacGia;
+        this.idTruyen = id;
+        this.noiDungTruyen = noiDung;
+    }
+
 
     public String getNoiDungTruyen() {
         return noiDungTruyen;
@@ -39,32 +37,13 @@ public class TruyenTranh {
     }
 
 
-    public TruyenTranh(String tenTruyen, String tenChap, String noiDungTruyen, String thLoai, String linkAnh, String tacGia, int idTruyen, int yeuThich) {
 
-        this.tenTruyen = tenTruyen;
-        this.tenChap = tenChap;
-        LinkAnh = linkAnh;
-        this.tacGia = tacGia;
-        this.idTruyen = idTruyen;
-        this.noiDungTruyen = noiDungTruyen;
-        this.thLoai = thLoai;
-        this.yeuThich = yeuThich;
-    }
 
     public void setIdTruyen(int idTruyen) {
         this.idTruyen = idTruyen;
     }
 
     private int idTruyen;
-    private int yeuThich;
-
-    public int getYeuThich() {
-        return yeuThich;
-    }
-
-    public void setYeuThich(int yeuThich) {
-        this.yeuThich = yeuThich;
-    }
 
     public TruyenTranh() {
 
@@ -77,13 +56,6 @@ public class TruyenTranh {
         this.tenTruyen = tenTruyen;
     }
 
-    public String getTenChap() {
-        return tenChap;
-    }
-
-    public void setTenChap(String tenChap) {
-        this.tenChap = tenChap;
-    }
 
     public String getLinkAnh() {
         return LinkAnh;

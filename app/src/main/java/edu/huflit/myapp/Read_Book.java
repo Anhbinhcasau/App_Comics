@@ -6,7 +6,9 @@ import android.graphics.BitmapFactory;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,8 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -29,6 +33,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,32 +54,47 @@ public class Read_Book extends AppCompatActivity {
     private boolean hidden = true;
 
     ListView lvComic, mlvChapter;
-    Button btnShowChapter, btnExit, btnThemTap,btnPreviousPage, btnNextPage;
-    dtbApp dbApp;
-    ArrayList<TapTruyen> tapTruyenArrayList;
+    Button btnShowChapter, btnExit, btnThemTap,btnPreviousPage, btnNextPage, btnThemAnh, btnRefresh;
+
     String tenUser, tenTruyen, tap;
-    int istap;
+    int istap, pq, Tap, IDtruyen;
     dtbApp dtbapp;
 
-    Chapter_Adapter adapterChapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_read_book);
-        dtbapp = new dtbApp(this);
+        AnhXa();
 
+        pq = getIntent().getIntExtra("phanquyen",0);
         tenTruyen = getIntent().getStringExtra("TenTruyen");
         tenUser = getIntent().getStringExtra("TenUser");
         tap = Integer.toString(getIntent().getIntExtra("Tap", 0));
-        Toast.makeText(this, "Bạn đang đọc truyên "+ tenTruyen+" Tập "+tap, Toast.LENGTH_SHORT).show();
+        IDtruyen = getIntent().getIntExtra("idTruyen", 0);
+
+        ShowTap();
+        Toast.makeText(this, "Bạn đang đọc truyên "+ tenTruyen+" Tập "+ tap, Toast.LENGTH_SHORT).show();
 
 
+        if (pq == 1){
+            btnThemAnh.setVisibility(View.VISIBLE);
+            btnThemTap.setVisibility(View.VISIBLE);
+        }else{
+            btnThemAnh.setVisibility(View.INVISIBLE);
+            btnThemTap.setVisibility(View.GONE);
+        }
+        btnThemAnh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickImages();
+            }
+        });
 
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://truyen-9f7f6.appspot.com/");
         StorageReference storageRef = storage.getReference().child(tenTruyen);
-        StorageReference imageRef = storageRef.child("Tập "+tap);
+        StorageReference imageRef = storageRef.child("Tập " + tap);
 
         imageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
@@ -99,22 +119,7 @@ public class Read_Book extends AppCompatActivity {
                 });
             }
         });
-
-        btnThemTap = findViewById(R.id.btnThemTap);
-        btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
-        btnExit = (Button) findViewById(R.id.btnExit);
-        btnNextPage = findViewById(R.id.btnNextPage);
-        btnPreviousPage = findViewById(R.id.btnPreviousPage);
-        lvComic = findViewById(R.id.lvComic);
-        rlTopBar = findViewById(R.id.rlTopBar);
-        rlBottomBar= findViewById(R.id.rlBottomBar);
-        mlvChapter = (ListView) findViewById(R.id.lvChapter);
-        dbApp = new dtbApp(this);
-
-
-        ArrayList arrChapter = new ArrayList<List_Chapter>();
-        Init();
-
+        ClickTap();
         btnShowChapter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,7 +134,7 @@ public class Read_Book extends AppCompatActivity {
             }
         });
         //kiem tra neu la tap 1 thi an btnPreviousPage
-        int Tap = Integer.parseInt(tap);
+        Tap = Integer.parseInt(tap);
         if (Tap == 1){
             btnPreviousPage.setVisibility(View.INVISIBLE);
         }
@@ -142,6 +147,8 @@ public class Read_Book extends AppCompatActivity {
                 i.putExtra("Tap", Tap);
                 i.putExtra("TenTruyen", tenTruyen);
                 i.putExtra("TenUser", tenUser);
+                i.putExtra("phanquyen", pq);
+                i.putExtra("idTruyen", IDtruyen);
                 startActivity(i);
                 finish();
             }
@@ -153,7 +160,10 @@ public class Read_Book extends AppCompatActivity {
                 int Tap = Integer.parseInt(tap);
                 Tap += 1;
                 while (cursor.moveToNext()){
-                    istap = cursor.getInt(1);
+                    int IdTruyen = Integer.parseInt(cursor.getString(2));
+                    if (IdTruyen == IDtruyen){
+                        istap = cursor.getInt(1);
+                    }
                 }
                 istap +=1;
                 if (Tap != istap){
@@ -161,14 +171,30 @@ public class Read_Book extends AppCompatActivity {
                     i.putExtra("Tap", Tap);
                     i.putExtra("TenTruyen", tenTruyen);
                     i.putExtra("TenUser", tenUser);
+                    i.putExtra("phanquyen", pq);
+                    i.putExtra("idTruyen", IDtruyen);
                     startActivity(i);
                     finish();
                 } else {
-                Toast.makeText(Read_Book.this, "Bạn đang đọc tập mới nhất", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Read_Book.this, "Bạn đang đọc tập mới nhất", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+        btnRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Read_Book.this, Read_Book.class);
+                i.putExtra("Tap", Tap);
+                i.putExtra("TenTruyen", tenTruyen);
+                i.putExtra("TenUser", tenUser);
+                i.putExtra("phanquyen", pq);
+                i.putExtra("idTruyen", IDtruyen);
+                startActivity(i);
+                finish();
+            }
+        });
+
         lvComic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             private static final long DOUBLE_CLICK_TIME_DELTA = 300; //Thời gian giữa 2 lần click (0.3s)
             private long lastClickTime = 0; // Khởi tạo giá trị bằng 0
@@ -177,6 +203,12 @@ public class Read_Book extends AppCompatActivity {
                 // gán thời gian hiện tại
                 long clickTime = System.currentTimeMillis();
                 if(clickTime - lastClickTime <= DOUBLE_CLICK_TIME_DELTA){
+                    if (hidden && pq == 1){
+                        btnThemAnh.setVisibility(View.INVISIBLE);
+                    }
+                    else if(hidden == false && pq == 1){
+                        btnThemAnh.setVisibility(View.VISIBLE);
+                    }
                     if(hidden){
                         rlBottomBar.setVisibility(View.INVISIBLE);
                         rlTopBar.setVisibility(View.INVISIBLE);
@@ -194,29 +226,94 @@ public class Read_Book extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Read_Book.this, ThemTap.class);
+                i.putExtra("idTruyen", IDtruyen);
                 startActivity(i);
             }
         });
     }
-    //hiện các tập
-    private void Init() {
-        Cursor cursor = dbApp.getDataTap();
-        tapTruyenArrayList = new ArrayList<TapTruyen>();
-
-        while (cursor.moveToNext()){
-            TapTruyen tapTruyen = new TapTruyen();
-            int id = cursor.getInt(0);
-            String Ten = cursor.getString(1);
-            tapTruyen.setId(id);
-            tapTruyen.setTenTap(Ten);
-
-            tapTruyenArrayList.add(tapTruyen);
-        }
-        cursor.moveToFirst();
-        //Thực hiện khi không sử dụng
-        cursor.close();
-        adapterChapter = new Chapter_Adapter(this,0, tapTruyenArrayList);
-        mlvChapter.setAdapter(adapterChapter);
+    public void AnhXa(){
+        btnThemTap = findViewById(R.id.btnThemTap);
+        btnThemAnh = findViewById(R.id.btnThemAnh);
+        btnShowChapter = (Button) findViewById(R.id.btnShowChapter);
+        btnExit = (Button) findViewById(R.id.btnExit);
+        btnNextPage = findViewById(R.id.btnNextPage);
+        btnPreviousPage = findViewById(R.id.btnPreviousPage);
+        btnRefresh = findViewById(R.id.btnRefresh);
+        lvComic = findViewById(R.id.lvComic);
+        rlTopBar = findViewById(R.id.rlTopBar);
+        rlBottomBar= findViewById(R.id.rlBottomBar);
+        mlvChapter = (ListView) findViewById(R.id.lvChapter);
+        dtbapp = new dtbApp(this);
+    }
+    private static final int REQUEST_CODE_PICK_IMAGES = 101;
+    private void pickImages() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Cho phép chọn nhiều ảnh
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGES);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_PICK_IMAGES && resultCode == RESULT_OK) {
+            if (data.getClipData() != null) { // Nếu người dùng đã chọn nhiều ảnh
+                int count = data.getClipData().getItemCount();
+                for (int i = 0; i < count; i++) {
+                    Uri imageUri = data.getClipData().getItemAt(i).getUri();
+                    uploadImageToFirebase(imageUri); // Tải từng ảnh lên Firebase Storage
+                }
+            } else if (data.getData() != null) { // Nếu người dùng chỉ chọn một ảnh
+                Uri imageUri = data.getData();
+                uploadImageToFirebase(imageUri); // Tải ảnh lên Firebase Storage
+            }
+        }
+    }
+
+    private void uploadImageToFirebase(Uri imageUri) {
+        FirebaseStorage storage = FirebaseStorage.getInstance("gs://truyen-9f7f6.appspot.com/");
+        StorageReference storageRef = storage.getReference().child(tenTruyen);
+        StorageReference imageRef = storageRef.child("Tập "+tap+"/" + imageUri.getLastPathSegment());
+        imageRef.putFile(imageUri);
+    }
+    public void ClickTap() {
+        mlvChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = dtbapp.getDataTapByIDTruyen(IDtruyen);
+                if (cursor.moveToPosition(position)) {
+                    int tenTap = Integer.parseInt(cursor.getString(1));
+                    Intent i = new Intent(Read_Book.this, Read_Book.class);
+                    i.putExtra("Tap", tenTap);
+                    i.putExtra("TenTruyen", tenTruyen);
+                    i.putExtra("TenUser", tenUser);
+                    i.putExtra("phanquyen", pq);
+                    i.putExtra("idTruyen", IDtruyen);
+                    finish();
+                    startActivity(i);
+                }
+                cursor.close();
+            }
+        });
+    }
+    public void ShowTap(){
+        Cursor cursor = dtbapp.getDataTap();
+        List<String> items = new ArrayList<String>();
+        while (cursor.moveToNext()){
+            int IdTruyen = Integer.parseInt(cursor.getString(2));
+            if (IdTruyen == IDtruyen){
+                String TenTap = Integer.toString(cursor.getInt(1));
+                items.add("Tập "+ TenTap);
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        mlvChapter.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShowTap();
+    }
 }

@@ -14,7 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -31,13 +30,12 @@ import edu.huflit.myapp.database.dtbApp;
 public class Home_Detail extends AppCompatActivity {
     Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue ;
     ImageButton mBntExt;
-    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor, tvCate;
-    public ImageView mImgFavorite, mImgRating, imgMain;
+    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
+    ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
-    ArrayList<TruyenTranh> arrayListTruyen;
     dtbApp dtbapp;
     String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
-    int IDtruyen;
+    int IDtruyen, pq;
 
 
     boolean hidden = true;
@@ -46,11 +44,8 @@ public class Home_Detail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_detail);
-
-
-        dtbapp = new dtbApp(this);
-
         AnhXa();
+
 
 
         IDtruyen = getIntent().getIntExtra("Id",0);
@@ -59,27 +54,16 @@ public class Home_Detail extends AppCompatActivity {
         tomTat  = getIntent().getStringExtra("tomtat");
         tacgia = getIntent().getStringExtra("tacgia");
         tenUser = getIntent().getStringExtra("TenUser");
+        pq = getIntent().getIntExtra("phanquyen", 0);
 
 
-        Cursor cursor = dtbapp.getDataTap();
-        List<String> items = new ArrayList<String>();
-
-        while (cursor.moveToNext()){
-            int IdTruyen = Integer.parseInt(cursor.getString(2));
-            if (IdTruyen == IDtruyen){
-                String TenTap = Integer.toString(cursor.getInt(1));
-                items.add("Tập "+ TenTap);
-            }
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
-        mlvChapter.setAdapter(adapter);
+        ShowTap();
         ClickTap();
 
         tvNameComic.setText(tenTruyen);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
         Glide.with(this).load(anhTruyen).fitCenter().into(imgMain);
-
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +99,6 @@ public class Home_Detail extends AppCompatActivity {
                 if(isColor){
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
                     isColor = false;
-                    Toast.makeText(Home_Detail.this, "Thêm chuyện yêu thích thành công", Toast.LENGTH_SHORT).show();
                 }else {
                     mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
                     isColor = true;
@@ -129,6 +112,8 @@ public class Home_Detail extends AppCompatActivity {
                 i.putExtra("TenTruyen", tenTruyen);
                 i.putExtra("TenUser", tenUser);
                 i.putExtra("Tap", 1);
+                i.putExtra("phanquyen", pq);
+                i.putExtra("idTruyen", IDtruyen);
                 startActivity(i);
             }
         });
@@ -174,24 +159,45 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic = findViewById(R.id.tvNameComic);
         tvNameAuthor = findViewById(R.id.tvNameAuthor);
         tvSummary = findViewById(R.id.tvSummary);
-        tvCate = findViewById(R.id.tvCategory);
         dtbapp = new dtbApp(this);
     }
     public void ClickTap(){
         mlvChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = dtbapp.getDataTap();
+
+                Cursor cursor = dtbapp.getDataTapByIDTruyen(IDtruyen);
                 if (cursor.moveToPosition(position)){
                     int tenTap = Integer.parseInt(cursor.getString(1));
                     Intent i = new Intent(Home_Detail.this, Read_Book.class);
-                    i.putExtra("Tap",tenTap);
+                    i.putExtra("Tap", tenTap);
                     i.putExtra("TenTruyen", tenTruyen);
                     i.putExtra("TenUser", tenUser);
+                    i.putExtra("phanquyen", pq);
+                    i.putExtra("idTruyen", IDtruyen);
                     startActivity(i);
                 }
                 cursor.close();
             }
         });
+    }
+
+    public void  ShowTap(){
+        Cursor cursor = dtbapp.getDataTap();
+        List<String> items = new ArrayList<String>();
+        while (cursor.moveToNext()){
+            int IdTruyen = Integer.parseInt(cursor.getString(2));
+            if (IdTruyen == IDtruyen){
+                String TenTap = Integer.toString(cursor.getInt(1));
+                items.add("Tập "+ TenTap);
+            }
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, items);
+        mlvChapter.setAdapter(adapter);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ShowTap();
     }
 }
