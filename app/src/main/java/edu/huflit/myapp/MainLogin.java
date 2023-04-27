@@ -42,8 +42,8 @@ public class MainLogin extends AppCompatActivity {
 
         Cursor cursor = dtbApp.getData();
 
-        sp = getSharedPreferences("Data", MODE_PRIVATE );
-        rmb = getSharedPreferences("Data1", MODE_PRIVATE );
+        sp = getSharedPreferences("AutoLogin", MODE_PRIVATE );
+        rmb = getSharedPreferences("SaveUser", MODE_PRIVATE );
 
         editor = sp.edit();
         rmbEditor = rmb.edit();

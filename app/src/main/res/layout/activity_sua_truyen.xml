@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:textColor="@color/teal_200"
-        android:text="SỬA THÔNG TIN TRUYỆN" />
+        android:text="Cập nhật lại truyện" />
 
     <EditText
-        android:id="@+id/edtTieuDe"
+        android:id="@+id/edtSuaTieuDe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,22 +24,15 @@
         android:hint="Tiêu đề truyện..." />
 
     <EditText
-        android:id="@+id/edtNoiDungTruyen"
+        android:id="@+id/edtSuaNoiDung"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:inputType="text"
+        android:gravity="left|top"
         android:hint="Nội dung truyện..."/>
 
     <EditText
-        android:id="@+id/edtTheLoai"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Thể loại truyện" />
-
-    <EditText
-        android:id="@+id/edtTacGia"
+        android:id="@+id/edtSuaTacGia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -47,7 +40,7 @@
         android:hint="Tac gia" />
 
     <EditText
-        android:id="@+id/edtIMG"
+        android:id="@+id/edtSuaIMG"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -60,11 +53,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnThem"
+            android:id="@+id/btnUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Xác nhận sửa thông tin" />
+            android:text="Update" />
     </LinearLayout>
-
 </LinearLayout>

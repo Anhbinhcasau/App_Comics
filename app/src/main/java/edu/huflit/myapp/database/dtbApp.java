@@ -84,7 +84,7 @@ public class dtbApp extends SQLiteOpenHelper {
                 +THE_LOAI+" TEXT, "
                 +IMAGE+" TEXT, "
                 +TAC_GIA+" TEXT, "
-                +YEU_THICH+" INTEGER)";
+                +YEU_THICH+" INTEGER )";
 
 
         //Tạo bảng tập Truyện
@@ -105,34 +105,37 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery4 = "CREATE TABLE "+ TABLE_LIKE +" ( "
                 +ID_LIKE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +TRANGTHAI+ " INTEGER, "
+                +ID_TRUYEN+ " INTEGER, "
                 +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+                +ID_TAI_KHOAN+ " INTEGER, "
                 +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
-        //Tạo bảng đánh giá
+        //Tạo bảng yêu thích
         String SQLQuery5 = "CREATE TABLE "+ TABLE_RATING +" ( "
                 +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
                 +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
-        //Tạo bảng thể loại
-        String SQLQuery9 = "CREATE TABLE "+ TABLE_THELOAI +" ( "
-                +ID_THELOAI+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +THE_LOAI + " TEXT)";
 
         //Insert Dữ Liệu vảo bảng người dùng
         //Phân quyền ( 1 - admin ) ( 2 - user)
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@', 'tương lai','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
+
+
+
 //        Thực hiện các câu lệnh truy vấn không trả về kết quả
-//        sqLiteDatabase.execSQL(SQLQuery);
-//        sqLiteDatabase.execSQL(SQLQuery1);
-//        sqLiteDatabase.execSQL(SQLQuery2);
-////        sqLiteDatabase.execSQL(SQLQuery3);
-////        sqLiteDatabase.execSQL(SQLQuery4);
-//        sqLiteDatabase.execSQL(SQLQuery9);
-//        sqLiteDatabase.execSQL(SQLQuery6);
-//        sqLiteDatabase.execSQL(SQLQuery7);
+        sqLiteDatabase.execSQL(SQLQuery);
+        sqLiteDatabase.execSQL(SQLQuery1);
+        sqLiteDatabase.execSQL(SQLQuery2);
+//        sqLiteDatabase.execSQL(SQLQuery3);
+//        sqLiteDatabase.execSQL(SQLQuery4);
+//        sqLiteDatabase.execSQL(SQLQuery5);
+        sqLiteDatabase.execSQL(SQLQuery6);
+        sqLiteDatabase.execSQL(SQLQuery7);
+        sqLiteDatabase.execSQL(SQLQuery8);
 
     }
 
@@ -199,26 +202,26 @@ public class dtbApp extends SQLiteOpenHelper {
         db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" +truyenTranh.getIdTruyen() + "'",null);
         db.close();
     }
-    public long Edit(TruyenTranh truyenTranh){
+    public void Edit(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(TEN_TRUYEN, truyenTranh.getTenTruyen());
         values.put(TAC_GIA, truyenTranh.getTacGia());
         values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
         values.put(YEU_THICH, truyenTranh.getYeuThich());
+        values.put(THE_LOAI, truyenTranh.getThLoai());
         values.put(IMAGE , truyenTranh.getLinkAnh());
 
-        long res = db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
+        db.update(TABLE_TRUYEN, values, ID_TRUYEN + " = " + truyenTranh.getIdTruyen(),null);
         db.close();
-        return res;
     }
     public void EditYT(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
-
+        values.put(ID_TRUYEN, truyenTranh.getIdTruyen());
         values.put(YEU_THICH, truyenTranh.getYeuThich());
 
-        db.update(TABLE_TRUYEN, values, ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
+        db.insert(TABLE_TRUYEN,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), values);
         db.close();
     }
 }
