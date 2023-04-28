@@ -77,6 +77,7 @@ public class dtbApp extends SQLiteOpenHelper {
                 +IMAGE+" TEXT, "
                 +TAC_GIA+" TEXT)";
 
+
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
                 + ID_TAP+" INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -109,12 +110,12 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio')";
         String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
         String SQLQuery12 = "INSERT INTO Tap VALUES(null,4,1)";
-        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio',1)";
+        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio')";
         String SQLQuery14 = "INSERT INTO Tap VALUES(null,1,0)";
         String SQLQuery15 = "INSERT INTO Tap VALUES(null,2,0)";
         String SQLQuery16 = "INSERT INTO Tap VALUES(null,3,0)";
@@ -168,7 +169,7 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
         return res;
     }
-    // Hàm add vào dtb khi user tạo tài khoản thành công
+    // Them User
     public void Add(Users taikhoan){
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -193,6 +194,8 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
     }
+
+    //Them tap moi
     public void Addtap(TapTruyen tapTruyen){
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -203,11 +206,16 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add tapTruyen", "Thành Công" );
     }
+
+    //Xoa truyen ( Check ID trong table truyen de xoa truyen )
     public void Delete(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
         db.close();
     }
+
+
+    //Update lai truyen moi
     public void Edit(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
@@ -219,6 +227,8 @@ public class dtbApp extends SQLiteOpenHelper {
         db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
     }
+
+    //Thay doi mat khau
     public void ChangePass(Users taikhoan) {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
@@ -227,10 +237,12 @@ public class dtbApp extends SQLiteOpenHelper {
         db.close();
 
     }
+
+    //Lay tap co ID truyen tuong ung
     public Cursor getDataTapByIDTruyen(int IDtruyen) {
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {ID_TAP, TEN_TAP, ID_TRUYEN};
-        String selection = "idtruyen = ?";
+        String selection = "idtruyen = ?"; //Check ID
         String[] selectionArgs = {String.valueOf(IDtruyen)};
         Cursor cursor = db.query(TABLE_TAP, columns, selection, selectionArgs, null, null, null);
         return cursor;

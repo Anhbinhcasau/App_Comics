@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="text"
-        android:hint="Tiêu đề truyện..." />
+        android:hint="Tiêu đề truyện..."/>
 
     <EditText
         android:id="@+id/edtSuaNoiDung"

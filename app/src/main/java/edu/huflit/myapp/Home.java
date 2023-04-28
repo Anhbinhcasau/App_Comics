@@ -71,8 +71,8 @@ public class Home extends AppCompatActivity {
     ThongTinAdapter ThongTinAdapter;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
-    public static dtbApp dtbapp;
-    int pk;
+    dtbApp dtbapp;
+    int pk,id;
 
 
     @Override
@@ -82,9 +82,10 @@ public class Home extends AppCompatActivity {
 
         //Lấy dữ liệu từ trang Login qua
 
-        pk = getIntent().getIntExtra("phanquyen",0);
+
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
+        id = getIntent().getIntExtra("Id",0);
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -112,6 +113,9 @@ public class Home extends AppCompatActivity {
                 //Thông Tin Cá Nhân
                 if(i == 0) {
                     Intent intent = new Intent(Home.this, Layout_User.class);
+                    intent.putExtra("Id",id);
+                    intent.putExtra("TaiKhoan",tentaikhoan);
+                    intent.putExtra("Email",email);
                     startActivity(intent);
                 }
                 //Đăng bài
@@ -268,6 +272,7 @@ public class Home extends AppCompatActivity {
         });
     }
 
+    //Hiện các truyện được kéo từ database
     public void Onclick() {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
