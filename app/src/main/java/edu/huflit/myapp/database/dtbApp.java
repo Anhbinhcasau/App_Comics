@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import edu.huflit.myapp.Model.List_Comment;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
@@ -180,6 +181,11 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
         return res;
     }
+    public Cursor getDataComment(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_COMMENT,null) ;
+        return res;
+    }
     // Them User
     public void Add(Users taikhoan){
         SQLiteDatabase dtb = this.getWritableDatabase();
@@ -234,19 +240,17 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(TAC_GIA, truyenTranh.getTacGia());
         values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
         values.put(IMAGE,truyenTranh.getLinkAnh());
-
         db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
     }
 
     //Thay doi mat khau
-    public void ChangePass(Users taikhoan) {
-        SQLiteDatabase db = this.getReadableDatabase();
+    public void ChangePass(Users users) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MAT_KHAU, taikhoan.getMatkhau());
-        db.update(TABLE_TAIKHOAN,values,TEN_TAI_KHOAN +" = " + taikhoan.getTenTaiKhoan(), null);
+        values.put(MAT_KHAU,users.getMatkhau());
+        db.update(TABLE_TAIKHOAN, values,ID_TAI_KHOAN + " = " + users.getmId(), null);
         db.close();
-
     }
 
     //Lay tap co ID truyen tuong ung
@@ -256,6 +260,37 @@ public class dtbApp extends SQLiteOpenHelper {
         String selection = "idtruyen = ?"; //Check ID
         String[] selectionArgs = {String.valueOf(IDtruyen)};
         Cursor cursor = db.query(TABLE_TAP, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+    public String getPasswordById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {MAT_KHAU};
+        String selection = "idtaikhoan = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_TAIKHOAN, columns, selection, selectionArgs, null, null, null);
+        String password = null;
+        if (cursor.moveToFirst()) {
+            int passwordIndex = cursor.getColumnIndex(MAT_KHAU);
+            password = cursor.getString(passwordIndex);
+        }
+        cursor.close();
+        return password;
+    }
+    public void comment(List_Comment listComment){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TAI_KHOAN, listComment.getNameUser());
+        values.put(ID_TRUYEN, listComment.getIdTruyen());
+        values.put(NOI_DUNG_COMMENT, listComment.getComment());
+        db.insert(TABLE_COMMENT, null, values);
+        db.close();
+    }
+    public Cursor getDataCommentdById(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
+        String selection = "idtruyen = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
 }

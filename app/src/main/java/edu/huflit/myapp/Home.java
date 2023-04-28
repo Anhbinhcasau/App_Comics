@@ -86,6 +86,7 @@ public class Home extends AppCompatActivity {
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
         id = getIntent().getIntExtra("Id",0);
+        pk = getIntent().getIntExtra("phanquyen", 2);
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -141,7 +142,10 @@ public class Home extends AppCompatActivity {
                 //Đổi Mật Khẩu
                 else if (i == 4) {
                     Intent intent = new Intent(Home.this,ChangePass.class);
+                    intent.putExtra("Id",id);
                     intent.putExtra("nameuser",tentaikhoan);
+                    intent.putExtra("Email",email);
+                    intent.putExtra("phanquyen", pk);
                     startActivity(intent);
                 }
                 //Setting

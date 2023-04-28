@@ -3,7 +3,29 @@ package edu.huflit.myapp.Model;
 public class List_Comment {
     private String nameUser;
     private  String comment;
-    private int imgAvatar;
+
+    public List_Comment(String nameUser, String comment, int idTruyen) {
+        this.nameUser = nameUser;
+        this.comment = comment;
+        this.idTruyen = idTruyen;
+    }
+
+    private String imgAvatar;
+
+    public List_Comment() {
+
+    }
+
+
+    public int getIdTruyen() {
+        return idTruyen;
+    }
+
+    public void setIdTruyen(int idTruyen) {
+        this.idTruyen = idTruyen;
+    }
+
+    private int idTruyen;
 
     public String getNameUser() {
         return nameUser;
@@ -21,11 +43,11 @@ public class List_Comment {
         this.comment = comment;
     }
 
-    public int getImgAvatar() {
+    public String getImgAvatar() {
         return imgAvatar;
     }
 
-    public void setImgAvatar(int imgAvatar) {
+    public void setImgAvatar(String imgAvatar) {
         this.imgAvatar = imgAvatar;
     }
 }

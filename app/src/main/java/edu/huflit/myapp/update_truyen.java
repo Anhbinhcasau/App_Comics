@@ -48,8 +48,7 @@ public class update_truyen extends AppCompatActivity {
             public void onClick(View view) {
                 TruyenTranh truyenTranh = CreatTruyen();
                 dtbApp.Edit(truyenTranh);
-//                Intent i = new Intent(update_truyen.this,LayoutAdmin.class);
-//                startActivity(i);
+
                 finish();
                 Toast.makeText(update_truyen.this, "Update truyện thành công!!", Toast.LENGTH_SHORT).show();
             }
@@ -60,7 +59,6 @@ public class update_truyen extends AppCompatActivity {
         String noiDung = edtNoiDung.getText().toString();
         String img = edtAnh.getText().toString();
         String tacGia = edtTacGia.getText().toString();
-
         Intent intent = getIntent();
         int id = intent.getIntExtra("Id", 0);
         TruyenTranh truyenTranh = new TruyenTranh(tieuDe,noiDung,img,tacGia,id);

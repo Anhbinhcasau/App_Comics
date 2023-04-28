@@ -52,7 +52,7 @@ public class LayoutAdmin extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 isLongClick = true;
                 AlertDialog.Builder builder = new AlertDialog.Builder(LayoutAdmin.this);
-                builder.setMessage("Bạn muốn xóa hay sửa truyện này?");
+                builder.setMessage("Bạn muốn xóa truyện này?");
                 builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
