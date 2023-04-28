@@ -72,7 +72,6 @@ public class MainDangKy extends AppCompatActivity {
         String matkhau = edtmk.getText().toString();
         String email = edtemail.getText().toString();
         int Phanquyen = 2;
-
         Users tk = new Users(taikhoan,matkhau,email,Phanquyen);
         return tk;
     }

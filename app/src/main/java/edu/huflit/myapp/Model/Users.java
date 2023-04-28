@@ -7,6 +7,11 @@ public class Users {
     private String email;
     private int phanquyen;
 
+    public Users(int mId, String matkhau) {
+        this.mId = mId;
+        this.matkhau = matkhau;
+    }
+
     public Users(String tenTaiKhoan, String matkhau, String email, int phanquyen) {
         TenTaiKhoan = tenTaiKhoan;
         this.matkhau = matkhau;

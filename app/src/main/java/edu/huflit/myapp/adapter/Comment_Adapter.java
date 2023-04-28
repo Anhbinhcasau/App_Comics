@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 import edu.huflit.myapp.Model.List_Comment;
@@ -32,17 +34,14 @@ public class Comment_Adapter extends ArrayAdapter {
         final TextView tvComment =  (TextView) convertView.findViewById(R.id.tvComment);
         final ImageView imgAvatarUser = (ImageView) convertView.findViewById(R.id.imgAvatarUser);
 
+        String image ="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSIxKuXfYotFraCK2lF-hy9rJoTWlmZqtLbR-dln5dopVNTjcw_3H1MYAPVEzQdDrjecI&usqp=CAU" ;
         List_Comment emp = myArray.get(position);
-        // test
-        tvNameUser.setText("Luong beo");
-
-        //tvNameUser.setText(emp.getNameUser());
+        tvNameUser.setText(emp.getNameUser());
         tvComment.setText(emp.getComment());
 
-        // them thu vien picassso de lay anh
-        // Picasso.get().load(emp.getimgAvatar()).into(imgAvatarUser);
-        // nay test thoi
-        imgAvatarUser.setImageResource(R.drawable.doraemon);
+        Glide.with(getContext())
+                .load(image)
+                .into(imgAvatarUser);
         return convertView;
     }
 }

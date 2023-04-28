@@ -75,7 +75,7 @@ public class Read_Book extends AppCompatActivity {
         IDtruyen = getIntent().getIntExtra("idTruyen", 0);
 
         ShowTap();
-        Toast.makeText(this, "Bạn đang đọc truyên "+ tenTruyen+" Tập "+ tap, Toast.LENGTH_SHORT).show();
+
 
 
         if (pq == 1){
@@ -84,6 +84,7 @@ public class Read_Book extends AppCompatActivity {
         }else{
             btnThemAnh.setVisibility(View.INVISIBLE);
             btnThemTap.setVisibility(View.GONE);
+            Toast.makeText(this, "Bạn đang đọc truyên "+ tenTruyen+" Tập "+ tap, Toast.LENGTH_SHORT).show();
         }
         btnThemAnh.setOnClickListener(new View.OnClickListener() {
             @Override

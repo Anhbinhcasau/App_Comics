@@ -9,6 +9,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import edu.huflit.myapp.Model.List_Comment;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.Users;
@@ -35,7 +36,7 @@ public class dtbApp extends SQLiteOpenHelper {
     private static String TABLE_TAP = "tap";
     private static String ID_TAP = "idTap";
     private static String TEN_TAP = "tenTap";
-    private static String NOI_DUNG_TAP = "noiDungTap";
+
 
     //Bảng Comment
     private static String TABLE_COMMENT = "comment";
@@ -45,9 +46,13 @@ public class dtbApp extends SQLiteOpenHelper {
     //Bảng yêu tích
     private static String TABLE_LIKE = "tblike";
     private static String ID_LIKE = "idLike";
+    private static String LIKE = "_like";
+
     //Bảng đánh giá
-    private static String TABLE_RATING = "rating";
+    private static String TABLE_RATING = "tbrating";
     private static String ID_RATING = "idRating";
+    private static String ISRATING= "_rating";
+
 
 
     // Phương thức tương tác với hệ điều hành truy cập vào tài nguyên hệ thống
@@ -86,24 +91,31 @@ public class dtbApp extends SQLiteOpenHelper {
                 +TABLE_TRUYEN+"(" + ID_TRUYEN +"))";
 
         //Tạo bảng Comment
-        //String SQLQuery3 = "CREATE TABLE "+ TABLE_COMMENT +" ( "
-        //        +ID_COMMENT+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-        //        +NOI_DUNG_COMMENT+" TEXT UNIQUE, "
-        //        +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
-        //        +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
+        String SQLQuery3 = "CREATE TABLE "+ TABLE_COMMENT +" ( "
+                +ID_COMMENT+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +NOI_DUNG_COMMENT+" TEXT , "
+                +ID_TRUYEN + " INTEGER , "
+                +TEN_TAI_KHOAN +" TEXT ,  "
+                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+                +"FOREIGN KEY ("+ TEN_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + TEN_TAI_KHOAN +"))";
 
         //Tạo bảng yêu thích
-       // String SQLQuery4 = "CREATE TABLE "+ TABLE_LIKE +" ( "
-         //       +ID_LIKE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-
-           //     +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
-           //     +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
+        String SQLQuery4 = "CREATE TABLE "+ TABLE_RATING +" ( "
+                +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +ISRATING + " INTEGER, "
+                +ID_TRUYEN+" INTEGER, "
+                +ID_TAI_KHOAN+ " INTEGER, "
+                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+                +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
         //Tạo bảng yêu thích
-        //String SQLQuery5 = "CREATE TABLE "+ TABLE_RATING +" ( "
-        //        +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-        //        +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
-        //        +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
+        String SQLQuery5 = "CREATE TABLE "+ TABLE_LIKE +" ( "
+                +ID_LIKE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +LIKE + " INTEGER, "
+                +ID_TRUYEN+" INTEGER, "
+                +ID_TAI_KHOAN+ " INTEGER, "
+                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+                +"FOREIGN KEY ("+ ID_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + ID_TAI_KHOAN +"))";
 
         //Insert Dữ Liệu vảo bảng người dùng
         //Phân quyền ( 1 - admin ) ( 2 - user)
@@ -128,9 +140,9 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery1);
         sqLiteDatabase.execSQL(SQLQuery2);
 
-        //sqLiteDatabase.execSQL(SQLQuery3);
-        //sqLiteDatabase.execSQL(SQLQuery4);
-        //sqLiteDatabase.execSQL(SQLQuery5);
+        sqLiteDatabase.execSQL(SQLQuery3);
+        sqLiteDatabase.execSQL(SQLQuery4);
+        sqLiteDatabase.execSQL(SQLQuery5);
 
 
         sqLiteDatabase.execSQL(SQLQuery6);
@@ -167,6 +179,11 @@ public class dtbApp extends SQLiteOpenHelper {
     public Cursor getDataTap(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
+        return res;
+    }
+    public Cursor getDataComment(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_COMMENT,null) ;
         return res;
     }
     // Them User
@@ -223,19 +240,17 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(TAC_GIA, truyenTranh.getTacGia());
         values.put(NOI_DUNG, truyenTranh.getNoiDungTruyen());
         values.put(IMAGE,truyenTranh.getLinkAnh());
-
         db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
     }
 
     //Thay doi mat khau
-    public void ChangePass(Users taikhoan) {
-        SQLiteDatabase db = this.getReadableDatabase();
+    public void ChangePass(Users users) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MAT_KHAU, taikhoan.getMatkhau());
-        db.update(TABLE_TAIKHOAN,values,TEN_TAI_KHOAN +" = " + taikhoan.getTenTaiKhoan(), null);
+        values.put(MAT_KHAU,users.getMatkhau());
+        db.update(TABLE_TAIKHOAN, values,ID_TAI_KHOAN + " = " + users.getmId(), null);
         db.close();
-
     }
 
     //Lay tap co ID truyen tuong ung
@@ -245,6 +260,37 @@ public class dtbApp extends SQLiteOpenHelper {
         String selection = "idtruyen = ?"; //Check ID
         String[] selectionArgs = {String.valueOf(IDtruyen)};
         Cursor cursor = db.query(TABLE_TAP, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+    public String getPasswordById(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {MAT_KHAU};
+        String selection = "idtaikhoan = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_TAIKHOAN, columns, selection, selectionArgs, null, null, null);
+        String password = null;
+        if (cursor.moveToFirst()) {
+            int passwordIndex = cursor.getColumnIndex(MAT_KHAU);
+            password = cursor.getString(passwordIndex);
+        }
+        cursor.close();
+        return password;
+    }
+    public void comment(List_Comment listComment){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TAI_KHOAN, listComment.getNameUser());
+        values.put(ID_TRUYEN, listComment.getIdTruyen());
+        values.put(NOI_DUNG_COMMENT, listComment.getComment());
+        db.insert(TABLE_COMMENT, null, values);
+        db.close();
+    }
+    public Cursor getDataCommentdById(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
+        String selection = "idtruyen = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
 }
