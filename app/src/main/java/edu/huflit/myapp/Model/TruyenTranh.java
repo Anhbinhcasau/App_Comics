@@ -13,7 +13,6 @@ public class TruyenTranh {
         this.noiDungTruyen = noiDung;
     }
 
-
     public String getNoiDungTruyen() {
         return noiDungTruyen;
     }

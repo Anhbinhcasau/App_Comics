@@ -27,6 +27,7 @@ public class Layout_User extends AppCompatActivity {
     Button btnSave, btnUPa;
     ImageView imgAva;
 
+    int id;
     dtbApp dtbApp;
 
     @Override
@@ -51,8 +52,8 @@ public class Layout_User extends AppCompatActivity {
 
         String name= getIntent().getStringExtra("TaiKhoan");
         edtName.setText(name);
-        int id = getIntent().getIntExtra("phanquyen",1);
-        edtId.setText(id);
+        id = getIntent().getIntExtra("Id",0);
+        edtId.setText(String.valueOf(id));
         String email= getIntent().getStringExtra("Email");
         edtEmail.setText(email);
         //Nhấn đổi chế độ Edit
