@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.huflit.myapp.Model.Dialog_rating;
+import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.YeuThich;
 import edu.huflit.myapp.database.dtbApp;
@@ -112,13 +113,19 @@ public class Home_Detail extends AppCompatActivity {
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Home_Detail.this, Read_Book.class );
-                i.putExtra("TenTruyen", tenTruyen);
-                i.putExtra("TenUser", tenUser);
-                i.putExtra("Tap", 1);
-                i.putExtra("phanquyen", pq);
-                i.putExtra("idTruyen", IDtruyen);
-                startActivity(i);
+                Cursor cursor = dtbapp.getDataTapByIDTruyen(IDtruyen);
+                if (pq == 2 && cursor == null && cursor.moveToFirst()){
+                    Toast.makeText(Home_Detail.this, "Truyện chưa có tập nào xin chờ Admin thêm lại sau", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent i = new Intent(Home_Detail.this, Read_Book.class );
+                    i.putExtra("TenTruyen", tenTruyen);
+                    i.putExtra("TenUser", tenUser);
+                    i.putExtra("Tap", 1);
+                    i.putExtra("phanquyen", pq);
+                    i.putExtra("idTruyen", IDtruyen);
+                    startActivity(i);
+                }
+
             }
         });
         mImgRating.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +146,9 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(Home_Detail.this, Comment.class );
+                i.putExtra("TenUser", tenUser);
+                i.putExtra("idTruyen", IDtruyen);
+                i.putExtra("phanquyen", pq);
                 startActivity(i);
             }
         });

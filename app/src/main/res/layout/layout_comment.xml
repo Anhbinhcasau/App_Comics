@@ -8,6 +8,7 @@
     android:padding="3dp"
     android:orientation="vertical" >
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,23 +23,34 @@
             android:layout_marginTop="6dp"
             android:layout_marginLeft="1dp"
             android:layout_weight="1"
-            android:padding="1dp"
-            android:background="@drawable/doraemon"/>
+            android:padding="1dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:padding="5dp"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/btnXoaCmt"
+                    android:layout_width="60dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:textSize="13dp"
+                    android:text="Xóa"
+                    android:textAllCaps="false"/>
 
-            <TextView
-                android:id="@+id/tvNameUser"
-                android:layout_width="match_parent"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:text="Lương béo" />
+                <TextView
+                    android:id="@+id/tvNameUser"
+                    android:layout_width="match_parent"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Lương béo" />
+            </RelativeLayout>
             <TextView
                 android:id="@+id/tvComment"
                 android:textColor="@color/black"

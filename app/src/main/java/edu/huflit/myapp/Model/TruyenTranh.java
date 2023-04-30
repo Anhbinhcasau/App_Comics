@@ -45,6 +45,8 @@ public class TruyenTranh {
     }
 
 
+
+
     public void setIdTruyen(int idTruyen) {
         this.idTruyen = idTruyen;
     }
