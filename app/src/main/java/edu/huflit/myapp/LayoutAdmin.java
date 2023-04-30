@@ -2,6 +2,7 @@ package edu.huflit.myapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -23,13 +24,14 @@ import edu.huflit.myapp.adapter.TruyenTranhAdapter;
 import edu.huflit.myapp.database.dtbApp;
 
 public class LayoutAdmin extends AppCompatActivity {
-    Button btnThem, btnYes, btnNo;
+    Button btnThem, btnTheloai;
     ListView listView;
     dtbApp dtbapp;
     ArrayList<TruyenTranh> tranhArrayList;
     AdminTruyenAdapter adapter;
     private boolean isLongClick = false;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +40,15 @@ public class LayoutAdmin extends AppCompatActivity {
 
         btnThem = findViewById(R.id.btnThemTruyen);
         listView = findViewById(R.id.lvQuanLy);
+        btnTheloai = findViewById(R.id.btnTheloai);
+
+        btnTheloai.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LayoutAdmin.this, TheLoai.class);
+                startActivity(i);
+            }
+        });
 
         btnThem.setOnClickListener(new View.OnClickListener() {
             @Override

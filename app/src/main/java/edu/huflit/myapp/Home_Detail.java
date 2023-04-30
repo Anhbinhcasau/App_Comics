@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -25,17 +26,18 @@ import java.util.List;
 
 import edu.huflit.myapp.Model.Dialog_rating;
 import edu.huflit.myapp.Model.TruyenTranh;
+import edu.huflit.myapp.Model.YeuThich;
 import edu.huflit.myapp.database.dtbApp;
 
 public class Home_Detail extends AppCompatActivity {
     Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue ;
     ImageButton mBntExt;
-    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
+    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor, tvCate;
     ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
     dtbApp dtbapp;
-    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
-    int IDtruyen, pq;
+    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
+    int IDtruyen, pq, id;
 
 
     boolean hidden = true;
@@ -47,15 +49,15 @@ public class Home_Detail extends AppCompatActivity {
         AnhXa();
 
 
-
+        id = getIntent().getIntExtra("idtaikhoan",0);
         IDtruyen = getIntent().getIntExtra("Id",0);
         anhTruyen = getIntent().getStringExtra("anh");
         tenTruyen = getIntent().getStringExtra("Ten");
         tomTat  = getIntent().getStringExtra("tomtat");
         tacgia = getIntent().getStringExtra("tacgia");
-        tenUser = getIntent().getStringExtra("TenUser");
+        tenUser = getIntent().getStringExtra("TaiKhoan");
         pq = getIntent().getIntExtra("phanquyen", 0);
-
+        cate = getIntent().getStringExtra("TL");
 
         ShowTap();
         ClickTap();
@@ -63,6 +65,8 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic.setText(tenTruyen);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
+        tvCate.setText(cate);
+        tvCate.setText(cate);
         Glide.with(this).load(anhTruyen).fitCenter().into(imgMain);
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
@@ -96,13 +100,13 @@ public class Home_Detail extends AppCompatActivity {
         mImgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isColor){
-                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
-                    isColor = false;
-                }else {
-                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
-                    isColor = true;
-                }
+                YeuThich yeuThich = AddYT();
+                mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
+                dtbapp.AddTYT(yeuThich);
+                dtbapp.UpdateTYT(yeuThich);
+                isColor = false;
+                Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
+                mImgFavorite.setVisibility(View.INVISIBLE);
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +149,13 @@ public class Home_Detail extends AppCompatActivity {
             }
         });
     }
+    private YeuThich AddYT() {
+        YeuThich yeuThich = new YeuThich();
+        yeuThich.setIdTruyen(IDtruyen);
+        yeuThich.setIdTK(id);
+        yeuThich.setTrangThai(1);
+        return yeuThich;
+    }
     public void AnhXa(){
         mBtnSummary = (Button) findViewById(R.id.btnSummary);
         mBtnChapter = (Button) findViewById(R.id.btnChapter);
@@ -159,6 +170,7 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic = findViewById(R.id.tvNameComic);
         tvNameAuthor = findViewById(R.id.tvNameAuthor);
         tvSummary = findViewById(R.id.tvSummary);
+        tvCate = findViewById(R.id.tvCategory);
         dtbapp = new dtbApp(this);
     }
     public void ClickTap(){

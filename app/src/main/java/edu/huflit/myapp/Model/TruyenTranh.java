@@ -4,6 +4,7 @@ public class TruyenTranh {
     private String tenTruyen;
     private String LinkAnh;
     private String noiDungTruyen;
+    private String Cate;
 
     public TruyenTranh(String tieuDe, String noiDung, String img, String tacGia, int id) {
         this.tenTruyen = tieuDe;
@@ -13,6 +14,13 @@ public class TruyenTranh {
         this.noiDungTruyen = noiDung;
     }
 
+    public String getCate() {
+        return Cate;
+    }
+
+    public void setCate(String cate) {
+        Cate = cate;
+    }
 
     public String getNoiDungTruyen() {
         return noiDungTruyen;
@@ -35,8 +43,6 @@ public class TruyenTranh {
     public int getIdTruyen() {
         return idTruyen;
     }
-
-
 
 
     public void setIdTruyen(int idTruyen) {

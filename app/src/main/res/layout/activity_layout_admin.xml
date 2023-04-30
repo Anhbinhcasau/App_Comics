@@ -25,13 +25,16 @@
             android:id="@+id/btnThemTruyen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Thêm truyện" />
 
         <Button
-            android:id="@+id/btnEditTruyen"
+            android:id="@+id/btnTheloai"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sửa truyện" />
+            android:layout_weight="1"
+            android:text="Thêm thể loại" />
+
     </LinearLayout>
 
     <ListView

@@ -45,6 +45,9 @@
             android:name=".Read_Book"
             android:exported="false" />
         <activity
+            android:name=".LayoutLike"
+            android:exported="false" />
+        <activity
             android:name=".Home_Detail"
             android:exported="false" />
         <activity

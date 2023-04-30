@@ -3,6 +3,7 @@ package edu.huflit.myapp.Model;
 public class TapTruyen {
     private Integer tenTap;
     private Integer Id;
+    private Integer IdTruyen;
 
     public TapTruyen(Integer tenTap, Integer id, Integer idTruyen) {
         this.tenTap = tenTap;
@@ -18,12 +19,6 @@ public class TapTruyen {
     public void setIdTruyen(Integer idTruyen) {
         IdTruyen = idTruyen;
     }
-
-    private Integer IdTruyen;
-
-
-
-
 
     public TapTruyen() {
     }

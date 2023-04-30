@@ -72,7 +72,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     public static dtbApp dtbapp;
-    int pk;
+    int pk, id;
 
 
     @Override
@@ -81,7 +81,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
-
+        id = getIntent().getIntExtra("idtaikhoan",0);
         pk = getIntent().getIntExtra("phanquyen",0);
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
@@ -119,7 +119,6 @@ public class Home extends AppCompatActivity {
                     if(pk == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
                         tentaikhoan= getIntent().getStringExtra("TaiKhoan");
-                        int pk = getIntent().getIntExtra("phanquyen",0);
                         email = getIntent().getStringExtra("Email");
                         startActivity(intent1);
                     }
@@ -129,7 +128,7 @@ public class Home extends AppCompatActivity {
                 }
                 //Yêu thích
                 else if (i == 2) {
-                    Intent intent = new Intent(Home.this, Home_Detail.class);
+                    Intent intent = new Intent(Home.this, LayoutLike.class);
                     startActivity(intent);
                 }
                 //Thể Loại
@@ -283,6 +282,7 @@ public class Home extends AppCompatActivity {
                     String tomtat = cursor.getString(2);
                     String anh = cursor.getString(3);
                     String tacgia = cursor.getString(4);
+                    String theLoai = cursor.getString(5);
                     Intent i = new Intent(Home.this, Home_Detail.class);
                     i.putExtra("anh", anh);
                     i.putExtra("Id", idTruyen);
@@ -291,6 +291,7 @@ public class Home extends AppCompatActivity {
                     i.putExtra("phanquyen", pk);
                     i.putExtra("TenUser", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
+                    i.putExtra("TL", theLoai);
                     startActivity(i);
                 }
                 cursor.close();
