@@ -230,6 +230,11 @@ public class dtbApp extends SQLiteOpenHelper {
         db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
         db.close();
     }
+    public void DeleteCmt(int commentId){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_COMMENT, ID_COMMENT + "=?", new String[]{String.valueOf(commentId)});
+        db.close();
+    }
 
 
     //Update lai truyen moi
@@ -287,10 +292,12 @@ public class dtbApp extends SQLiteOpenHelper {
     }
     public Cursor getDataCommentdById(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
+        String[] columns = {ID_COMMENT,NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
         String selection = "idtruyen = ?";
         String[] selectionArgs = {String.valueOf(id)};
         Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
+
+
 }
