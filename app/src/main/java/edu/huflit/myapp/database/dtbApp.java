@@ -54,7 +54,7 @@ public class dtbApp extends SQLiteOpenHelper {
     private static String TABLE_RATING = "tbrating";
     private static String ID_RATING = "idRating";
     private static String ISRATING= "_rating";
-    //Bảng đánh giá
+    //Bảng thể loại
     private static String TABLE_CATEGORY = "tbCategory";
     private static String ID_CATE = "idCategory";
     private static String CATE = "_category";
@@ -93,6 +93,7 @@ public class dtbApp extends SQLiteOpenHelper {
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
                 + ID_TAP+" INTEGER PRIMARY KEY AUTOINCREMENT, "
+                +TEN_TAP+" INTEGER, "
                 +TEN_TAP+" INTEGER, "
                 +ID_TRUYEN+" INTEGER, FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES "
                 +TABLE_TRUYEN+"(" + ID_TRUYEN +"))";
@@ -136,7 +137,7 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio', null)";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',1)";
         String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
@@ -159,6 +160,7 @@ public class dtbApp extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
+
 //        sqLiteDatabase.execSQL(SQLQuery8);
 //        sqLiteDatabase.execSQL(SQLQuery9);
 //        sqLiteDatabase.execSQL(SQLQuery10);
@@ -170,6 +172,12 @@ public class dtbApp extends SQLiteOpenHelper {
 //        sqLiteDatabase.execSQL(SQLQuery16);
 //        sqLiteDatabase.execSQL(SQLQuery17);
         sqLiteDatabase.execSQL(SQLQuery18);
+        sqLiteDatabase.execSQL(SQLQuery8);
+        sqLiteDatabase.execSQL(SQLQuery9);
+        sqLiteDatabase.execSQL(SQLQuery10);
+        sqLiteDatabase.execSQL(SQLQuery11);
+        sqLiteDatabase.execSQL(SQLQuery12);
+
     }
 
     @Override
