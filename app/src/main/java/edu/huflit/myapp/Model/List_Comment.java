@@ -3,10 +3,41 @@ package edu.huflit.myapp.Model;
 public class List_Comment {
     private String nameUser;
     private  String comment;
+    private int pq;
 
-    public List_Comment(String nameUser, String comment, int idTruyen) {
+    public String getNameUserN() {
+        return nameUserN;
+    }
+
+    public void setNameUserN(String nameUserN) {
+        this.nameUserN = nameUserN;
+    }
+
+    private String nameUserN;
+
+    public int getIdCmt() {
+        return idCmt;
+    }
+
+    public void setIdCmt(int idCmt) {
+        this.idCmt = idCmt;
+    }
+
+    private  int idCmt;
+
+    public int getPq() {
+        return pq;
+    }
+
+    public void setPq(int pq) {
+        this.pq = pq;
+    }
+
+
+    public List_Comment(String nameUser, String comment, int pq,int idTruyen) {
         this.nameUser = nameUser;
         this.comment = comment;
+        this.pq = pq;
         this.idTruyen = idTruyen;
     }
 

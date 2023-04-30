@@ -24,10 +24,10 @@ public class Comment extends AppCompatActivity {
     EditText edtComment;
     Button btnSend, btnExtComment;
     ListView lvComment;
-    ArrayList arrComment;
+    ArrayList<List_Comment> arrComment;
     String comment, nameUser;
     dtbApp dtbapp;
-    int idTruyen;
+    int idTruyen, pq;
     ArrayAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class Comment extends AppCompatActivity {
         ShowComment();
         nameUser = getIntent().getStringExtra("TenUser");
         idTruyen = getIntent().getIntExtra("idTruyen", 0);
-
+        pq = getIntent().getIntExtra("phanquyen", 0);
 
 
 
@@ -71,17 +71,23 @@ public class Comment extends AppCompatActivity {
     }
     public List_Comment addComment(){
         comment = edtComment.getText().toString();
-        List_Comment listComment = new List_Comment(nameUser,comment,idTruyen);
+        List_Comment listComment = new List_Comment(nameUser,comment,pq,idTruyen);
         return listComment;
     }
     public void ShowComment(){
         idTruyen = getIntent().getIntExtra("idTruyen", 0);
         Cursor cursor = dtbapp.getDataCommentdById(idTruyen);
         arrComment = new ArrayList<List_Comment>();
+        nameUser = getIntent().getStringExtra("TenUser");
+        pq = getIntent().getIntExtra("phanquyen", 0);
         while (cursor.moveToNext()){
             List_Comment listComment = new List_Comment();
-            String comment = cursor.getString(0);
-            String Ten =cursor.getString(1);
+            String comment = cursor.getString(1);
+            String Ten =cursor.getString(2);
+            int idcmt = cursor.getInt(0);
+            listComment.setPq(pq);
+            listComment.setNameUserN(nameUser);
+            listComment.setIdCmt(idcmt);
             listComment.setComment(comment);
             listComment.setNameUser(Ten);
             arrComment.add(listComment);
@@ -89,7 +95,9 @@ public class Comment extends AppCompatActivity {
         }
         cursor.close();
         Collections.reverse(arrComment);
+
         adapter= new Comment_Adapter(this,R.layout.layout_comment,arrComment);
         lvComment.setAdapter(adapter);
     }
+
 }

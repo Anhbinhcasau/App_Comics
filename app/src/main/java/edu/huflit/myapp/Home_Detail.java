@@ -145,6 +145,7 @@ public class Home_Detail extends AppCompatActivity {
                 Intent i = new Intent(Home_Detail.this, Comment.class );
                 i.putExtra("TenUser", tenUser);
                 i.putExtra("idTruyen", IDtruyen);
+                i.putExtra("phanquyen", pq);
                 startActivity(i);
             }
         });
