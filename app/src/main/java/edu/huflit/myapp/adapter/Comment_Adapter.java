@@ -1,6 +1,8 @@
 package edu.huflit.myapp.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 import edu.huflit.myapp.Comment;
+import edu.huflit.myapp.LayoutAdmin;
 import edu.huflit.myapp.Model.List_Comment;
 import edu.huflit.myapp.R;
 import edu.huflit.myapp.database.dtbApp;
@@ -59,15 +62,32 @@ public class Comment_Adapter extends ArrayAdapter<List_Comment> {
                 String name = emp.getNameUser();
                 String nameN = emp.getNameUserN();
                 if (pq == 1){
-                    int commentId = getItem(position).getIdCmt();
-                    dtbapp.DeleteCmt(commentId);
-                    remove(getItem(position));
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Bạn muốn xóa bình luận này?");
+                    builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int commentId = getItem(position).getIdCmt();
+                            dtbapp.DeleteCmt(commentId);
+                            remove(getItem(position));
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.show();
+
                 }else if (pq == 2 && name.trim().equals(nameN.trim())){
-                    int commentId = getItem(position).getIdCmt();
-                    dtbapp.DeleteCmt(commentId);
-                    remove(getItem(position));
-                    notifyDataSetChanged();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Bạn muốn xóa bình luận này?");
+                    builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            int commentId = getItem(position).getIdCmt();
+                            dtbapp.DeleteCmt(commentId);
+                            remove(getItem(position));
+                            notifyDataSetChanged();
+                        }
+                    });
+                    builder.show();
                 }else {
                     Toast.makeText(context, "Bạn không được xóa bình luận của người khác", Toast.LENGTH_SHORT).show();
                 }
