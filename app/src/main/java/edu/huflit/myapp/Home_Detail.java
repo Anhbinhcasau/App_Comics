@@ -1,6 +1,8 @@
 package edu.huflit.myapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -38,11 +40,10 @@ public class Home_Detail extends AppCompatActivity {
     ListView mlvChapter ;
     dtbApp dtbapp;
     String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
-    int IDtruyen, pq, id;
+    public int IDtruyen, pq, id;
 
 
     boolean hidden = true;
-    boolean isColor = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +51,8 @@ public class Home_Detail extends AppCompatActivity {
         AnhXa();
 
 
-        id = getIntent().getIntExtra("idtaikhoan",0);
-        IDtruyen = getIntent().getIntExtra("Id",0);
+        IDtruyen = getIntent().getIntExtra("idTruyen",0);
+        id = getIntent().getIntExtra("Id",1);
         anhTruyen = getIntent().getStringExtra("anh");
         tenTruyen = getIntent().getStringExtra("Ten");
         tomTat  = getIntent().getStringExtra("tomtat");
@@ -60,6 +61,13 @@ public class Home_Detail extends AppCompatActivity {
         pq = getIntent().getIntExtra("phanquyen", 0);
         cate = getIntent().getStringExtra("TL");
 
+        SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("idTruyen", IDtruyen);
+        editor.putInt("Id", id);
+        editor.apply();
+
+
         ShowTap();
         ClickTap();
 
@@ -67,8 +75,8 @@ public class Home_Detail extends AppCompatActivity {
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
         tvCate.setText(cate);
-        tvCate.setText(cate);
         Glide.with(this).load(anhTruyen).fitCenter().into(imgMain);
+
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +110,10 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 YeuThich yeuThich = AddYT();
-                mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
                 dtbapp.AddTYT(yeuThich);
                 dtbapp.UpdateTYT(yeuThich);
-                isColor = false;
-                Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
                 mImgFavorite.setVisibility(View.INVISIBLE);
+                Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {

@@ -72,7 +72,7 @@ public class Home extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor editor;
     public static dtbApp dtbapp;
-    int pk, id;
+    int pk, idus;
 
 
     @Override
@@ -81,11 +81,10 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
-        id = getIntent().getIntExtra("idtaikhoan",0);
         pk = getIntent().getIntExtra("phanquyen",0);
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
-        id = getIntent().getIntExtra("Id",0);
+        idus = getIntent().getIntExtra("Id",0);
         pk = getIntent().getIntExtra("phanquyen", 2);
 
         AnhXa();
@@ -114,7 +113,7 @@ public class Home extends AppCompatActivity {
                 //Thông Tin Cá Nhân
                 if(i == 0) {
                     Intent intent = new Intent(Home.this, Layout_User.class);
-                    intent.putExtra("Id",id);
+                    intent.putExtra("Id",idus);
                     intent.putExtra("TaiKhoan",tentaikhoan);
                     intent.putExtra("Email",email);
                     startActivity(intent);
@@ -123,7 +122,7 @@ public class Home extends AppCompatActivity {
                 else if (i == 1) {
                     if(pk == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
-                        tentaikhoan= getIntent().getStringExtra("TaiKhoan");
+                        tentaikhoan= getIntent().getStringExtra("username");
                         email = getIntent().getStringExtra("Email");
                         startActivity(intent1);
                     }
@@ -134,6 +133,7 @@ public class Home extends AppCompatActivity {
                 //Yêu thích
                 else if (i == 2) {
                     Intent intent = new Intent(Home.this, LayoutLike.class);
+                    intent.putExtra("Id", idus);
                     startActivity(intent);
                 }
                 //Thể Loại
@@ -144,8 +144,8 @@ public class Home extends AppCompatActivity {
                 //Đổi Mật Khẩu
                 else if (i == 4) {
                     Intent intent = new Intent(Home.this,ChangePass.class);
-                    intent.putExtra("Id",id);
-                    intent.putExtra("nameuser",tentaikhoan);
+                    intent.putExtra("Id",idus);
+                    intent.putExtra("TaiKhoan",tentaikhoan);
                     intent.putExtra("Email",email);
                     intent.putExtra("phanquyen", pk);
                     startActivity(intent);
@@ -291,16 +291,19 @@ public class Home extends AppCompatActivity {
                     String tomtat = cursor.getString(2);
                     String anh = cursor.getString(3);
                     String tacgia = cursor.getString(4);
-                    String theLoai = cursor.getString(5);
+                    int idlike = cursor.getInt(5);
+                    String theLoai = cursor.getString(6);
                     Intent i = new Intent(Home.this, Home_Detail.class);
                     i.putExtra("anh", anh);
-                    i.putExtra("Id", idTruyen);
+                    i.putExtra("idTruyen", idTruyen);
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);
                     i.putExtra("phanquyen", pk);
                     i.putExtra("TenUser", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     i.putExtra("TL", theLoai);
+                    i.putExtra("Id", idus);
+                    i.putExtra("idLike", idlike);
                     startActivity(i);
                 }
                 cursor.close();

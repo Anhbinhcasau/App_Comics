@@ -4,7 +4,9 @@ package edu.huflit.myapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,11 +27,11 @@ public class LayoutLike extends AppCompatActivity {
 
     ListView listView1;
     public static dtbApp dtbapp;
-    ImageView imgTim;
     public static ArrayList<TruyenTranh> tranhArrayListYT;
     Like_Adapter adapter;
     int id, IDtruyen;
     String anhTruyen, tenTruyen;
+    SharedPreferences sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +40,14 @@ public class LayoutLike extends AppCompatActivity {
 
         dtbapp = new dtbApp(this);
 
-        id = getIntent().getIntExtra("TaiKhoan", 0);
+        sharedPref = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
+        IDtruyen = sharedPref.getInt("idTruyen", 0);
+        id = sharedPref.getInt("Id", 0);
+//        id = getIntent().getIntExtra("Id", 0);
+//        IDtruyen = getIntent().getIntExtra("idTruyen", 0);
         anhTruyen = getIntent().getStringExtra("anh");
         tenTruyen = getIntent().getStringExtra("Ten");
-        IDtruyen = getIntent().getIntExtra("Id", IDtruyen);
+
 
         listView1 = findViewById(R.id.lvyeuthich);
 
@@ -58,12 +64,14 @@ public class LayoutLike extends AppCompatActivity {
                     String tomtat = cursor.getString(2);
                     String anh = cursor.getString(3);
                     String tacgia = cursor.getString(4);
+                    String theloai = cursor.getString(5);
                     Intent a = new Intent(LayoutLike.this, Home_Detail.class);
                     a.putExtra("anh", anh);
-                    a.putExtra("Id", idTruyen);
+                    a.putExtra("idTruyen", idTruyen);
                     a.putExtra("Ten", Ten);
                     a.putExtra("tomtat", tomtat);
                     a.putExtra("tacgia", tacgia);
+                    a.putExtra("TL", theloai);
                     startActivity(a);
                 }
                 cursor.close();
@@ -73,28 +81,28 @@ public class LayoutLike extends AppCompatActivity {
 
     private void Init(){
         //Hiện các truyện yêu thích
-        Cursor likee = dtbapp.getDataYeuThich();
+        Cursor cursor1 = dtbapp.getDataYeuThich();
         Cursor cursor = dtbapp.getDataTruyen();
         tranhArrayListYT = new ArrayList<TruyenTranh>();
-        while (likee.moveToNext() && cursor.moveToNext()){
-            if (likee.getInt(1) == 1 && likee.getInt(3) == id) {
-                TruyenTranh truyenTranh= new TruyenTranh();
-                int id = cursor.getInt(0);
-                String Ten =cursor.getString(1);
-                String anh = cursor.getString(3);
-                truyenTranh.setIdTruyen(id);
-                truyenTranh.setTenTruyen(Ten);
-                truyenTranh.setLinkAnh(anh);
+        while (cursor.moveToNext() && cursor1.moveToNext()){
+            if (cursor1.getInt(1) == 1 ){
+                TruyenTranh truyenTranh = new TruyenTranh();
+                truyenTranh.setIdTruyen(cursor.getInt(0));
+                truyenTranh.setTenTruyen(cursor.getString(1));
+                truyenTranh.setNoiDungTruyen(cursor.getString(2));
+                truyenTranh.setLinkAnh(cursor.getString(3));
+                truyenTranh.setTacGia(cursor.getString(4));
+                truyenTranh.setCate(cursor.getString(6));
                 tranhArrayListYT.add(truyenTranh);
             }
         }
-        likee.moveToFirst();
         //Thực hiện khi không sử dụng
-        likee.close();
         cursor.close();
+        cursor1.close();
         adapter = new Like_Adapter(this, 0, tranhArrayListYT);
         listView1.setAdapter(adapter);
     }
+
     public YeuThich DeleteYT() {
         YeuThich yeuThich = new YeuThich();
         yeuThich.setIdTruyen(IDtruyen);

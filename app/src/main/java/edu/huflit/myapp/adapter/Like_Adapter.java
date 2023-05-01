@@ -56,8 +56,7 @@ public class Like_Adapter extends ArrayAdapter<TruyenTranh> {
             imgTim.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    notifyDataSetChanged();
+                    YeuThich yeuThich = new YeuThich();
                 }
             });
 

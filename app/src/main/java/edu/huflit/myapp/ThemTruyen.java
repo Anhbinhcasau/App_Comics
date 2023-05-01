@@ -31,7 +31,7 @@ public class ThemTruyen extends AppCompatActivity {
     Spinner spinner;
     ImageView imgTruyen;
     dtbApp dbApp;
-    private static int id = 1;
+    private static int id, idLike = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,18 +83,15 @@ public class ThemTruyen extends AppCompatActivity {
         String tacGia = edtTacGia.getText().toString();
 
         Intent intent = getIntent();
-        int id = intent.getIntExtra("Id",0);
+        id = intent.getIntExtra("idTruyen",0);
         TruyenTranh truyenTranh = new TruyenTranh();
-        YeuThich yeuThich = new YeuThich();
         truyenTranh.setIdTruyen(id);
         truyenTranh.setTenTruyen(tieuDe);
         truyenTranh.setLinkAnh(img);
         truyenTranh.setNoiDungTruyen(noiDung);
         truyenTranh.setTacGia(tacGia);
+        truyenTranh.setIdLike(idLike);
         truyenTranh.setCate((String) spinner.getSelectedItem());
-        yeuThich.setIdTruyen(id);
-        yeuThich.setTrangThai(0);
-
         return truyenTranh;
     }
     @Override
@@ -118,5 +115,4 @@ public class ThemTruyen extends AppCompatActivity {
 
         return list;
     }
-
 }
