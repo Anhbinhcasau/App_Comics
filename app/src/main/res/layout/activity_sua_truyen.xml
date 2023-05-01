@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ThemTruyen">
+    tools:context=".SuaTruyen">
 
     <TextView
         android:id="@+id/textView5"
@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:textColor="@color/teal_200"
-        android:text="THÊM TRUYỆN MỚI" />
+        android:text="Cập nhật lại truyện" />
 
     <EditText
-        android:id="@+id/edtTieuDe"
+        android:id="@+id/edtSuaTieuDe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -24,7 +24,7 @@
         android:hint="Tiêu đề truyện..." />
 
     <EditText
-        android:id="@+id/edtNoiDungTruyen"
+        android:id="@+id/edtSuaNoiDung"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:inputType="text"
@@ -32,37 +32,15 @@
         android:hint="Nội dung truyện..."/>
 
     <EditText
-        android:id="@+id/edtTacGia"
+        android:id="@+id/edtSuaTacGia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Tac gia" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textSize="20dp"
-            android:text="Thể loại truyện" />
-
-        <Spinner
-            android:id="@+id/spinnerTL"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-
     <EditText
-        android:id="@+id/edtIMG"
+        android:id="@+id/edtSuaIMG"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -75,11 +53,10 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btnThem"
+            android:id="@+id/btnUpdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Thêm" />
+            android:text="Update" />
     </LinearLayout>
-
 </LinearLayout>

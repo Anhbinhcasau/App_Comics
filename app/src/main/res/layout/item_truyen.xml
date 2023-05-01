@@ -25,6 +25,7 @@
             android:gravity="center"
             android:text="Ten Truyen Tranh"
             android:textSize="14dp"
+            style="@style/TEXT"
             android:textColor="#000"></TextView>
 
 </LinearLayout>

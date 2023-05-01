@@ -27,24 +27,26 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.huflit.myapp.Model.TapTruyen;
+import edu.huflit.myapp.Model.TruyenTranh;
+import edu.huflit.myapp.Model.YeuThich;
 import edu.huflit.myapp.Dialog.Dialog_rating;
 import edu.huflit.myapp.database.dtbApp;
 
 public class Home_Detail extends AppCompatActivity {
     Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue ;
     ImageButton mBntExt;
-    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
+    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor, tvCate;
     ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
     dtbApp dtbapp;
-    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
+    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
+    public int IDtruyen, pq, id ,userId;
     SharedPreferences saveRating;
     SharedPreferences.Editor editor;
-    int IDtruyen, pq, userId;
 
 
     boolean hidden = true;
-    boolean isColor = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +54,8 @@ public class Home_Detail extends AppCompatActivity {
         AnhXa();
 
 
-
-        IDtruyen = getIntent().getIntExtra("Id",0);
+        IDtruyen = getIntent().getIntExtra("idTruyen",0);
+        id = getIntent().getIntExtra("Id",1);
         anhTruyen = getIntent().getStringExtra("anh");
 
         tenTruyen = getIntent().getStringExtra("Ten");
@@ -61,11 +63,19 @@ public class Home_Detail extends AppCompatActivity {
         tacgia = getIntent().getStringExtra("tacgia");
         tenUser = getIntent().getStringExtra("TenUser");
         userId = getIntent().getIntExtra("userId", 0);
+        tenUser = getIntent().getStringExtra("TaiKhoan");
         pq = getIntent().getIntExtra("phanquyen", 0);
         saveRating = getSharedPreferences("Rating", Context.MODE_PRIVATE);
         editor = saveRating.edit();
 
 
+        cate = getIntent().getStringExtra("TL");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("idTruyen", IDtruyen);
+        editor.putInt("Id", id);
+        editor.apply();
 
 
         ShowTap();
@@ -74,7 +84,9 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic.setText(tenTruyen);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
+        tvCate.setText(cate);
         Glide.with(this).load(anhTruyen).fitCenter().into(imgMain);
+
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,13 +119,11 @@ public class Home_Detail extends AppCompatActivity {
         mImgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isColor){
-                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
-                    isColor = false;
-                }else {
-                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
-                    isColor = true;
-                }
+                YeuThich yeuThich = AddYT();
+                dtbapp.AddTYT(yeuThich);
+                dtbapp.UpdateTYT(yeuThich);
+                mImgFavorite.setVisibility(View.INVISIBLE);
+                Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +176,13 @@ public class Home_Detail extends AppCompatActivity {
             }
         });
     }
+    private YeuThich AddYT() {
+        YeuThich yeuThich = new YeuThich();
+        yeuThich.setIdTruyen(IDtruyen);
+        yeuThich.setIdTK(id);
+        yeuThich.setTrangThai(1);
+        return yeuThich;
+    }
     public void AnhXa(){
         mBtnSummary = (Button) findViewById(R.id.btnSummary);
         mBtnChapter = (Button) findViewById(R.id.btnChapter);
@@ -180,6 +197,7 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic = findViewById(R.id.tvNameComic);
         tvNameAuthor = findViewById(R.id.tvNameAuthor);
         tvSummary = findViewById(R.id.tvSummary);
+        tvCate = findViewById(R.id.tvCategory);
         dtbapp = new dtbApp(this);
     }
     public void ClickTap(){

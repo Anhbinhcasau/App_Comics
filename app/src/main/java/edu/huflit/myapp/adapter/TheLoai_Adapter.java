@@ -4,56 +4,50 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.huflit.myapp.Model.TheLoaiTruyen;
+import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.R;
+import edu.huflit.myapp.TheLoai;
 
-public class TheLoai_Adapter extends BaseAdapter {
+public class TheLoai_Adapter extends ArrayAdapter<TheLoaiTruyen> {
 
-    private Context context;
+    private Context ct;
+    private ArrayList<TheLoaiTruyen> arrad;
 
-    private int layout;
-
-    private List<TheLoaiTruyen> theLoaiList;
-
-    public TheLoai_Adapter(Context context, int layout, List<TheLoaiTruyen> theLoaiList) {
-        this.context = context;
-        this.layout = layout;
-        this.theLoaiList = theLoaiList;
+    public TheLoai_Adapter(TheLoai context, int resource, ArrayList<TheLoaiTruyen> theLoaiArrayList) {
+        super(context, resource, theLoaiArrayList);
+        this.ct = context;
+        this.arrad = new ArrayList<>(theLoaiArrayList);
     }
 
     @Override
-    public int getCount() {
-        return theLoaiList.size();
-    }
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        if(convertView==null) {
+            LayoutInflater inflater=(LayoutInflater)ct.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.item_the_loai,null);
+        }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
-    }
+        if(arrad.size()>0){
+            TheLoaiTruyen theLoaiTruyen = this.arrad.get(position);
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+            TextView tenTL = convertView.findViewById(R.id.hienTheLoai);
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        view = inflater.inflate(layout, null);
-        ImageView img = (ImageView) view.findViewById(edu.huflit.myapp.R.id.imgTheLoai);
-        TextView txt = (TextView) view.findViewById(R.id.tvTheLoai);
-        TheLoaiTruyen type = theLoaiList.get(i);
-        txt.setText(type.getTenTL());
-        Glide.with(this.context).load(type.getHinhTL()).into(img);
-        return view;
+            tenTL.setText(theLoaiTruyen.getTenTL());
 
+        }
+        return convertView;
     }
 }

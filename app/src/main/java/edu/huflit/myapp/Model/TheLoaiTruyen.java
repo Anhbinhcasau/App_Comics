@@ -2,13 +2,16 @@ package edu.huflit.myapp.Model;
 
 public class TheLoaiTruyen {
     private String tenTL;
-    private int hinhTL;
+    private Integer IdTruyen;
+    private Integer idTl;
 
-    public TheLoaiTruyen(String tenTL, int hinhTL) {
-        this.tenTL = tenTL;
-        this.hinhTL = hinhTL;
+    public Integer getIdTruyen() {
+        return IdTruyen;
     }
 
+    public void setIdTruyen(Integer idTruyen) {
+        IdTruyen = idTruyen;
+    }
     public String getTenTL() {
         return tenTL;
     }
@@ -17,11 +20,20 @@ public class TheLoaiTruyen {
         this.tenTL = tenTL;
     }
 
-    public int getHinhTL() {
-        return hinhTL;
+    public TheLoaiTruyen() {
     }
 
-    public void setHinhTL(int hinhTL) {
-        this.hinhTL = hinhTL;
+    public TheLoaiTruyen(String tenTL, Integer idTruyen, Integer idTL) {
+        this.tenTL = tenTL;
+        IdTruyen = idTruyen;
+        this.idTl = idTL;
+    }
+
+    public Integer getIdTl() {
+        return idTl;
+    }
+
+    public void setIdTl(Integer idTl) {
+        this.idTl = idTl;
     }
 }

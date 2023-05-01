@@ -51,9 +51,7 @@ public class Comment_Adapter extends ArrayAdapter<List_Comment> {
 
         tvNameUser.setText(emp.getNameUser());
         tvComment.setText(emp.getComment());
-        Glide.with(getContext())
-                .load(image)
-                .into(imgAvatarUser);
+        Glide.with(getContext()).load(image).into(imgAvatarUser);
 
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,7 +89,6 @@ public class Comment_Adapter extends ArrayAdapter<List_Comment> {
                 }else {
                     Toast.makeText(context, "Bạn không được xóa bình luận của người khác", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         return convertView;

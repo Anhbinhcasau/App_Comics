@@ -28,7 +28,7 @@ public class ChangePass extends AppCompatActivity {
         btnDoi = findViewById(R.id.btnDoi);
         dtbapp=new dtbApp(this);
 
-        name = getIntent().getStringExtra("username");
+        name = getIntent().getStringExtra("TaiKhoan");
         int id = getIntent().getIntExtra("Id", 0);
         email = getIntent().getStringExtra("email");
         btnDoi.setOnClickListener(new View.OnClickListener() {

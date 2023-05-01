@@ -4,13 +4,33 @@ public class TruyenTranh {
     private String tenTruyen;
     private String LinkAnh;
     private String noiDungTruyen;
+    private String Cate;
+    private Integer idLike;
 
-    public TruyenTranh(String tieuDe, String noiDung, String img, String tacGia, int id) {
+    public TruyenTranh(String tieuDe, String noiDung, String img, String tacGia, int id, int idLike, String cate) {
         this.tenTruyen = tieuDe;
         this.LinkAnh = img;
         this.tacGia = tacGia;
         this.idTruyen = id;
         this.noiDungTruyen = noiDung;
+        this.Cate = cate;
+        this.idLike = idLike;
+    }
+
+    public Integer getIdLike() {
+        return idLike;
+    }
+
+    public void setIdLike(Integer idLike) {
+        this.idLike = idLike;
+    }
+
+    public String getCate() {
+        return Cate;
+    }
+
+    public void setCate(String cate) {
+        Cate = cate;
     }
 
     public String getNoiDungTruyen() {

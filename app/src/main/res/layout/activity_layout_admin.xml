@@ -15,11 +15,27 @@
         android:textAlignment="center"
         android:text="Quản lý " />
 
-    <Button
-        android:id="@+id/btnThemTruyen"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thêm truyện" />
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnThemTruyen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thêm truyện" />
+
+        <Button
+            android:id="@+id/btnTheloai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Thêm thể loại" />
+
+    </LinearLayout>
 
     <ListView
         android:id="@+id/lvQuanLy"

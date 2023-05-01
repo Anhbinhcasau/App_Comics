@@ -45,8 +45,6 @@ public class Comment extends AppCompatActivity {
         pq = getIntent().getIntExtra("phanquyen", 0);
 
 
-
-
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
