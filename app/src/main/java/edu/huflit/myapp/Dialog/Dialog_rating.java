@@ -58,7 +58,6 @@ public class Dialog_rating extends Dialog {
         }else{
             ratingBar.setRating(userRate);
         }
-
         saveRateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
