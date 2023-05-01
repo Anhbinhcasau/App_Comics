@@ -27,7 +27,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.huflit.myapp.Model.Dialog_rating;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.YeuThich;
@@ -42,11 +41,9 @@ public class Home_Detail extends AppCompatActivity {
     ListView mlvChapter ;
     dtbApp dtbapp;
     String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
-    public int IDtruyen, pq, id;
-    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
+    public int IDtruyen, pq, id ,userId;
     SharedPreferences saveRating;
     SharedPreferences.Editor editor;
-    int IDtruyen, pq, userId;
 
 
     boolean hidden = true;

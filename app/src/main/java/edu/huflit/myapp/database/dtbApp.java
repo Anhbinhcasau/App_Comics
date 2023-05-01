@@ -354,14 +354,6 @@ public class dtbApp extends SQLiteOpenHelper {
         db.insert(TABLE_COMMENT, null, values);
         db.close();
     }
-    public Cursor getDataCommentdById(int id){
-        SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {ID_COMMENT,NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
-        String selection = "idtruyen = ?";
-        String[] selectionArgs = {String.valueOf(id)};
-        Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
-        return cursor;
-    }
     public  void addRating(Rating rating){
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
