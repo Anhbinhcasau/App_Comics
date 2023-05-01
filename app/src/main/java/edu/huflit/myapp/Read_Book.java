@@ -93,10 +93,14 @@ public class Read_Book extends AppCompatActivity {
             }
         });
 
+        //link tới fireebase storage
         FirebaseStorage storage = FirebaseStorage.getInstance("gs://truyen-9f7f6.appspot.com/");
+        // tới folder thứ nhất tên truyện
         StorageReference storageRef = storage.getReference().child(tenTruyen);
+        // tới folder thứ con Tập số ...
         StorageReference imageRef = storageRef.child("Tập " + tap);
 
+        // lấy Toàn bộ danh sách ảnh có tong folder tập
         imageRef.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
             @Override
             public void onSuccess(ListResult listResult) {

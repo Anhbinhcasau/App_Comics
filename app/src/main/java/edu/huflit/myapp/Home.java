@@ -295,6 +295,7 @@ public class Home extends AppCompatActivity {
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);
                     i.putExtra("phanquyen", pk);
+                    i.putExtra("userId", id);
                     i.putExtra("TenUser", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     startActivity(i);
