@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -30,6 +31,7 @@ import edu.huflit.myapp.Model.Dialog_rating;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.Model.YeuThich;
+import edu.huflit.myapp.Dialog.Dialog_rating;
 import edu.huflit.myapp.database.dtbApp;
 
 public class Home_Detail extends AppCompatActivity {
@@ -41,6 +43,10 @@ public class Home_Detail extends AppCompatActivity {
     dtbApp dtbapp;
     String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
     public int IDtruyen, pq, id;
+    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
+    SharedPreferences saveRating;
+    SharedPreferences.Editor editor;
+    int IDtruyen, pq, userId;
 
 
     boolean hidden = true;
@@ -54,11 +60,18 @@ public class Home_Detail extends AppCompatActivity {
         IDtruyen = getIntent().getIntExtra("idTruyen",0);
         id = getIntent().getIntExtra("Id",1);
         anhTruyen = getIntent().getStringExtra("anh");
+
         tenTruyen = getIntent().getStringExtra("Ten");
         tomTat  = getIntent().getStringExtra("tomtat");
         tacgia = getIntent().getStringExtra("tacgia");
+        tenUser = getIntent().getStringExtra("TenUser");
+        userId = getIntent().getIntExtra("userId", 0);
         tenUser = getIntent().getStringExtra("TaiKhoan");
         pq = getIntent().getIntExtra("phanquyen", 0);
+        saveRating = getSharedPreferences("Rating", Context.MODE_PRIVATE);
+        editor = saveRating.edit();
+
+
         cate = getIntent().getStringExtra("TL");
 
         SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
@@ -137,7 +150,8 @@ public class Home_Detail extends AppCompatActivity {
         mImgRating.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog_rating rating = new Dialog_rating(Home_Detail.this);
+                final Dialog_rating rating = new Dialog_rating(Home_Detail.this, userId, IDtruyen);
+
                 rating.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(Home_Detail.this, android.R.color.transparent)));
                 rating.setCancelable(false);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();

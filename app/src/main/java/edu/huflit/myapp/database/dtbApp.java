@@ -2,6 +2,7 @@ package edu.huflit.myapp.database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -10,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import edu.huflit.myapp.Model.List_Comment;
+import edu.huflit.myapp.Model.Rating;
 import edu.huflit.myapp.Model.TapTruyen;
 import edu.huflit.myapp.Model.TheLoaiTruyen;
 import edu.huflit.myapp.Model.TruyenTranh;
@@ -112,7 +114,7 @@ public class dtbApp extends SQLiteOpenHelper {
         //Tạo bảng rating
         String SQLQuery4 = "CREATE TABLE "+ TABLE_RATING +" ( "
                 +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +ISRATING + " INTEGER, "
+                +ISRATING + " REAL, "
                 +ID_TRUYEN+" INTEGER, "
                 +ID_TAI_KHOAN+ " INTEGER, "
                 +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
@@ -151,6 +153,7 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery17 = "INSERT INTO Tap VALUES(null,4,0)";
 
 
+
         //Thực hiện các câu lệnh truy vấn không trả về kết quả
         sqLiteDatabase.execSQL(SQLQuery);
         sqLiteDatabase.execSQL(SQLQuery1);
@@ -159,6 +162,7 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery3);
         sqLiteDatabase.execSQL(SQLQuery4);
         sqLiteDatabase.execSQL(SQLQuery5);
+
 
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
@@ -324,6 +328,15 @@ public class dtbApp extends SQLiteOpenHelper {
         cursor.close();
         return password;
     }
+    public Cursor getDataRatingByID(int userId, int storyId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = { ID_RATING,ID_TAI_KHOAN, ID_TRUYEN, ISRATING };
+        String selection = "idtaikhoan = ? AND idtruyen = ?";
+        String[] selectionArgs = { String.valueOf(userId), String.valueOf(storyId) };
+        Cursor cursor = db.query(TABLE_RATING, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+
     public Cursor getDataCommentdById(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         String[] columns = {ID_COMMENT,NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
@@ -341,4 +354,31 @@ public class dtbApp extends SQLiteOpenHelper {
         db.insert(TABLE_COMMENT, null, values);
         db.close();
     }
+    public Cursor getDataCommentdById(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {ID_COMMENT,NOI_DUNG_COMMENT, TEN_TAI_KHOAN};
+        String selection = "idtruyen = ?";
+        String[] selectionArgs = {String.valueOf(id)};
+        Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+    public  void addRating(Rating rating){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ISRATING, rating.getRating());
+        values.put(ID_TRUYEN, rating.getComicId());
+        values.put(ID_TAI_KHOAN, rating.getUserId());
+        db.insert(TABLE_RATING, null, values);
+        db.close();
+    }
+    public void upRating(Rating rating){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(ISRATING, rating.getRating());
+        db.update(TABLE_RATING, values,ID_RATING + " = " + rating.getIdRating(), null);
+        db.close();
+    }
+
+
+
 }
