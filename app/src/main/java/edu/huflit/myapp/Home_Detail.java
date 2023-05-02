@@ -27,24 +27,27 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.huflit.myapp.Model.TapTruyen;
+import edu.huflit.myapp.Model.TruyenTranh;
+import edu.huflit.myapp.Model.YeuThich;
 import edu.huflit.myapp.Dialog.Dialog_rating;
 import edu.huflit.myapp.database.dtbApp;
 
 public class Home_Detail extends AppCompatActivity {
     Button mBtnSummary,  mBtnChapter, mBtnComment , mBtnContinue ;
     ImageButton mBntExt;
-    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor;
+    TextView mTvSummary, tvNameComic, tvSummary,tvNameAuthor, tvCate;
     ImageView mImgFavorite, mImgRating, imgMain;
     ListView mlvChapter ;
     dtbApp dtbapp;
-    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser;
+    String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
+    public int IDtruyen, pq, id ,userId,like, idLike;
     SharedPreferences saveRating;
     SharedPreferences.Editor editor;
-    int IDtruyen, pq, userId;
+    Cursor cursor;
 
 
     boolean hidden = true;
-    boolean isColor = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,20 +55,26 @@ public class Home_Detail extends AppCompatActivity {
         AnhXa();
 
 
-
-        IDtruyen = getIntent().getIntExtra("Id",0);
+        IDtruyen = getIntent().getIntExtra("idTruyen",0);
         anhTruyen = getIntent().getStringExtra("anh");
-
         tenTruyen = getIntent().getStringExtra("Ten");
         tomTat  = getIntent().getStringExtra("tomtat");
         tacgia = getIntent().getStringExtra("tacgia");
         tenUser = getIntent().getStringExtra("TenUser");
         userId = getIntent().getIntExtra("userId", 0);
+        tenUser = getIntent().getStringExtra("TaiKhoan");
         pq = getIntent().getIntExtra("phanquyen", 0);
         saveRating = getSharedPreferences("Rating", Context.MODE_PRIVATE);
         editor = saveRating.edit();
 
 
+        cate = getIntent().getStringExtra("TL");
+
+        SharedPreferences sharedPreferences = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("idTruyen", IDtruyen);
+        editor.putInt("Id", id);
+        editor.apply();
 
 
         ShowTap();
@@ -74,7 +83,9 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic.setText(tenTruyen);
         tvSummary.setText(tomTat);
         tvNameAuthor.setText(tacgia);
+        tvCate.setText(cate);
         Glide.with(this).load(anhTruyen).fitCenter().into(imgMain);
+
 
         mBtnChapter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,16 +115,20 @@ public class Home_Detail extends AppCompatActivity {
                 }
             }
         });
+        getYt();
+
         mImgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isColor){
-                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
-                    isColor = false;
-                }else {
-                    mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
-                    isColor = true;
+                if (cursor.moveToFirst()){
+                    dtbapp.DeleleYT(idLike);
+                    Toast.makeText(Home_Detail.this, "Bỏ yêu thích", Toast.LENGTH_SHORT).show();
+                }else{
+                    YeuThich yeuThich = AddYT();
+                    dtbapp.AddTYT(yeuThich);
+                    Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
                 }
+                getYt();
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +153,6 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Dialog_rating rating = new Dialog_rating(Home_Detail.this, userId, IDtruyen);
-
                 rating.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(Home_Detail.this, android.R.color.transparent)));
                 rating.setCancelable(false);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -166,6 +180,15 @@ public class Home_Detail extends AppCompatActivity {
             }
         });
     }
+    private YeuThich AddYT() {
+        int like = 1;
+        YeuThich yeuThich = new YeuThich(like, IDtruyen, userId);
+        return yeuThich;
+    }
+    public YeuThich DeleteYT() {
+        YeuThich yeuThich = new YeuThich(idLike);
+        return yeuThich;
+    }
     public void AnhXa(){
         mBtnSummary = (Button) findViewById(R.id.btnSummary);
         mBtnChapter = (Button) findViewById(R.id.btnChapter);
@@ -180,6 +203,7 @@ public class Home_Detail extends AppCompatActivity {
         tvNameComic = findViewById(R.id.tvNameComic);
         tvNameAuthor = findViewById(R.id.tvNameAuthor);
         tvSummary = findViewById(R.id.tvSummary);
+        tvCate = findViewById(R.id.tvCategory);
         dtbapp = new dtbApp(this);
     }
     public void ClickTap(){
@@ -220,5 +244,20 @@ public class Home_Detail extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ShowTap();
+    }
+    public void getYt(){
+        if (dtbapp == null) {
+            dtbapp = new dtbApp(getApplicationContext());
+        }
+        cursor = dtbapp.getDataLikeByID(userId,IDtruyen);
+        if (cursor.moveToFirst()){
+            like = cursor.getInt(3);
+            idLike = cursor.getInt(0);
+            if (like == 1 ){
+                mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
+            }
+        }else{
+            mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
+        }
     }
 }

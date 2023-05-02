@@ -45,8 +45,6 @@ public class Comment extends AppCompatActivity {
         pq = getIntent().getIntExtra("phanquyen", 0);
 
 
-
-
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +52,6 @@ public class Comment extends AppCompatActivity {
                 if(comment.equals("")){
                     Toast.makeText(Comment.this, "Hãy nhập comment", Toast.LENGTH_SHORT).show();
                 }else {
-
                     List_Comment listComment = addComment();
                     dtbapp.comment(listComment);
                     ShowComment();
@@ -95,7 +92,6 @@ public class Comment extends AppCompatActivity {
         }
         cursor.close();
         Collections.reverse(arrComment);
-
         adapter= new Comment_Adapter(this,R.layout.layout_comment,arrComment);
         lvComment.setAdapter(adapter);
     }

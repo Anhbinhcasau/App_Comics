@@ -1,8 +1,14 @@
 package edu.huflit.myapp;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -11,45 +17,91 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
 import edu.huflit.myapp.Model.TheLoaiTruyen;
+import edu.huflit.myapp.Model.TruyenTranh;
+import edu.huflit.myapp.Model.YeuThich;
+import edu.huflit.myapp.adapter.AdminTruyenAdapter;
 import edu.huflit.myapp.adapter.TheLoai_Adapter;
+import edu.huflit.myapp.database.dtbApp;
 
 public class TheLoai extends AppCompatActivity {
 
     ListView listView;
     ArrayList<TheLoaiTruyen> theLoaiArrayList;
     TheLoai_Adapter theLoai_adapter;
+    Button btnAdd;
+    EditText edtTL;
+    dtbApp dbapp;
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_the_loai);
         listView = findViewById(R.id.list_theloai);
-        AnhXa();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i == 0)
-                {
-                    Toast.makeText(TheLoai.this, "Thể loại phiêu lưu", Toast.LENGTH_SHORT).show();
-                }
-                else if (i == 1) {
-                    Toast.makeText(TheLoai.this, "Thể loại cổ tích", Toast.LENGTH_SHORT).show();
-                }
 
+        btnAdd = findViewById(R.id.btnAddTheLoai);
+        edtTL = findViewById(R.id.edtTL);
+        dbapp = new dtbApp(this);
+
+
+        Init();
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String cate = edtTL.getText().toString();
+                TheLoaiTruyen theLoaiTruyen = CreatTL();
+                if(cate.equals(""))
+                {
+                    Toast.makeText(TheLoai.this, "Đừng bỏ trống nhé@@", Toast.LENGTH_SHORT).show();
+                    Log.e("ERR","Hãy nhập đầy đủ thong tin");
+                }
+                else {
+                    dbapp.AddCate(theLoaiTruyen);
+                    Toast.makeText(TheLoai.this, "Thêm thể loại thành công!!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Cursor cursor = dbapp.getDataCate();
+//                if (cursor.moveToPosition(i)) {
+//                    // Di chuyển con trỏ đến vị trí item được chọn
+//                    int idTruyen = cursor.getInt(0);
+//                    String Ten = cursor.getString(1);
+//                    Intent a = new Intent(TheLoai.this, update_truyen.class);
+//                    a.putExtra("Id", idTruyen);
+//                    a.putExtra("Ten", Ten);
+//                    startActivity(a);
+//                }
+//                cursor.close();
+//            }
+//        });
+
     }
+    private TheLoaiTruyen CreatTL(){
+        String cate = edtTL.getText().toString();
+        TheLoaiTruyen theLoaiTruyen = new TheLoaiTruyen();
+        theLoaiTruyen.setTenTL(cate);
 
-    public void AnhXa(){
-        //Thể loại
-        theLoaiArrayList = new ArrayList<>();
-        theLoaiArrayList.add(new TheLoaiTruyen("Phiêu lưu" ,R.drawable.icon_adven));
-        theLoaiArrayList.add(new TheLoaiTruyen("Cổ tích" ,R.drawable.icon_adven));
-        theLoaiArrayList.add(new TheLoaiTruyen("Viễn tưởng" ,R.drawable.icon_adven));
-        theLoai_adapter = new TheLoai_Adapter(this,R.layout.layout_theloai,theLoaiArrayList);
+        return theLoaiTruyen;
+    }
+    private void Init() {
+        Cursor cursor = dbapp.getDataCate();
+        theLoaiArrayList = new ArrayList<TheLoaiTruyen>();
+        while (cursor.moveToNext()){
+            TheLoaiTruyen theLoaiTruyen= new TheLoaiTruyen();
+            int id = cursor.getInt(0);
+            String Ten =cursor.getString(1);
+            theLoaiTruyen.setIdTl(id);
+            theLoaiTruyen.setTenTL(Ten);
+            theLoaiArrayList.add(theLoaiTruyen);
+        }
+        cursor.moveToFirst();
+        //Thực hiện khi không sử dụng
+        cursor.close();
+        theLoai_adapter = new TheLoai_Adapter(this,0,theLoaiArrayList);
         listView.setAdapter(theLoai_adapter);
-
     }
 }

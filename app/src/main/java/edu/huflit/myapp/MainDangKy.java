@@ -1,8 +1,12 @@
 package edu.huflit.myapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,11 +65,7 @@ public class MainDangKy extends AppCompatActivity {
                 }
             }
         });
-
     }
-
-
-
 
     private Users CreatTK() {
         String taikhoan = edttk.getText().toString();
