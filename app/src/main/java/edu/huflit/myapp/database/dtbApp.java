@@ -85,6 +85,7 @@ public class dtbApp extends SQLiteOpenHelper {
                 +TAC_GIA+" TEXT)";
 
 
+
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
                 + ID_TAP+" INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -101,7 +102,7 @@ public class dtbApp extends SQLiteOpenHelper {
                 +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
                 +"FOREIGN KEY ("+ TEN_TAI_KHOAN +") REFERENCES " +TABLE_TAIKHOAN+"(" + TEN_TAI_KHOAN +"))";
 
-        //Tạo bảng yêu thích
+        //Tạo bảng rating
         String SQLQuery4 = "CREATE TABLE "+ TABLE_RATING +" ( "
                 +ID_RATING+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +ISRATING + " REAL, "
@@ -124,12 +125,12 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio')";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',null)";
         String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
         String SQLQuery12 = "INSERT INTO Tap VALUES(null,4,1)";
-        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio')";
+        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio',null)";
         String SQLQuery14 = "INSERT INTO Tap VALUES(null,1,0)";
         String SQLQuery15 = "INSERT INTO Tap VALUES(null,2,0)";
         String SQLQuery16 = "INSERT INTO Tap VALUES(null,3,0)";
@@ -283,11 +284,11 @@ public class dtbApp extends SQLiteOpenHelper {
         cursor.close();
         return password;
     }
-    public Cursor getDataRatingByID(int userId, int storyId) {
+    public Cursor getDataRatingByID(int userId, int comicId) {
         SQLiteDatabase db = getReadableDatabase();
         String[] columns = { ID_RATING,ID_TAI_KHOAN, ID_TRUYEN, ISRATING };
         String selection = "idtaikhoan = ? AND idtruyen = ?";
-        String[] selectionArgs = { String.valueOf(userId), String.valueOf(storyId) };
+        String[] selectionArgs = { String.valueOf(userId), String.valueOf(comicId) };
         Cursor cursor = db.query(TABLE_RATING, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }

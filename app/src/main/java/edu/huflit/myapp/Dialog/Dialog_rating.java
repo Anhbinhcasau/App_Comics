@@ -26,7 +26,9 @@ public class Dialog_rating extends Dialog {
     SharedPreferences.Editor edtRating;
     private int userId;
     private int comicId;
-    int  userRating, idRating;
+
+    float userRating;
+    int idRating;
     dtbApp dtbapp;
     private  float userRate = 0;
     RatingBar ratingBar;
@@ -51,7 +53,7 @@ public class Dialog_rating extends Dialog {
         }
         Cursor cursor = dtbapp.getDataRatingByID(userId,comicId);
         if (cursor.moveToFirst()){
-            userRating = cursor.getInt(3);
+            userRating = cursor.getFloat(3);
             idRating = cursor.getInt(0);
             ratingBar.setRating(userRating);
 
@@ -64,13 +66,13 @@ public class Dialog_rating extends Dialog {
                 Cursor cursor = dtbapp.getDataRatingByID(userId,comicId);
                 if (cursor.moveToFirst()){
                     Rating rating1 = upRating();
-                    Log.e( "onClick: ","Chỉnh sưa thanh công");
                     dtbapp.upRating(rating1);
 
                 }else {
                     Rating rating1 = addRating();
                     Log.e( "onClick: ","Thêm Thành công");
                     dtbapp.addRating(rating1);
+                    dismiss();
                 }
             }
         });
@@ -83,13 +85,18 @@ public class Dialog_rating extends Dialog {
     }
     private Rating addRating(){
         float ratingbar = ratingBar.getRating();
+        Log.e( "onClick: ","Chỉnh sưa thanh công bạn đã đánh giá Truyên" + ratingbar+ "*");
         Rating rating1 = new Rating(ratingbar, userId,comicId);
         return rating1;
     }
     private  Rating upRating(){
         float ratingbar = ratingBar.getRating();
+        Log.e( "onClick: ","Bạn đã đánh giá Truyện: " + ratingbar+"*");
         Rating rating1 = new Rating(idRating,ratingbar);
+        Toast.makeText(ratingBar.getContext(), "Bạn đã đánh giá Truyện: " + ratingbar+"*", Toast.LENGTH_SHORT).show();
+        dismiss();
         return  rating1;
+
     }
 
 }
