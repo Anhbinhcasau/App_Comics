@@ -41,9 +41,10 @@ public class Home_Detail extends AppCompatActivity {
     ListView mlvChapter ;
     dtbApp dtbapp;
     String tacgia, tomTat, tenTruyen, anhTruyen, tenUser, cate;
-    public int IDtruyen, pq, id ,userId;
+    public int IDtruyen, pq, id ,userId,like, idLike;
     SharedPreferences saveRating;
     SharedPreferences.Editor editor;
+    Cursor cursor;
 
 
     boolean hidden = true;
@@ -55,9 +56,7 @@ public class Home_Detail extends AppCompatActivity {
 
 
         IDtruyen = getIntent().getIntExtra("idTruyen",0);
-        id = getIntent().getIntExtra("Id",1);
         anhTruyen = getIntent().getStringExtra("anh");
-
         tenTruyen = getIntent().getStringExtra("Ten");
         tomTat  = getIntent().getStringExtra("tomtat");
         tacgia = getIntent().getStringExtra("tacgia");
@@ -116,14 +115,20 @@ public class Home_Detail extends AppCompatActivity {
                 }
             }
         });
+        getYt();
+
         mImgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                YeuThich yeuThich = AddYT();
-                dtbapp.AddTYT(yeuThich);
-                dtbapp.UpdateTYT(yeuThich);
-                mImgFavorite.setVisibility(View.INVISIBLE);
-                Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
+                if (cursor.moveToFirst()){
+                    dtbapp.DeleleYT(idLike);
+                    Toast.makeText(Home_Detail.this, "Bỏ yêu thích", Toast.LENGTH_SHORT).show();
+                }else{
+                    YeuThich yeuThich = AddYT();
+                    dtbapp.AddTYT(yeuThich);
+                    Toast.makeText(Home_Detail.this, "Thêm vào truyện yêu thích", Toast.LENGTH_SHORT).show();
+                }
+                getYt();
             }
         });
         mBtnContinue.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +153,6 @@ public class Home_Detail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final Dialog_rating rating = new Dialog_rating(Home_Detail.this, userId, IDtruyen);
-
                 rating.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(Home_Detail.this, android.R.color.transparent)));
                 rating.setCancelable(false);
                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
@@ -177,10 +181,12 @@ public class Home_Detail extends AppCompatActivity {
         });
     }
     private YeuThich AddYT() {
-        YeuThich yeuThich = new YeuThich();
-        yeuThich.setIdTruyen(IDtruyen);
-        yeuThich.setIdTK(id);
-        yeuThich.setTrangThai(1);
+        int like = 1;
+        YeuThich yeuThich = new YeuThich(like, IDtruyen, userId);
+        return yeuThich;
+    }
+    public YeuThich DeleteYT() {
+        YeuThich yeuThich = new YeuThich(idLike);
         return yeuThich;
     }
     public void AnhXa(){
@@ -238,5 +244,20 @@ public class Home_Detail extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         ShowTap();
+    }
+    public void getYt(){
+        if (dtbapp == null) {
+            dtbapp = new dtbApp(getApplicationContext());
+        }
+        cursor = dtbapp.getDataLikeByID(userId,IDtruyen);
+        if (cursor.moveToFirst()){
+            like = cursor.getInt(3);
+            idLike = cursor.getInt(0);
+            if (like == 1 ){
+                mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_red);
+            }
+        }else{
+            mImgFavorite.setBackgroundResource(R.drawable.baseline_favorite_shadow);
+        }
     }
 }

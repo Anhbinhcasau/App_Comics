@@ -287,6 +287,14 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_TAP, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
+    public Cursor getDataTryenByID(int IDtruyen) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] columns = {TEN_TRUYEN,IMAGE,ID_TRUYEN,TAC_GIA,NOI_DUNG,};
+        String selection = "idtruyen = ?";
+        String[] selectionArgs = {String.valueOf(IDtruyen)};
+        Cursor cursor = db.query(TABLE_TRUYEN, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
 
     public void AddTYT(YeuThich yeuThich){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -297,11 +305,10 @@ public class dtbApp extends SQLiteOpenHelper {
         db.insert(TABLE_LIKE, null, values);
         db.close();
     }
-    public void UpdateTYT(YeuThich yeuThich){
+
+    public void DeleleYT(int idLike){
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(LIKE, yeuThich.getTrangThai());
-        db.update(TABLE_LIKE, values, ID_LIKE + " = " + yeuThich.getIdYt(), null);
+        db.delete(TABLE_LIKE, ID_LIKE + "=?", new String[]{String.valueOf(idLike)});
         db.close();
     }
     public void DeleteCmt(int commentId){
@@ -333,10 +340,18 @@ public class dtbApp extends SQLiteOpenHelper {
     }
     public Cursor getDataLikeByID(int userId, int comicId) {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = { ID_LIKE,ID_TAI_KHOAN, ID_TRUYEN,LIKE };
+        String[] columns = {ID_LIKE,ID_TAI_KHOAN,ID_TRUYEN,LIKE};
         String selection = "idtaikhoan = ? AND idtruyen = ?";
         String[] selectionArgs = { String.valueOf(userId), String.valueOf(comicId) };
-        Cursor cursor = db.query(TABLE_RATING, columns, selection, selectionArgs, null, null, null);
+        Cursor cursor = db.query(TABLE_LIKE, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+    public Cursor getDataLikeByIDUser(int userId) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {ID_LIKE,ID_TAI_KHOAN,ID_TRUYEN,LIKE};
+        String selection = "idtaikhoan = ?";
+        String[] selectionArgs = { String.valueOf(userId)};
+        Cursor cursor = db.query(TABLE_LIKE, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
@@ -348,6 +363,7 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
+
     public void comment(List_Comment listComment){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

@@ -78,13 +78,13 @@ public class Dialog_rating extends Dialog {
     }
     private Rating addRating(){
         float ratingbar = ratingBar.getRating();
-        Log.e( "onClick: ","Chỉnh sưa thanh công bạn đã đánh giá Truyên" + ratingbar+ "*");
+        Log.e( "onClick: ","Bạn đã đánh giá truyên: " + ratingbar+ "*");
         Rating rating1 = new Rating(ratingbar, userId,comicId);
         return rating1;
     }
     private  Rating upRating(){
         float ratingbar = ratingBar.getRating();
-        Log.e( "onClick: ","Bạn đã đánh giá Truyện: " + ratingbar+"*");
+        Log.e( "onClick: ","Chỉnh sưa thanh công bạn đã đánh giá Truyện: " + ratingbar+"*");
         Rating rating1 = new Rating(idRating,ratingbar);
         return  rating1;
     }

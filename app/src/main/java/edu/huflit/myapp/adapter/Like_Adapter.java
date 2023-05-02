@@ -53,12 +53,7 @@ public class Like_Adapter extends ArrayAdapter<TruyenTranh> {
             tenTruyen.setText(truyenTranh.getTenTruyen());
             imgTim.setBackgroundResource(R.drawable.baseline_favorite_red);
             Glide.with(this.ct).load(truyenTranh.getLinkAnh()).into(imgTruyen);
-            imgTim.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    YeuThich yeuThich = new YeuThich();
-                }
-            });
+
 
         }
         return convertView;

@@ -3,14 +3,15 @@ package edu.huflit.myapp.Model;
 public class YeuThich {
     private int idYt, trangThai, idTruyen, idTK;
 
-    public YeuThich(int idYt, int trangThai, int idTruyen, int idTK) {
-        this.idYt = idYt;
+
+    public YeuThich(int trangThai, int idTruyen, int idTK) {
         this.trangThai = trangThai;
         this.idTruyen = idTruyen;
         this.idTK = idTK;
     }
 
-    public YeuThich() {
+    public YeuThich(int idLike) {
+        this.idYt = idLike;
     }
 
     public int getIdYt() {
