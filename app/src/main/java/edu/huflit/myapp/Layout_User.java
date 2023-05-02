@@ -50,6 +50,7 @@ public class Layout_User extends AppCompatActivity {
 
         dtbApp=new dtbApp(this);
 
+        //Truyen vao profile
         String name= getIntent().getStringExtra("TaiKhoan");
         edtName.setText(name);
         id = getIntent().getIntExtra("Id",0);

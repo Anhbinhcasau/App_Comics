@@ -82,7 +82,6 @@ public class Home extends AppCompatActivity {
 
         //Lấy dữ liệu từ trang Login qua
 
-
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
         id = getIntent().getIntExtra("Id",0);
@@ -121,7 +120,7 @@ public class Home extends AppCompatActivity {
                 }
                 //Đăng bài
                 else if (i == 1) {
-                    if(pk == 1) {
+                    if(id == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
                         startActivity(intent1);
                     }
