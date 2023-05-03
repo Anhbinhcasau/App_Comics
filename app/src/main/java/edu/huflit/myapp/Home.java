@@ -81,9 +81,9 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
-        pk = getIntent().getIntExtra("phanquyen",0);
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
+
         idus = getIntent().getIntExtra("Id",0);
         pk = getIntent().getIntExtra("phanquyen", 2);
 
@@ -133,7 +133,10 @@ public class Home extends AppCompatActivity {
                 //Yêu thích
                 else if (i == 2) {
                     Intent intent = new Intent(Home.this, LayoutLike.class);
-                    intent.putExtra("Id", idus);
+                    intent.putExtra("Id",idus);
+                    intent.putExtra("phanquyen", pk);
+                    intent.putExtra("userId", idus);
+                    intent.putExtra("TenUser", tentaikhoan);
                     startActivity(intent);
                 }
                 //Thể Loại
@@ -218,6 +221,7 @@ public class Home extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        drawerLayout.closeDrawer(GravityCompat.START);
         Init();
     }
 
@@ -291,20 +295,17 @@ public class Home extends AppCompatActivity {
                     String tomtat = cursor.getString(2);
                     String anh = cursor.getString(3);
                     String tacgia = cursor.getString(4);
-                    int idlike = cursor.getInt(5);
-                    String theLoai = cursor.getString(6);
+                    String theLoai = cursor.getString(5);
                     Intent i = new Intent(Home.this, Home_Detail.class);
                     i.putExtra("anh", anh);
                     i.putExtra("idTruyen", idTruyen);
                     i.putExtra("Ten", Ten);
                     i.putExtra("tomtat", tomtat);
                     i.putExtra("phanquyen", pk);
-                    i.putExtra("userId", id);
-                    i.putExtra("TenUser", tentaikhoan);
+                    i.putExtra("userId", idus);
+                    i.putExtra("TaiKhoan", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     i.putExtra("TL", theLoai);
-                    i.putExtra("Id", idus);
-                    i.putExtra("idLike", idlike);
                     startActivity(i);
                 }
                 cursor.close();
@@ -350,5 +351,6 @@ public class Home extends AppCompatActivity {
             mTimer = null;
         }
     }
+
 
 }

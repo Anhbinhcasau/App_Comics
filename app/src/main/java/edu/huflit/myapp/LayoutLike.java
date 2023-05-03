@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -29,9 +30,11 @@ public class LayoutLike extends AppCompatActivity {
     public static dtbApp dtbapp;
     public static ArrayList<TruyenTranh> tranhArrayListYT;
     Like_Adapter adapter;
-    int id, IDtruyen;
-    String anhTruyen, tenTruyen;
-    SharedPreferences sharedPref;
+    int idUser, pk;
+    String nameUser;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,75 +42,65 @@ public class LayoutLike extends AppCompatActivity {
         setContentView(R.layout.activity_layout_like);
 
         dtbapp = new dtbApp(this);
-
-        sharedPref = getSharedPreferences("my_prefs", Context.MODE_PRIVATE);
-        IDtruyen = sharedPref.getInt("idTruyen", 0);
-        id = sharedPref.getInt("Id", 0);
-//        id = getIntent().getIntExtra("Id", 0);
-//        IDtruyen = getIntent().getIntExtra("idTruyen", 0);
-        anhTruyen = getIntent().getStringExtra("anh");
-        tenTruyen = getIntent().getStringExtra("Ten");
-
-
         listView1 = findViewById(R.id.lvyeuthich);
+        idUser = getIntent().getIntExtra("Id", 0);
+        pk = getIntent().getIntExtra("phanquyen", 0);
+        nameUser= getIntent().getStringExtra("TenUser");
 
+        Log.e( "onCreate: ", String.valueOf(idUser));
 
         Init();
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Cursor cursor = dtbapp.getDataTruyen();
-                if (cursor.moveToPosition(i)) {
-                    // Di chuyển con trỏ đến vị trí item được chọn
-                    int idTruyen = cursor.getInt(0);
-                    String Ten = cursor.getString(1);
-                    String tomtat = cursor.getString(2);
-                    String anh = cursor.getString(3);
-                    String tacgia = cursor.getString(4);
-                    String theloai = cursor.getString(5);
-                    Intent a = new Intent(LayoutLike.this, Home_Detail.class);
-                    a.putExtra("anh", anh);
-                    a.putExtra("idTruyen", idTruyen);
-                    a.putExtra("Ten", Ten);
-                    a.putExtra("tomtat", tomtat);
-                    a.putExtra("tacgia", tacgia);
-                    a.putExtra("TL", theloai);
-                    startActivity(a);
+                Cursor csLike = dtbapp.getDataLikeByIDUser(idUser);
+                if (csLike.moveToPosition(i)) { // retrieve the item at the clicked position
+                    int IDtruyen = csLike.getInt(2);
+                    Cursor csTruyen = dtbapp.getDataTryenByID(IDtruyen);
+                    if (csTruyen != null && csTruyen.moveToFirst()) { // use moveToFirst instead of moveToPosition to retrieve the first item
+                        int idTruyen = csTruyen.getInt(2);
+                        String Ten = csTruyen.getString(0);
+                        String tomtat = csTruyen.getString(4);
+                        String anh = csTruyen.getString(1);
+                        String tacgia = csTruyen.getString(3);
+                        String theloai = csTruyen.getString(5);
+                        Intent a = new Intent(LayoutLike.this, Home_Detail.class);
+                        a.putExtra("anh", anh);
+                        a.putExtra("idTruyen", idTruyen);
+                        a.putExtra("Ten", Ten);
+                        a.putExtra("tomtat", tomtat);
+                        a.putExtra("tacgia", tacgia);
+                        a.putExtra("phanquyen", pk);
+                        a.putExtra("userId", idUser);
+                        a.putExtra("TaiKhoan", nameUser);
+                        a.putExtra("TL", theloai);
+                        startActivity(a);
+                        finish();
+                    }
+                    csTruyen.close();
                 }
-                cursor.close();
+                csLike.close();
             }
         });
     }
 
     private void Init(){
         //Hiện các truyện yêu thích
-        Cursor cursor1 = dtbapp.getDataYeuThich();
-        Cursor cursor = dtbapp.getDataTruyen();
+        Cursor csLike = dtbapp.getDataLikeByIDUser(idUser);
         tranhArrayListYT = new ArrayList<TruyenTranh>();
-        while (cursor.moveToNext() && cursor1.moveToNext()){
-            if (cursor1.getInt(1) == 1 ){
+        while(csLike.moveToNext() ){
+            int IDtruyen = csLike.getInt(2);
+            Cursor csTruyen = dtbapp.getDataTryenByID(IDtruyen);
+            if (csTruyen.moveToFirst()){
                 TruyenTranh truyenTranh = new TruyenTranh();
-                truyenTranh.setIdTruyen(cursor.getInt(0));
-                truyenTranh.setTenTruyen(cursor.getString(1));
-                truyenTranh.setNoiDungTruyen(cursor.getString(2));
-                truyenTranh.setLinkAnh(cursor.getString(3));
-                truyenTranh.setTacGia(cursor.getString(4));
-                truyenTranh.setCate(cursor.getString(6));
+                truyenTranh.setLinkAnh(csTruyen.getString(1));
+                truyenTranh.setTenTruyen(csTruyen.getString(0));
                 tranhArrayListYT.add(truyenTranh);
             }
+            csTruyen.close();
         }
-        //Thực hiện khi không sử dụng
-        cursor.close();
-        cursor1.close();
+        csLike.close();
         adapter = new Like_Adapter(this, 0, tranhArrayListYT);
         listView1.setAdapter(adapter);
-    }
-
-    public YeuThich DeleteYT() {
-        YeuThich yeuThich = new YeuThich();
-        yeuThich.setIdTruyen(IDtruyen);
-        yeuThich.setIdTK(id);
-        yeuThich.setTrangThai(0);
-        return yeuThich;
     }
 }
