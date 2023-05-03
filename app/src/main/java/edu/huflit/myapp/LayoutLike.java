@@ -63,7 +63,7 @@ public class LayoutLike extends AppCompatActivity {
                         String tomtat = csTruyen.getString(4);
                         String anh = csTruyen.getString(1);
                         String tacgia = csTruyen.getString(3);
-                        String theloai = csTruyen.getString(5);
+                        //String theloai = cursor.getString(5);
                         Intent a = new Intent(LayoutLike.this, Home_Detail.class);
                         a.putExtra("anh", anh);
                         a.putExtra("idTruyen", idTruyen);
@@ -73,7 +73,7 @@ public class LayoutLike extends AppCompatActivity {
                         a.putExtra("phanquyen", pk);
                         a.putExtra("userId", idUser);
                         a.putExtra("TaiKhoan", nameUser);
-                        a.putExtra("TL", theloai);
+                        //a.putExtra("TL", theloai);
                         startActivity(a);
                         finish();
                     }

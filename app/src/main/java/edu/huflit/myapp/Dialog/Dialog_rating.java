@@ -2,22 +2,17 @@ package edu.huflit.myapp.Dialog;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 
-import edu.huflit.myapp.Home_Detail;
-import edu.huflit.myapp.Model.List_Comment;
 import edu.huflit.myapp.Model.Rating;
-import edu.huflit.myapp.Model.TruyenTranh;
 import edu.huflit.myapp.R;
 import edu.huflit.myapp.database.dtbApp;
 
@@ -26,7 +21,8 @@ public class Dialog_rating extends Dialog {
     SharedPreferences.Editor edtRating;
     private int userId;
     private int comicId;
-    int  userRating, idRating;
+    float userRating;
+    int idRating;
     dtbApp dtbapp;
     private  float userRate = 0;
     RatingBar ratingBar;
@@ -51,21 +47,19 @@ public class Dialog_rating extends Dialog {
         }
         Cursor cursor = dtbapp.getDataRatingByID(userId,comicId);
         if (cursor.moveToFirst()){
-            userRating = cursor.getInt(3);
+            userRating = cursor.getFloat(3);
             idRating = cursor.getInt(0);
             ratingBar.setRating(userRating);
 
         }else{
             ratingBar.setRating(userRate);
         }
-
         saveRateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Cursor cursor = dtbapp.getDataRatingByID(userId,comicId);
                 if (cursor.moveToFirst()){
                     Rating rating1 = upRating();
-                    Log.e( "onClick: ","Chỉnh sưa thanh công");
                     dtbapp.upRating(rating1);
 
                 }else {
@@ -84,11 +78,13 @@ public class Dialog_rating extends Dialog {
     }
     private Rating addRating(){
         float ratingbar = ratingBar.getRating();
+        Log.e( "onClick: ","Bạn đã đánh giá truyên: " + ratingbar+ "*");
         Rating rating1 = new Rating(ratingbar, userId,comicId);
         return rating1;
     }
     private  Rating upRating(){
         float ratingbar = ratingBar.getRating();
+        Log.e( "onClick: ","Chỉnh sưa thanh công bạn đã đánh giá Truyện: " + ratingbar+"*");
         Rating rating1 = new Rating(idRating,ratingbar);
         return  rating1;
     }

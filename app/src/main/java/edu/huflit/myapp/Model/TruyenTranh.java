@@ -7,6 +7,11 @@ public class TruyenTranh {
     private String Cate;
     private Integer idLike;
 
+    public TruyenTranh(String tenTruyen, String linkAnh) {
+        this.tenTruyen = tenTruyen;
+        LinkAnh = linkAnh;
+    }
+
     public TruyenTranh(String tieuDe, String noiDung, String img, String tacGia, int id, int idLike, String cate) {
         this.tenTruyen = tieuDe;
         this.LinkAnh = img;

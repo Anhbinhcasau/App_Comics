@@ -81,9 +81,9 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //Lấy dữ liệu từ trang Login qua
+        pk = getIntent().getIntExtra("phanquyen",0);
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
-
         idus = getIntent().getIntExtra("Id",0);
         pk = getIntent().getIntExtra("phanquyen", 2);
 
@@ -351,6 +351,5 @@ public class Home extends AppCompatActivity {
             mTimer = null;
         }
     }
-
 
 }

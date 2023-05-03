@@ -173,16 +173,16 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
 
-        sqLiteDatabase.execSQL(SQLQuery8);
-        sqLiteDatabase.execSQL(SQLQuery9);
-        sqLiteDatabase.execSQL(SQLQuery10);
-        sqLiteDatabase.execSQL(SQLQuery11);
-        sqLiteDatabase.execSQL(SQLQuery12);
-        sqLiteDatabase.execSQL(SQLQuery13);
-        sqLiteDatabase.execSQL(SQLQuery14);
-        sqLiteDatabase.execSQL(SQLQuery15);
-        sqLiteDatabase.execSQL(SQLQuery16);
-        sqLiteDatabase.execSQL(SQLQuery17);
+//        sqLiteDatabase.execSQL(SQLQuery8);
+//        sqLiteDatabase.execSQL(SQLQuery9);
+//        sqLiteDatabase.execSQL(SQLQuery10);
+//        sqLiteDatabase.execSQL(SQLQuery11);
+//        sqLiteDatabase.execSQL(SQLQuery12);
+//        sqLiteDatabase.execSQL(SQLQuery13);
+//        sqLiteDatabase.execSQL(SQLQuery14);
+//        sqLiteDatabase.execSQL(SQLQuery15);
+//        sqLiteDatabase.execSQL(SQLQuery16);
+//        sqLiteDatabase.execSQL(SQLQuery17);
         sqLiteDatabase.execSQL(SQLQuery18);
         sqLiteDatabase.execSQL(SQLQuery19);
 
@@ -240,6 +240,7 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(IMAGE,truyenTranh.getLinkAnh());
         values.put(TAC_GIA,truyenTranh.getTacGia());
         values.put(CATE, truyenTranh.getCate());
+
         dtb.insert(TABLE_TRUYEN,null,values);
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
@@ -355,22 +356,6 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_LIKE, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
-    public Cursor getDataTruyenByCate(String cate) {
-        SQLiteDatabase db = getReadableDatabase();
-        String[] columns = {ID_TRUYEN,TEN_TRUYEN,IMAGE,TAC_GIA,NOI_DUNG,CATE};
-        String selection = "_category = ?";
-        String[] selectionArgs = {String.valueOf(cate)};
-        Cursor cursor = db.query(TABLE_TRUYEN, columns, selection, selectionArgs, null, null, null);
-        return cursor;
-    }
-    public Cursor getDataCateById(int IDcate) {
-        SQLiteDatabase db = getReadableDatabase();
-        String[] columns = {ID_CATE,CATE};
-        String selection = "_category = ?";
-        String[] selectionArgs = {String.valueOf(IDcate)};
-        Cursor cursor = db.query(TABLE_CATEGORY, columns, selection, selectionArgs, null, null, null);
-        return cursor;
-    }
     public Cursor getDataLikeByIDUser(int userId) {
         SQLiteDatabase db = getReadableDatabase();
         String[] columns = {ID_LIKE,ID_TAI_KHOAN,ID_TRUYEN,LIKE};
@@ -388,7 +373,6 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
-
     public void comment(List_Comment listComment){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -414,4 +398,7 @@ public class dtbApp extends SQLiteOpenHelper {
         db.update(TABLE_RATING, values,ID_RATING + " = " + rating.getIdRating(), null);
         db.close();
     }
+
+
+
 }
