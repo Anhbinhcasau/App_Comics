@@ -305,7 +305,7 @@ public class dtbApp extends SQLiteOpenHelper {
     }
     public Cursor getDataTryenByID(int IDtruyen) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {TEN_TRUYEN,IMAGE,ID_TRUYEN,TAC_GIA,NOI_DUNG,};
+        String[] columns = {TEN_TRUYEN,IMAGE,ID_TRUYEN,TAC_GIA,NOI_DUNG,CATE};
         String selection = "idtruyen = ?";
         String[] selectionArgs = {String.valueOf(IDtruyen)};
         Cursor cursor = db.query(TABLE_TRUYEN, columns, selection, selectionArgs, null, null, null);
