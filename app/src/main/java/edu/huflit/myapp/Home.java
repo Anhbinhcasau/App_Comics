@@ -305,7 +305,6 @@ public class Home extends AppCompatActivity {
                     i.putExtra("userId", idus);
                     i.putExtra("TaiKhoan", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
-                    //i.putExtra("TL", theLoai);
                     i.putExtra("TL", theLoai);
                     startActivity(i);
                 }
@@ -352,6 +351,5 @@ public class Home extends AppCompatActivity {
             mTimer = null;
         }
     }
-
 
 }
