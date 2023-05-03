@@ -123,6 +123,9 @@ public class Home extends AppCompatActivity {
                     if(pk == 1) {
                         Intent intent1 = new Intent(Home.this, LayoutAdmin.class);
                         tentaikhoan= getIntent().getStringExtra("username");
+                        intent1.putExtra("phanquyen", pk);
+                        intent1.putExtra("userId", idus);
+                        intent1.putExtra("TaiKhoan", tentaikhoan);
                         email = getIntent().getStringExtra("Email");
                         startActivity(intent1);
                     }
@@ -135,13 +138,15 @@ public class Home extends AppCompatActivity {
                     Intent intent = new Intent(Home.this, LayoutLike.class);
                     intent.putExtra("Id",idus);
                     intent.putExtra("phanquyen", pk);
-                    intent.putExtra("userId", idus);
                     intent.putExtra("TenUser", tentaikhoan);
                     startActivity(intent);
                 }
                 //Thể Loại
                 else if (i == 3) {
                     Intent intent = new Intent(Home.this, TheLoai.class);
+                    intent.putExtra("phanquyen", pk);
+                    intent.putExtra("userId", idus);
+                    intent.putExtra("TaiKhoan", tentaikhoan);
                     startActivity(intent);
                 }
                 //Đổi Mật Khẩu
@@ -248,8 +253,8 @@ public class Home extends AppCompatActivity {
         //Chuyên mục
         navigationsArrayList = new ArrayList<>();
         navigationsArrayList.add(new ThongTin("Thông Tin", R.drawable.icon_login));
-        navigationsArrayList.add(new ThongTin("Đăng bài",R.drawable.icon_dangbai));
-        navigationsArrayList.add(new ThongTin("Ưa thích",R.drawable.baseline_favorite_red));
+        navigationsArrayList.add(new ThongTin("Quản lý truyện",R.drawable.icon_dangbai));
+        navigationsArrayList.add(new ThongTin("Yêu thích",R.drawable.baseline_favorite_red));
         navigationsArrayList.add(new ThongTin("Thể Loại",R.drawable.icon_theloai));
         navigationsArrayList.add(new ThongTin("Đổi mật khẩu",R.drawable.icon_doimatkhau));
         navigationsArrayList.add(new ThongTin("Setting",R.drawable.icon_setting));

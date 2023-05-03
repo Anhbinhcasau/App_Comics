@@ -258,10 +258,17 @@ public class dtbApp extends SQLiteOpenHelper {
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(CATE, theLoai.getTenTL());
-        values.put(ID_TRUYEN, theLoai.getIdTruyen());
         dtb.insert(TABLE_CATEGORY, null, values);
         dtb.close();
         Log.e("Add _category", "Thành Công" );
+    }
+    public Cursor getDataTruyenByCate(String cate) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {ID_TRUYEN,TEN_TRUYEN,IMAGE,TAC_GIA,NOI_DUNG,CATE};
+        String selection = "_category = ?";
+        String[] selectionArgs = {String.valueOf(cate)};
+        Cursor cursor = db.query(TABLE_TRUYEN, columns, selection, selectionArgs, null, null, null);
+        return cursor;
     }
     public void Delete(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
