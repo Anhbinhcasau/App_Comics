@@ -295,7 +295,7 @@ public class Home extends AppCompatActivity {
                     String tomtat = cursor.getString(2);
                     String anh = cursor.getString(3);
                     String tacgia = cursor.getString(4);
-                    //String theLoai = cursor.getString(6);
+                    String theLoai = cursor.getString(5);
                     Intent i = new Intent(Home.this, Home_Detail.class);
                     i.putExtra("anh", anh);
                     i.putExtra("idTruyen", idTruyen);
@@ -306,6 +306,7 @@ public class Home extends AppCompatActivity {
                     i.putExtra("TaiKhoan", tentaikhoan);
                     i.putExtra("tacgia", tacgia);
                     //i.putExtra("TL", theLoai);
+                    i.putExtra("TL", theLoai);
                     startActivity(i);
                 }
                 cursor.close();

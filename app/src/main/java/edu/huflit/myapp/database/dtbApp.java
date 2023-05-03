@@ -61,7 +61,9 @@ public class dtbApp extends SQLiteOpenHelper {
     private static String TABLE_CATEGORY = "tbCategory";
     private static String ID_CATE = "idCategory";
     private static String CATE = "_category";
-
+    //Bảng quản lý thể loại
+    private static String TABLE_QLTL = "tbQLTL";
+    private static String ID_QL = "idLQL";
 
 
     // Phương thức tương tác với hệ điều hành truy cập vào tài nguyên hệ thống
@@ -130,9 +132,15 @@ public class dtbApp extends SQLiteOpenHelper {
         //Tạo bảng thể loại
         String SQLQuery18 = "CREATE TABLE "+ TABLE_CATEGORY +" ( "
                 +ID_CATE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +CATE + " TEXT UNIQUE, "
+                +CATE + " TEXT UNIQUE )";
+
+        //Tạo bảng quản lý thể loại
+        String SQLQuery19 = "CREATE TABLE "+ TABLE_QLTL +" ( "
+                +ID_QL+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +ID_TRUYEN+" INTEGER , "
-                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"))";
+                +ID_CATE+ " INTEGER , "
+                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+                +"FOREIGN KEY ("+ ID_CATE +") REFERENCES " +TABLE_CATEGORY+"(" + ID_CATE +"))";
 
         //Insert Dữ Liệu vảo bảng người dùng
         //Phân quyền ( 1 - admin ) ( 2 - user)
@@ -200,11 +208,11 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
         return res;
     }
-    public Cursor getDataYeuThich(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_LIKE,null) ;
-        return res;
-    }
+//    public Cursor getDataYeuThich(){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_LIKE,null) ;
+//        return res;
+//    }
     public Cursor getDataCate(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_CATEGORY,null) ;
@@ -275,7 +283,7 @@ public class dtbApp extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
         values.put(MAT_KHAU, taikhoan.getMatkhau());
-        db.update(TABLE_TAIKHOAN,values,TEN_TAI_KHOAN +" = " + taikhoan.getTenTaiKhoan(), null);
+        db.update(TABLE_TAIKHOAN,values,ID_TAI_KHOAN +" = " + taikhoan.getmId(), null);
         db.close();
 
     }
@@ -389,7 +397,4 @@ public class dtbApp extends SQLiteOpenHelper {
         db.update(TABLE_RATING, values,ID_RATING + " = " + rating.getIdRating(), null);
         db.close();
     }
-
-
-
 }
