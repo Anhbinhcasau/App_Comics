@@ -62,6 +62,7 @@ public class Home_Detail extends AppCompatActivity {
         tacgia = getIntent().getStringExtra("tacgia");
         tenUser = getIntent().getStringExtra("TenUser");
         userId = getIntent().getIntExtra("userId", 0);
+
         tenUser = getIntent().getStringExtra("TaiKhoan");
         pq = getIntent().getIntExtra("phanquyen", 0);
         saveRating = getSharedPreferences("Rating", Context.MODE_PRIVATE);
@@ -210,7 +211,6 @@ public class Home_Detail extends AppCompatActivity {
         mlvChapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                 Cursor cursor = dtbapp.getDataTapByIDTruyen(IDtruyen);
                 if (cursor.moveToPosition(position)){
                     int tenTap = Integer.parseInt(cursor.getString(1));

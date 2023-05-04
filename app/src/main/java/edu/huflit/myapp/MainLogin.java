@@ -76,6 +76,7 @@ public class MainLogin extends AppCompatActivity {
                     i.putExtra("TaiKhoan",tk);
                     i.putExtra("Email",email);
                     startActivity(i);
+                    finish();
                 }
             }
         }
@@ -126,8 +127,8 @@ public class MainLogin extends AppCompatActivity {
                         i.putExtra("Id",id);
                         i.putExtra("TaiKhoan",tk);
                         i.putExtra("Email",email);
-
                         startActivity(i);
+                        finish();
                     }
                 }
                 //Trả cursor về đầu

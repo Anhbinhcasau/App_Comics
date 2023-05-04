@@ -31,6 +31,8 @@ public class TheLoai extends AppCompatActivity {
     Button btnAdd;
     EditText edtTL;
     dtbApp dbapp;
+    int idUser, pk;
+    String nameUser;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,7 +44,9 @@ public class TheLoai extends AppCompatActivity {
         btnAdd = findViewById(R.id.btnAddTheLoai);
         edtTL = findViewById(R.id.edtTL);
         dbapp = new dtbApp(this);
-
+        idUser = getIntent().getIntExtra("userId", 0);
+        pk = getIntent().getIntExtra("phanquyen", 0);
+        nameUser= getIntent().getStringExtra("TaiKhoan");
 
         Init();
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -57,34 +61,38 @@ public class TheLoai extends AppCompatActivity {
                 }
                 else {
                     dbapp.AddCate(theLoaiTruyen);
+                    Init();
                     Toast.makeText(TheLoai.this, "Thêm thể loại thành công!!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Cursor cursor = dbapp.getDataCate();
-//                if (cursor.moveToPosition(i)) {
-//                    // Di chuyển con trỏ đến vị trí item được chọn
-//                    int idTruyen = cursor.getInt(0);
-//                    String Ten = cursor.getString(1);
-//                    Intent a = new Intent(TheLoai.this, update_truyen.class);
-//                    a.putExtra("Id", idTruyen);
-//                    a.putExtra("Ten", Ten);
-//                    startActivity(a);
-//                }
-//                cursor.close();
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor cursor = dbapp.getDataCate();
+                if (cursor.moveToPosition(i)) {
+                    // Di chuyển con trỏ đến vị trí item được chọn
+                    int idCate = cursor.getInt(0);
+                    String cate = cursor.getString(1);
+                    Intent a = new Intent(TheLoai.this, ListTLTruyen.class);
+                    a.putExtra("IdCate", idCate);
+                    a.putExtra("TL", cate);
+                    a.putExtra("phanquyen", pk);
+                    a.putExtra("userId", idUser);
+                    a.putExtra("TaiKhoan", nameUser);
+                    startActivity(a);
+                    finish();
+                }
+                cursor.close();
+            }
+        });
 
     }
     private TheLoaiTruyen CreatTL(){
         String cate = edtTL.getText().toString();
         TheLoaiTruyen theLoaiTruyen = new TheLoaiTruyen();
         theLoaiTruyen.setTenTL(cate);
-
         return theLoaiTruyen;
     }
     private void Init() {
@@ -104,4 +112,5 @@ public class TheLoai extends AppCompatActivity {
         theLoai_adapter = new TheLoai_Adapter(this,0,theLoaiArrayList);
         listView.setAdapter(theLoai_adapter);
     }
+
 }

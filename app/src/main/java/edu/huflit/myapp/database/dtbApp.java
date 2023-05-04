@@ -61,7 +61,9 @@ public class dtbApp extends SQLiteOpenHelper {
     private static String TABLE_CATEGORY = "tbCategory";
     private static String ID_CATE = "idCategory";
     private static String CATE = "_category";
-
+    //Bảng quản lý thể loại
+    private static String TABLE_QLTL = "tbQLTL";
+    private static String ID_QL = "idLQL";
 
 
     // Phương thức tương tác với hệ điều hành truy cập vào tài nguyên hệ thống
@@ -92,7 +94,6 @@ public class dtbApp extends SQLiteOpenHelper {
                 +TAC_GIA+" TEXT,"
                 +CATE+" TEXT,"
                 +"FOREIGN KEY ("+ CATE +") REFERENCES " +TABLE_CATEGORY+"(" + CATE +"))";
-
 
         //Tạo bảng tập Truyện
         String SQLQuery2 = "CREATE TABLE "+ TABLE_TAP +" ( "
@@ -131,16 +132,22 @@ public class dtbApp extends SQLiteOpenHelper {
         //Tạo bảng thể loại
         String SQLQuery18 = "CREATE TABLE "+ TABLE_CATEGORY +" ( "
                 +ID_CATE+" INTEGER PRIMARY KEY AUTOINCREMENT, "
-                +CATE + " TEXT UNIQUE, "
+                +CATE + " TEXT UNIQUE )";
+
+        //Tạo bảng quản lý thể loại
+        String SQLQuery19 = "CREATE TABLE "+ TABLE_QLTL +" ( "
+                +ID_QL+" INTEGER PRIMARY KEY AUTOINCREMENT, "
                 +ID_TRUYEN+" INTEGER , "
-                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"))";
+                +ID_CATE+ " INTEGER , "
+                +"FOREIGN KEY ("+ ID_TRUYEN +") REFERENCES " +TABLE_TRUYEN+"(" + ID_TRUYEN +"),"
+                +"FOREIGN KEY ("+ ID_CATE +") REFERENCES " +TABLE_CATEGORY+"(" + ID_CATE +"))";
 
         //Insert Dữ Liệu vảo bảng người dùng
         //Phân quyền ( 1 - admin ) ( 2 - user)
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio','Manga')";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',null)";
         String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
@@ -166,16 +173,16 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
 
-        sqLiteDatabase.execSQL(SQLQuery8);
-        sqLiteDatabase.execSQL(SQLQuery9);
-        sqLiteDatabase.execSQL(SQLQuery10);
-        sqLiteDatabase.execSQL(SQLQuery11);
-        sqLiteDatabase.execSQL(SQLQuery12);
-        sqLiteDatabase.execSQL(SQLQuery13);
-        sqLiteDatabase.execSQL(SQLQuery14);
-        sqLiteDatabase.execSQL(SQLQuery15);
-        sqLiteDatabase.execSQL(SQLQuery16);
-        sqLiteDatabase.execSQL(SQLQuery17);
+//        sqLiteDatabase.execSQL(SQLQuery8);
+//        sqLiteDatabase.execSQL(SQLQuery9);
+//        sqLiteDatabase.execSQL(SQLQuery10);
+//        sqLiteDatabase.execSQL(SQLQuery11);
+//        sqLiteDatabase.execSQL(SQLQuery12);
+//        sqLiteDatabase.execSQL(SQLQuery13);
+//        sqLiteDatabase.execSQL(SQLQuery14);
+//        sqLiteDatabase.execSQL(SQLQuery15);
+//        sqLiteDatabase.execSQL(SQLQuery16);
+//        sqLiteDatabase.execSQL(SQLQuery17);
         sqLiteDatabase.execSQL(SQLQuery18);
 
     }
@@ -201,11 +208,11 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_TAP,null) ;
         return res;
     }
-    public Cursor getDataYeuThich(){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_LIKE,null) ;
-        return res;
-    }
+//    public Cursor getDataYeuThich(){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_LIKE,null) ;
+//        return res;
+//    }
     public Cursor getDataCate(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + dtbApp.TABLE_CATEGORY,null) ;
@@ -232,6 +239,7 @@ public class dtbApp extends SQLiteOpenHelper {
         values.put(IMAGE,truyenTranh.getLinkAnh());
         values.put(TAC_GIA,truyenTranh.getTacGia());
         values.put(CATE, truyenTranh.getCate());
+
         dtb.insert(TABLE_TRUYEN,null,values);
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
@@ -255,6 +263,14 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add _category", "Thành Công" );
     }
+    public Cursor getDataTruyenByCate(String cate) {
+        SQLiteDatabase db = getReadableDatabase();
+        String[] columns = {ID_TRUYEN,TEN_TRUYEN,IMAGE,TAC_GIA,NOI_DUNG,CATE};
+        String selection = "_category = ?";
+        String[] selectionArgs = {String.valueOf(cate)};
+        Cursor cursor = db.query(TABLE_TRUYEN, columns, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
     public void Delete(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
@@ -272,11 +288,11 @@ public class dtbApp extends SQLiteOpenHelper {
         db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
     }
-    public void ChangePass(Users users) {
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void ChangePass(Users taikhoan) {
+        SQLiteDatabase db = this.getReadableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MAT_KHAU, users.getMatkhau());
-        db.update(TABLE_TAIKHOAN,values,ID_TAI_KHOAN + " = " + users.getmId(), null);
+        values.put(MAT_KHAU, taikhoan.getMatkhau());
+        db.update(TABLE_TAIKHOAN,values,ID_TAI_KHOAN +" = " + taikhoan.getmId(), null);
         db.close();
 
     }
@@ -290,7 +306,7 @@ public class dtbApp extends SQLiteOpenHelper {
     }
     public Cursor getDataTryenByID(int IDtruyen) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] columns = {TEN_TRUYEN,IMAGE,ID_TRUYEN,TAC_GIA,NOI_DUNG,};
+        String[] columns = {TEN_TRUYEN,IMAGE,ID_TRUYEN,TAC_GIA,NOI_DUNG,CATE};
         String selection = "idtruyen = ?";
         String[] selectionArgs = {String.valueOf(IDtruyen)};
         Cursor cursor = db.query(TABLE_TRUYEN, columns, selection, selectionArgs, null, null, null);

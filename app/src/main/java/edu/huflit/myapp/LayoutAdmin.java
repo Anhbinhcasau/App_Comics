@@ -30,6 +30,8 @@ public class LayoutAdmin extends AppCompatActivity {
     ArrayList<TruyenTranh> tranhArrayList;
     AdminTruyenAdapter adapter;
     private boolean isLongClick = false;
+    int idUser, pk;
+    String nameUser;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,10 +44,17 @@ public class LayoutAdmin extends AppCompatActivity {
         listView = findViewById(R.id.lvQuanLy);
         btnTheloai = findViewById(R.id.btnTheloai);
 
+        idUser = getIntent().getIntExtra("userId", 0);
+        pk = getIntent().getIntExtra("phanquyen", 0);
+        nameUser= getIntent().getStringExtra("TaiKhoan");
+
         btnTheloai.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(LayoutAdmin.this, TheLoai.class);
+                i.putExtra("phanquyen", pk);
+                i.putExtra("userId", idUser);
+                i.putExtra("TaiKhoan", nameUser);
                 startActivity(i);
             }
         });
