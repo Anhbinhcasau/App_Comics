@@ -140,7 +140,7 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',null)";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio','Manga')";
         String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
@@ -272,11 +272,11 @@ public class dtbApp extends SQLiteOpenHelper {
         db.update(TABLE_TRUYEN, values,ID_TRUYEN + " = " + truyenTranh.getIdTruyen(), null);
         db.close();
     }
-    public void ChangePass(Users taikhoan) {
-        SQLiteDatabase db = this.getReadableDatabase();
+    public void ChangePass(Users users) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(MAT_KHAU, taikhoan.getMatkhau());
-        db.update(TABLE_TAIKHOAN,values,TEN_TAI_KHOAN +" = " + taikhoan.getTenTaiKhoan(), null);
+        values.put(MAT_KHAU, users.getMatkhau());
+        db.update(TABLE_TAIKHOAN,values,ID_TAI_KHOAN + " = " + users.getmId(), null);
         db.close();
 
     }
