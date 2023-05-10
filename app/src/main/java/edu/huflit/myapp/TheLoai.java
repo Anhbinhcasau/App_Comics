@@ -47,7 +47,6 @@ public class TheLoai extends AppCompatActivity {
         idUser = getIntent().getIntExtra("userId", 0);
         pk = getIntent().getIntExtra("phanquyen", 0);
         nameUser= getIntent().getStringExtra("TaiKhoan");
-
         Init();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

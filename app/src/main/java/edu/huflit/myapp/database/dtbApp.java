@@ -173,16 +173,16 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
 
-//        sqLiteDatabase.execSQL(SQLQuery8);
-//        sqLiteDatabase.execSQL(SQLQuery9);
-//        sqLiteDatabase.execSQL(SQLQuery10);
-//        sqLiteDatabase.execSQL(SQLQuery11);
-//        sqLiteDatabase.execSQL(SQLQuery12);
-//        sqLiteDatabase.execSQL(SQLQuery13);
-//        sqLiteDatabase.execSQL(SQLQuery14);
-//        sqLiteDatabase.execSQL(SQLQuery15);
-//        sqLiteDatabase.execSQL(SQLQuery16);
-//        sqLiteDatabase.execSQL(SQLQuery17);
+        sqLiteDatabase.execSQL(SQLQuery8);
+        sqLiteDatabase.execSQL(SQLQuery9);
+        sqLiteDatabase.execSQL(SQLQuery10);
+        sqLiteDatabase.execSQL(SQLQuery11);
+        sqLiteDatabase.execSQL(SQLQuery12);
+        sqLiteDatabase.execSQL(SQLQuery13);
+        sqLiteDatabase.execSQL(SQLQuery14);
+        sqLiteDatabase.execSQL(SQLQuery15);
+        sqLiteDatabase.execSQL(SQLQuery16);
+        sqLiteDatabase.execSQL(SQLQuery17);
         sqLiteDatabase.execSQL(SQLQuery18);
 
     }
