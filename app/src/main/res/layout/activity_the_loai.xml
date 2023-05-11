@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_light"
+    android:background="#FFFFCC"
     android:orientation="vertical"
     tools:context=".TheLoai">
 
@@ -12,9 +12,12 @@
         android:id="@+id/textView8"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:textColor="@color/black"
-        android:text="Quản lý thể loại truyện" />
+        android:textColor="#E1555151"
+        android:background="@color/green_light"
+        android:textSize="40dp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="Thể loại truyện" />
 
     <EditText
         android:id="@+id/edtTL"

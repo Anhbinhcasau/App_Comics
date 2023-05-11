@@ -125,12 +125,12 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:layout_marginTop="156dp"
-        android:background="@color/black"
+
         app:layout_constraintEnd_toStartOf="@+id/imgBtnEdt"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/profilePicture"
-        app:srcCompat="@drawable/img_2" />
+        app:srcCompat="@drawable/icon_avatar" />
 
     <Button
         android:id="@+id/btnSave"

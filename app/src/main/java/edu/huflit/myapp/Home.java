@@ -60,7 +60,7 @@ public class Home extends AppCompatActivity {
 
     EditText edTSearch,edtName,edtEmail;
 
-    String email,tentaikhoan;
+    String email,tentaikhoan,pass;
 
     ListView listviewthongtin, listviewmanhinhchinh;
 
@@ -83,9 +83,9 @@ public class Home extends AppCompatActivity {
         //Lấy dữ liệu từ trang Login qua
         email = getIntent().getStringExtra("Email");
         tentaikhoan = getIntent().getStringExtra("TaiKhoan");
-
         idus = getIntent().getIntExtra("Id",0);
         pk = getIntent().getIntExtra("phanquyen", 2);
+        pass = getIntent().getStringExtra("MK");
 
         AnhXa();
         dtbapp = new dtbApp(this);
@@ -116,6 +116,8 @@ public class Home extends AppCompatActivity {
                     intent.putExtra("Id",idus);
                     intent.putExtra("TaiKhoan",tentaikhoan);
                     intent.putExtra("Email",email);
+                    intent.putExtra("PQ", pk);
+                    intent.putExtra("MK", pass);
                     startActivity(intent);
                 }
                 //Đăng bài

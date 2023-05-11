@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import edu.huflit.myapp.Model.Users;
 import edu.huflit.myapp.database.dtbApp;
 
 public class Layout_User extends AppCompatActivity {
@@ -29,6 +31,9 @@ public class Layout_User extends AppCompatActivity {
 
     int id;
     dtbApp dtbApp;
+
+    String pass;
+    int pq;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +61,8 @@ public class Layout_User extends AppCompatActivity {
         edtId.setText(String.valueOf(id));
         String email= getIntent().getStringExtra("Email");
         edtEmail.setText(email);
+        pass = getIntent().getStringExtra("MK");
+        pq = getIntent().getIntExtra("PQ",0);
         //Nhấn đổi chế độ Edit
         btnImg.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -100,9 +107,13 @@ public class Layout_User extends AppCompatActivity {
                 edtEmail.setEnabled(false);
                 edtEmail.setFocusable(false);
 
-
+                Users users = CreatUser();
+                dtbApp.EditUser(users);
+                Toast.makeText(Layout_User.this, "Update thông tin người dùng thành công!!", Toast.LENGTH_SHORT).show();
             }
         });
+
+
         edtEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -137,5 +148,17 @@ public class Layout_User extends AppCompatActivity {
             Uri uri = data.getData();
             imgAva.setImageURI(uri);
         }
+    }
+    private Users CreatUser() {
+        String tk = edtName.getText().toString();
+        String emaill = edtEmail.getText().toString();
+        Users users = new Users();
+        users.setmId(id);
+        users.setTenTaiKhoan(tk);
+        users.setEmail(emaill);
+        users.setMatkhau(pass);
+        users.setPhanquyen(pq);
+
+        return users;
     }
 }

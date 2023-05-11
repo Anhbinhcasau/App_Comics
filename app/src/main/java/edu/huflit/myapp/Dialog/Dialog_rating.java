@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -84,8 +85,10 @@ public class Dialog_rating extends Dialog {
     }
     private  Rating upRating(){
         float ratingbar = ratingBar.getRating();
-        Log.e( "onClick: ","Chỉnh sưa thanh công bạn đã đánh giá Truyện: " + ratingbar+"*");
+        Log.e( "onClick: ","Chỉnh sửa thanh công bạn đã đánh giá Truyện: " + ratingbar+"*");
         Rating rating1 = new Rating(idRating,ratingbar);
+        Toast.makeText(ratingBar.getContext(), "Bạn đã đánh giá Truyện: " + ratingbar+"*", Toast.LENGTH_SHORT).show();
+        dismiss();
         return  rating1;
     }
 

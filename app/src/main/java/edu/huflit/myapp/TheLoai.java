@@ -48,6 +48,12 @@ public class TheLoai extends AppCompatActivity {
         pk = getIntent().getIntExtra("phanquyen", 0);
         nameUser= getIntent().getStringExtra("TaiKhoan");
 
+        if(pk != 1)
+        {
+            btnAdd.setVisibility(View.GONE);
+            edtTL.setVisibility(View.GONE);
+        }
+
         Init();
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -88,6 +88,7 @@ public class MainLogin extends AppCompatActivity {
                 // Tạo 2 biến Tài khoản và Mật Khẩu
                 String mtaikhoan = edtTK.getText().toString();
                 String mmatkhau = edtMK.getText().toString();
+                boolean found = false;
 
                 //Sử dụng con trỏ để lấy dữ liệu từ database
 
@@ -127,14 +128,16 @@ public class MainLogin extends AppCompatActivity {
                         i.putExtra("Id",id);
                         i.putExtra("TaiKhoan",tk);
                         i.putExtra("Email",email);
+                        i.putExtra("MK", mmatkhau);
                         startActivity(i);
                         finish();
+                        found = true;
                     }
                 }
-                //Trả cursor về đầu
                 cursor.moveToFirst();
-                //Thực hiện khi không sử dụng
-                cursor.close();
+                if (!found) {
+                    Toast.makeText(MainLogin.this, "Tên đăng nhập hoặc mật khẩu không đúng", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

@@ -27,6 +27,7 @@
             android:id="@+id/tvNameTruyenYT"
             android:layout_marginTop="25dp"
             android:textAlignment="center"
+            android:fontFamily="@font/regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20dp" />
@@ -36,7 +37,8 @@
             android:layout_width="30dp"
             android:layout_height="27dp"
             android:layout_marginTop="50dp"
-            android:layout_marginLeft="150dp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="95dp"
             android:background="@drawable/baseline_favorite_shadow" />
     </LinearLayout>
 

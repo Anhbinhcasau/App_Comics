@@ -42,12 +42,13 @@ public class ChangePass extends AppCompatActivity {
                     if ((newPass.trim()).equals(rePass.trim())){
                         Users users = changePass();
                         dtbapp.ChangePass(users);
-                        Toast.makeText(ChangePass.this, "Đổi mật khẩu thanh cong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ChangePass.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                        finish();
                     } else{
                         Toast.makeText(ChangePass.this, "Mật khẩu mới không trùng nhau", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(ChangePass.this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ChangePass.this, "Sai mật khẩu cũ", Toast.LENGTH_SHORT).show();
                 }
             }
         });

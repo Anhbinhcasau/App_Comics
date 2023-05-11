@@ -147,12 +147,12 @@ public class dtbApp extends SQLiteOpenHelper {
         String SQLQuery6 = "INSERT INTO TaiKhoan VAlUES (null,'admin','admin','admin@gmail.com',1)";
         String SQLQuery7 = "INSERT INTO TaiKhoan VAlUES (null,'binh','binh','binh@gmail.com',2)";
 
-        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio',null)";
+        String SQLQuery8 = "INSERT INTO Truyen VALUES (1,'Doraemon','Vừa xem vừa ăn cơm thì hết sảy@@','https://i.pinimg.com/564x/7f/ac/10/7fac103e4a43eda31d5896e48cabf28c.jpg', 'Fujiko F. Fujio','Trinh Tham')";
         String SQLQuery9 = "INSERT INTO Tap VALUES(null,1,1)";
         String SQLQuery10 = "INSERT INTO Tap VALUES(null,2,1)";
         String SQLQuery11 = "INSERT INTO Tap VALUES(null,3,1)";
         String SQLQuery12 = "INSERT INTO Tap VALUES(null,4,1)";
-        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio',null)";
+        String SQLQuery13 = "INSERT INTO Truyen VALUES (0,'Conan','Vừa xem vừa ăn cơm thì hết sảy@@','https://st.nettruyenvt.com/data/comics/30/tham-tu-conan.jpg', 'Fujiko F. Fujio','Co Tich')";
         String SQLQuery14 = "INSERT INTO Tap VALUES(null,1,0)";
         String SQLQuery15 = "INSERT INTO Tap VALUES(null,2,0)";
         String SQLQuery16 = "INSERT INTO Tap VALUES(null,3,0)";
@@ -173,16 +173,16 @@ public class dtbApp extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQLQuery6);
         sqLiteDatabase.execSQL(SQLQuery7);
 
-//        sqLiteDatabase.execSQL(SQLQuery8);
-//        sqLiteDatabase.execSQL(SQLQuery9);
-//        sqLiteDatabase.execSQL(SQLQuery10);
-//        sqLiteDatabase.execSQL(SQLQuery11);
-//        sqLiteDatabase.execSQL(SQLQuery12);
-//        sqLiteDatabase.execSQL(SQLQuery13);
-//        sqLiteDatabase.execSQL(SQLQuery14);
-//        sqLiteDatabase.execSQL(SQLQuery15);
-//        sqLiteDatabase.execSQL(SQLQuery16);
-//        sqLiteDatabase.execSQL(SQLQuery17);
+        sqLiteDatabase.execSQL(SQLQuery8);
+        sqLiteDatabase.execSQL(SQLQuery9);
+        sqLiteDatabase.execSQL(SQLQuery10);
+        sqLiteDatabase.execSQL(SQLQuery11);
+        sqLiteDatabase.execSQL(SQLQuery12);
+        sqLiteDatabase.execSQL(SQLQuery13);
+        sqLiteDatabase.execSQL(SQLQuery14);
+        sqLiteDatabase.execSQL(SQLQuery15);
+        sqLiteDatabase.execSQL(SQLQuery16);
+        sqLiteDatabase.execSQL(SQLQuery17);
         sqLiteDatabase.execSQL(SQLQuery18);
 
     }
@@ -244,6 +244,9 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
     }
+    public void EditProFile(Users users) {
+
+    }
     public void Addtap(TapTruyen tapTruyen){
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -273,6 +276,17 @@ public class dtbApp extends SQLiteOpenHelper {
     public void Delete(TruyenTranh truyenTranh){
         SQLiteDatabase db = this.getReadableDatabase();
         db.delete(TABLE_TRUYEN, ID_TRUYEN + "=" + "'" + truyenTranh.getIdTruyen() + "'",null);
+        db.close();
+    }
+    public void EditUser(Users users){
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(TEN_TAI_KHOAN, users.getTenTaiKhoan());
+        values.put(MAT_KHAU, users.getMatkhau());
+        values.put(PHAN_QUYEN, users.getPhanquyen());
+        values.put(EMAIL, users.getEmail());
+
+        db.update(TABLE_TAIKHOAN, values,ID_TAI_KHOAN + " = " + users.getmId(), null);
         db.close();
     }
     public void Edit(TruyenTranh truyenTranh){

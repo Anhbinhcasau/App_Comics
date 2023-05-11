@@ -58,7 +58,6 @@ public class update_truyen extends AppCompatActivity {
             public void onClick(View view) {
                 TruyenTranh truyenTranh = CreatTruyen();
                 dtbApp.Edit(truyenTranh);
-
                 finish();
                 Toast.makeText(update_truyen.this, "Update truyện thành công!!", Toast.LENGTH_SHORT).show();
             }

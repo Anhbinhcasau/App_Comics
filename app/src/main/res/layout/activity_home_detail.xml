@@ -210,9 +210,9 @@
                 android:layout_marginRight="10dp"
                 android:background="@drawable/siliver_background"
                 android:padding="10dp"
-                android:text="Đôrêmon là một chú mèo máy được Nôbita, cháu ba đời của Nôbita gửi về quá khứ cho ông mình để giúp đỡ Nôbita tiến bộ, tức là cũng sẽ cải thiện hoàn cảnh của con cháu Nôbita sau này. Còn ở hiện tại, Nôbita là một cậu bé luôn thất bại ở trường học, và sau đó là thất bại trong công việc, đẩy gia đình và con cháu sau này vào cảnh nợ nần. Các câu chuyện trong Đôrêmon thường có một công thức chung, đó là xoay quanh những rắc rối hay xảy ra với cậu bé Nôbita lớp bốn, nhân vật chính thứ nhì của bộ truyện. Đôrêmon có một chiếc túi thần kỳ trước bụng với đủ loại bảo bối của tương lai. Cốt truyện thường gặp nhất sẽ là Nôbita trở về nhà khóc lóc với những rắc rối mà cậu gặp phải ở trường hoặc với bạn bè. Sau khi bị cậu bé van nài hoặc thúc giục, Đôrêmon sẽ đưa ra một bảo bối giúp Nôbita giải quyết những rắc rối của mình, hoặc là để trả đũa hay khoe khoang với bạn bè của cậu. Nôbita sẽ lại thường đi quá xa so với dự định ban đầu của Đôrêmon, thậm chí với những bảo bối mới cậu còn gặp rắc rối lớn hơn trước đó. Đôi khi những người bạn của Nôbita (thường là Xêkô hoặc Chaien) lại lấy trộm những bảo bối và sử dụng chúng không đúng mục đích. Tuy nhiên thường thì ở cuối mỗi câu chuyện, những ai sử dụng sai mục đích bảo bối sẽ phải chịu hậu quả do mình gây ra, và người đọc sẽ rút ra được bài học đạo đức từ đó."
+                android:text="doraemon"
                 android:textColor="@color/black"
-                android:textSize="11dp" />
+                android:textSize="18dp" />
             <!--Viết bình luậ-->
             <Button
                 android:id="@+id/btnComment"

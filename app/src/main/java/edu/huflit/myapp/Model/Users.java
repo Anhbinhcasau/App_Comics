@@ -24,6 +24,10 @@ public class Users {
         this.email = email;
     }
 
+    public Users() {
+
+    }
+
     public int getmId() {
         return mId;
     }
