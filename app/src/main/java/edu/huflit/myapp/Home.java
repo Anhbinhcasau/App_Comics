@@ -140,6 +140,7 @@ public class Home extends AppCompatActivity {
                     Intent intent = new Intent(Home.this, LayoutLike.class);
                     intent.putExtra("Id",idus);
                     intent.putExtra("phanquyen", pk);
+                    intent.putExtra("userId", idus);
                     intent.putExtra("TenUser", tentaikhoan);
                     startActivity(intent);
                 }
@@ -358,5 +359,4 @@ public class Home extends AppCompatActivity {
             mTimer = null;
         }
     }
-
 }

@@ -261,6 +261,7 @@ public class dtbApp extends SQLiteOpenHelper {
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(CATE, theLoai.getTenTL());
+        values.put(ID_TRUYEN, theLoai.getIdTruyen());
         dtb.insert(TABLE_CATEGORY, null, values);
         dtb.close();
         Log.e("Add _category", "Thành Công" );
@@ -393,6 +394,7 @@ public class dtbApp extends SQLiteOpenHelper {
         Cursor cursor = db.query(TABLE_COMMENT, columns, selection, selectionArgs, null, null, null);
         return cursor;
     }
+
     public void comment(List_Comment listComment){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

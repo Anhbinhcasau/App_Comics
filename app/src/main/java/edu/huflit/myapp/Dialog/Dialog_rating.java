@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
@@ -61,12 +60,14 @@ public class Dialog_rating extends Dialog {
                 Cursor cursor = dtbapp.getDataRatingByID(userId,comicId);
                 if (cursor.moveToFirst()){
                     Rating rating1 = upRating();
+                    Log.e( "onClick: ","Chỉnh sưa thanh công");
                     dtbapp.upRating(rating1);
 
                 }else {
                     Rating rating1 = addRating();
                     Log.e( "onClick: ","Thêm Thành công");
                     dtbapp.addRating(rating1);
+                    dismiss();
                 }
             }
         });
@@ -79,7 +80,7 @@ public class Dialog_rating extends Dialog {
     }
     private Rating addRating(){
         float ratingbar = ratingBar.getRating();
-        Log.e( "onClick: ","Bạn đã đánh giá truyên: " + ratingbar+ "*");
+        Log.e( "onClick: ","Chỉnh sưa thanh công bạn đã đánh giá Truyên" + ratingbar+ "*");
         Rating rating1 = new Rating(ratingbar, userId,comicId);
         return rating1;
     }
