@@ -71,7 +71,7 @@ public class dtbApp extends SQLiteOpenHelper {
 
 
     public dtbApp(@Nullable Context context) {
-        super(context, "App doc truyen", null, 4);
+        super(context, "App doc truyen", null, 5);
     }
 
     @Override
@@ -244,9 +244,7 @@ public class dtbApp extends SQLiteOpenHelper {
         dtb.close();
         Log.e("Add truyenTranh ","Thành Công");
     }
-    public void EditProFile(Users users) {
 
-    }
     public void Addtap(TapTruyen tapTruyen){
         SQLiteDatabase dtb = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -420,7 +418,4 @@ public class dtbApp extends SQLiteOpenHelper {
         db.update(TABLE_RATING, values,ID_RATING + " = " + rating.getIdRating(), null);
         db.close();
     }
-
-
-
 }

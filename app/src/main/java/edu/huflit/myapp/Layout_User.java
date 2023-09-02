@@ -1,5 +1,6 @@
 package edu.huflit.myapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.net.Uri;
@@ -35,6 +36,7 @@ public class Layout_User extends AppCompatActivity {
     String pass;
     int pq;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -71,6 +71,7 @@ public class Home extends AppCompatActivity {
     ThongTinAdapter ThongTinAdapter;
     SharedPreferences sp;
     SharedPreferences.Editor editor;
+
     public static dtbApp dtbapp;
     int pk, idus;
 
@@ -245,6 +246,7 @@ public class Home extends AppCompatActivity {
         listviewmanhinhchinh = findViewById(R.id.manhinhchuyenmuc);
         listviewthongtin = findViewById(R.id.manthongtin);
         drawerLayout = findViewById(R.id.drawerlayout);
+
         //Thông tin
         usersArrayList = new ArrayList<>();
         usersArrayList.add(new Users(tentaikhoan,email));
