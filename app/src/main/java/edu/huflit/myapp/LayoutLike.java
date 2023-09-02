@@ -54,10 +54,10 @@ public class LayoutLike extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cursor csLike = dtbapp.getDataLikeByIDUser(idUser);
-                if (csLike.moveToPosition(i)) { // retrieve the item at the clicked position
+                if (csLike.moveToPosition(i)) {
                     int IDtruyen = csLike.getInt(2);
                     Cursor csTruyen = dtbapp.getDataTryenByID(IDtruyen);
-                    if (csTruyen != null && csTruyen.moveToFirst()) { // use moveToFirst instead of moveToPosition to retrieve the first item
+                    if (csTruyen != null && csTruyen.moveToFirst()) {
                         int idTruyen = csTruyen.getInt(2);
                         String Ten = csTruyen.getString(0);
                         String tomtat = csTruyen.getString(4);
